@@ -1,0 +1,9 @@
+@import './variables.scss';
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft {
+    border-right: 1px solid $stroke-color;
+}
+
+svg {
+    color: $white-color;
+}
