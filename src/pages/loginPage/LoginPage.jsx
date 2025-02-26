@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, TextField } from '@mui/material';
 import { PageContainer } from '@toolpad/core';
 import { Send } from '@mui/icons-material';
@@ -6,12 +6,40 @@ import { useState } from 'react';
 
 import './index.scss';
 import src from '../../assets/logo.png';
+import { useInput } from '../../hooks/useInput';
 
 const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [isValidForm, setIsValidForm] = useState(false);
+
+    const emailInput = useInput('', { isEmailValid: true, isEmpty: true });
+    const passwordInput = useInput('', { isEmpty: true, minLength: 8 });
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (isValidForm) {
+            console.log({
+                email: emailInput.value,
+                password: passwordInput.value,
+            });
+            setIsLoading(true);
+        }
     };
+
+    const handleForm = () => {
+        if (emailInput.emailError || passwordInput.minLengthError) {
+            setIsValidForm(false);
+        } else if (emailInput.isEmptyError || passwordInput.isEmptyError) {
+            setIsValidForm(false);
+        } else {
+            setIsValidForm(true);
+        }
+    };
+
+    useEffect(() => {
+        handleForm();
+    }, [emailInput.emailError, passwordInput.minLengthError]);
+
     return (
         <div>
             <section className='content'>
@@ -31,14 +59,35 @@ const LoginPage = () => {
                                     <h2>Авторизация</h2>
                                 </div>
                                 <div className='login-form__input-wrapper'>
-                                    <TextField label='Email' type={'email'} />
-                                    <TextField label='Пароль' type={'password'} />
+                                    <TextField
+                                        label={emailInput.emailError ? 'Невалидный email' : 'Email'}
+                                        type={'email'}
+                                        value={emailInput.value}
+                                        onChange={(e) => {
+                                            emailInput.onChange(e);
+                                        }}
+                                        error={emailInput.emailError}
+                                    />
+                                    <TextField
+                                        label={
+                                            passwordInput.minLengthError
+                                                ? `Введите ещё ${8 - passwordInput.value.length} символа`
+                                                : 'Пароль'
+                                        }
+                                        type={'password'}
+                                        value={passwordInput.value}
+                                        onChange={(e) => {
+                                            passwordInput.onChange(e);
+                                        }}
+                                        error={passwordInput.minLengthError}
+                                    />
                                 </div>
                                 <Button
                                     variant='contained'
                                     type='submit'
                                     loading={isLoading}
                                     endIcon={<Send />}
+                                    disabled={!isValidForm}
                                 >
                                     {'Войти'}
                                 </Button>
