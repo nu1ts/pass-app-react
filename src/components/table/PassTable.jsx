@@ -24,7 +24,7 @@ function createData(name, status, date) {
         name,
         status,
         date,
-        history: [
+        details: [
             {
                 start_date: '05/01/2020',
                 end_date: '01/02/2020',

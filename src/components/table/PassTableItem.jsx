@@ -82,13 +82,11 @@ export default function PassTableItem(props) {
                                     <TableCell align='center'>Причина</TableCell>
                                 </TableHead>
                                 <TableBody>
-                                    {row.history.map((historyRow) => (
-                                        <TableRow key={historyRow.date}>
-                                            <TableCell>{historyRow.start_date}</TableCell>
-                                            <TableCell>{historyRow.end_date}</TableCell>
-                                            <TableCell align='center'>
-                                                {historyRow.reason}
-                                            </TableCell>
+                                    {row.details.map((detail) => (
+                                        <TableRow key={detail.date}>
+                                            <TableCell>{detail.start_date}</TableCell>
+                                            <TableCell>{detail.end_date}</TableCell>
+                                            <TableCell align='center'>{detail.reason}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
