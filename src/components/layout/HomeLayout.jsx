@@ -26,6 +26,7 @@ export default function HomeLayout() {
                         borderBottom: 1,
                         borderColor: 'divider',
                         margin: '0 20px',
+                        overflow: 'hidden',
                     }}
                 >
                     <TabList onChange={handleChange}>
@@ -55,7 +56,16 @@ export default function HomeLayout() {
                         />
                     </TabList>
                 </Box>
-                <TabPanel value={value}>
+                <TabPanel
+                    value={value}
+                    sx={{
+                        paddingY: 0,
+                        overflowY: 'scroll',
+                        minHeight: '400px',
+                        height: 'auto',
+                        maxHeight: '620px',
+                    }}
+                >
                     <Outlet />
                 </TabPanel>
             </TabContext>

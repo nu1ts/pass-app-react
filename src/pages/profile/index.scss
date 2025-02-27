@@ -1,1 +1,66 @@
 @import '../../scss/variables.scss';
+
+.profile-page {
+    box-sizing: border-box;
+    margin-top: 20px;
+    width: 100%;
+    min-height: 400px;
+    height: auto;
+    max-height: 620px;
+
+    div.inner-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        .img-wrapper {
+            box-sizing: border-box;
+            max-width: 300px;
+            max-height: 300px;
+            padding: 10px;
+            border: 1px solid $stroke-color;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+
+            .role-span {
+                position: absolute;
+                border-radius: 4px;
+                width: 120px;
+                height: 40px;
+                background-color: $soft-black;
+                top: 6px;
+                left: 6px;
+                span {
+                    font-weight: 400;
+                    font-size: 20px;
+                    color: $white-color;
+                }
+            }
+        }
+        .profile-info {
+            box-sizing: border-box;
+            margin-left: 20px;
+            padding: 0 20px;
+            flex: 1;
+            min-height: 200px;
+
+            h2 {
+                color: $soft-black;
+                margin: 10px;
+            }
+            .divider {
+                width: 100%;
+                height: 1px;
+                color: $stroke-color;
+                background-color: $stroke-color;
+            }
+            .input-wrapper {
+                box-sizing: border-box;
+                width: 100%;
+                height: auto;
+                padding: 20px 0;
+            }
+        }
+    }
+}
