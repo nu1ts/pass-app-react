@@ -1,10 +1,11 @@
 import React from 'react';
+import PassTable from '../../components/table/PassTable';
 import './index.scss';
 const UserAbsences = () => {
     return (
         <div>
             <div className='absences-page'>
-                <h2>Welcome to absences!</h2>
+                <PassTable />
             </div>
         </div>
     );
