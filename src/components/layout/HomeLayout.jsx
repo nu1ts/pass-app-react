@@ -31,7 +31,7 @@ export default function HomeLayout() {
                 >
                     <TabList onChange={handleChange}>
                         <Tab
-                            label='Мои профиль'
+                            label='Мои пропуска'
                             value='/home'
                             sx={{
                                 padding: '10px',
@@ -43,8 +43,8 @@ export default function HomeLayout() {
                             }}
                         />
                         <Tab
-                            label='Мои пропуска'
-                            value='/home/absence/my'
+                            label='Мои профиль'
+                            value='/home/profile'
                             sx={{
                                 padding: '10px',
                                 margin: '10px 20px',

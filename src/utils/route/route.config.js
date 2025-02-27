@@ -26,11 +26,11 @@ const router = createBrowserRouter([
                         children: [
 
                             {
-                                path: '/home',
+                                path: '/home/profile',
                                 Component: ProfilePage,
                             },
                             {
-                                path: '/home/absence/my',
+                                path: '/home',
                                 Component: UserAbsences,
                             }
                         ]
