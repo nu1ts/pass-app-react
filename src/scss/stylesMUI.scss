@@ -1,0 +1,11 @@
+@import './variables.scss';
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft {
+    border-right: 1px solid $stroke-color;
+}
+ul .MuiListSubheader-root.MuiListSubheader-gutters {
+    background-color: $white-color;
+}
+svg {
+    color: $white-color;
+}
