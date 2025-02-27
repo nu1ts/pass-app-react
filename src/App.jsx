@@ -1,18 +1,14 @@
 import { Archive, Home, NotificationsActive } from '@mui/icons-material';
 import { ReactRouterAppProvider } from '@toolpad/core/react-router';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import RecentActorsIcon from '@mui/icons-material/RecentActors';
-import BadgeIcon from '@mui/icons-material/Badge';
+import { Outlet } from 'react-router-dom';
 import PeopleIcon from '@mui/icons-material/People';
 import HistoryIcon from '@mui/icons-material/History';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import { Outlet } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
+
+import appTheme from './themes/appTheme';
 import './scss/styles.scss';
 import './scss/stylesMUI.scss';
-import appTheme from './themes/appTheme';
 
 const navigation = [
     {
@@ -34,7 +30,6 @@ const navigation = [
         title: 'Пользователи',
         icon: <PeopleIcon />,
     },
-
     {
         segment: 'absence',
         title: 'История пропусков',
