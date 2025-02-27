@@ -6,6 +6,7 @@ import HomePage from '../../pages/home/HomePage';
 import { Component } from 'react';
 import ProfilePage from '../../pages/profile/ProfilePage';
 import HomeLayout from '../../components/layout/HomeLayout';
+import UserAbsences from '../../pages/absences/UserAbsences';
 
 const router = createBrowserRouter([
     {
@@ -23,14 +24,14 @@ const router = createBrowserRouter([
                         path: '/home',
                         Component: HomeLayout,
                         children: [
-                            
+
                             {
                                 path: '/home',
                                 Component: ProfilePage,
                             },
                             {
                                 path: '/home/absence/my',
-                                Component: ProfilePage,
+                                Component: UserAbsences,
                             }
                         ]
                     },

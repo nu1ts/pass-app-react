@@ -1,15 +1,15 @@
 import React from 'react';
 
-const ProfilePage = () => {
+const UserAbsences = () => {
     return (
         <div>
             <section className='content'>
                 <div className='profile-page'>
-                    <h2>Welcome to profile!</h2>
+                    <h2>Welcome to absences!</h2>
                 </div>
             </section>
         </div>
     );
 };
 
-export default ProfilePage;
+export default UserAbsences;
