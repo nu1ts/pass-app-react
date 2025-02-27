@@ -2,6 +2,11 @@ import { createBrowserRouter } from 'react-router';
 import App from '../../App';
 import LoginPage from '../../pages/loginPage/LoginPage';
 import AppDashboard from '../../components/dashboard/AppDashboard';
+import HomePage from '../../pages/home/HomePage';
+import { Component } from 'react';
+import ProfilePage from '../../pages/profile/ProfilePage';
+import HomeLayout from '../../components/layout/HomeLayout';
+
 const router = createBrowserRouter([
     {
         Component: App,
@@ -11,12 +16,31 @@ const router = createBrowserRouter([
                 Component: AppDashboard,
                 children: [
                     {
+                        path: '/',
+                        Component: HomePage,
+                    },
+                    {
+                        path: '/home',
+                        Component: HomeLayout,
+                        children: [
+                            
+                            {
+                                path: '/home',
+                                Component: ProfilePage,
+                            },
+                            {
+                                path: '/home/absence/my',
+                                Component: ProfilePage,
+                            }
+                        ]
+                    },
+                    {
                         path: '/archive',
                         Component: LoginPage,
                         children: [
                             {
                                 path: '/archive/sub',
-                                Component: LoginPage,
+                                Component: HomePage,
                             },
                         ],
                     },
