@@ -9,12 +9,12 @@ const UsersPage = () => {
             <div className='users-page'>
                 <div className='inner-wrapper'>
                     <div className='search-filter'>
-                        {/* <SearchInput
+                        <SearchInput
                             value={search.value}
                             onChange={(e) => {
                                 search.onChange(e);
                             }}
-                        /> */}
+                        />
                     </div>
                     <div className='users-wrapper'></div>
                 </div>
