@@ -7,10 +7,11 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-
+import SearchInput from '../search/SearchInput';
+import { useInput } from '../../hooks/useInput';
 export default function UsersLayout() {
     const [value, setValue] = React.useState('/users/students');
-
+    const search = useInput('', {});
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -24,6 +25,10 @@ export default function UsersLayout() {
                         borderColor: 'divider',
                         margin: '0 20px',
                         overflow: 'hidden',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
                     }}
                 >
                     <TabList onChange={handleChange}>
@@ -64,6 +69,12 @@ export default function UsersLayout() {
                             }}
                         />
                     </TabList>
+                    <SearchInput
+                        value={search.value}
+                        onChange={(e) => {
+                            search.onChange(e);
+                        }}
+                    />
                 </Box>
                 <TabPanel
                     value={value}

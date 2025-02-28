@@ -35,10 +35,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         width: '0px',
         transition: '0.2s ease-in-out',
         '&:focus': {
-            width: '310px',
+            width: '200px',
         },
         '&:hover': {
-            width: '310px',
+            width: '200px',
         },
     },
 }));
@@ -46,7 +46,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchInput({ value, onChange }) {
     return (
         <>
-            <Search sx={{ width: 'auto', display: 'flex', alignSelf: 'end' }}>
+            <Search sx={{ width: 'auto', display: 'flex' }}>
                 <SearchIconWrapper>
                     <SearchIcon sx={{ color: 'inherit' }} />
                 </SearchIconWrapper>

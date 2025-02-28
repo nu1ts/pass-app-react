@@ -2,24 +2,26 @@
 
 .users-page {
     box-sizing: border-box;
-    margin-top: 20px;
     width: 100%;
-    min-height: 400px;
-    height: auto;
-    max-height: 620px;
 
+    height: auto;
+    padding: 10px 0;
     .inner-wrapper {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
+        box-sizing: border-box;
 
-        div.search-filter {
+        .users-wrapper {
             width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
+            box-sizing: border-box;
+
+            .wrapper {
+                width: 100%;
+                max-width: 400px;
+            }
         }
     }
 }
