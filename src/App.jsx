@@ -20,15 +20,16 @@ const navigation = [
         title: 'Главная',
         icon: <HomeIcon />,
     },
+
+    {
+        segment: 'users',
+        title: 'Пользователи',
+        icon: <PeopleIcon />,
+    },
     {
         segment: 'archive',
         title: 'Заявки',
         icon: <NotificationsActive />,
-    },
-    {
-        segment: 'notifications',
-        title: 'Пользователи',
-        icon: <PeopleIcon />,
     },
     {
         segment: 'absence',

@@ -7,6 +7,8 @@ import { Component } from 'react';
 import ProfilePage from '../../pages/profile/ProfilePage';
 import HomeLayout from '../../components/layout/HomeLayout';
 import UserAbsences from '../../pages/absences/UserAbsences';
+import UsersPage from '../../pages/users/UsersPage';
+import UsersLayout from '../../components/layout/UsersLayout';
 
 const router = createBrowserRouter([
     {
@@ -32,6 +34,17 @@ const router = createBrowserRouter([
                             {
                                 path: '/home',
                                 Component: UserAbsences,
+                            }
+                        ]
+                    },
+                    {
+                        path: '/users',
+                        Component: UsersLayout,
+                        children: [
+
+                            {
+                                path: '/users/',
+                                Component: UsersPage,
                             }
                         ]
                     },
