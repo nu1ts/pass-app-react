@@ -7,10 +7,9 @@ const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: '25px',
     backgroundColor: '#edf4fe',
-
-    transition: '0.2s ease-in-out',
-
     width: 'auto',
+    display: 'flex',
+    transition: '0.2s ease-in-out',
     marginLeft: 0,
 }));
 
@@ -46,7 +45,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchInput({ value, onChange }) {
     return (
         <>
-            <Search sx={{ width: 'auto', display: 'flex' }}>
+            <Search>
                 <SearchIconWrapper>
                     <SearchIcon sx={{ color: 'inherit' }} />
                 </SearchIconWrapper>

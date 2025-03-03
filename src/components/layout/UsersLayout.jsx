@@ -1,24 +1,22 @@
 import * as React from 'react';
 import { Outlet, useNavigate } from 'react-router';
-import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import { PageContainer } from '@toolpad/core/PageContainer';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import SearchInput from '../search/SearchInput';
-import { useInput } from '../../hooks/useInput';
+import { styled } from '@mui/material';
+import UserPageFilter from '../filters/UserPageFilter';
+
 export default function UsersLayout() {
-    const [value, setValue] = React.useState('/users/students');
-    const search = useInput('', {});
-    const handleChange = (event, newValue) => {
+    const [value, setValue] = React.useState('students');
+    const handleChange = (e, newValue) => {
         setValue(newValue);
     };
 
     return (
         <>
-            <TabContext value={value}>
+            <TabContext value={value} sx={{ boxSizing: 'border-box' }}>
                 <Box
                     sx={{
                         borderBottom: 1,
@@ -29,12 +27,13 @@ export default function UsersLayout() {
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-between',
+                        minHeight: '80px',
                     }}
                 >
                     <TabList onChange={handleChange}>
-                        <Tab
+                        <StyledTab
                             label='Студенты'
-                            value='/users/students'
+                            value='students'
                             sx={{
                                 padding: '10px',
                                 margin: '10px 20px',
@@ -44,21 +43,9 @@ export default function UsersLayout() {
                                 textTransform: 'none',
                             }}
                         />
-                        <Tab
+                        <StyledTab
                             label='Преподаватели'
-                            value='/users/teachers'
-                            sx={{
-                                padding: '10px',
-                                margin: '10px 20px',
-                                borderRadius: '4px',
-                                fontWeight: '500',
-                                fontSize: '16px',
-                                textTransform: 'none',
-                            }}
-                        />
-                        <Tab
-                            label='Деканат'
-                            value='/users/dekan'
+                            value='teachers'
                             sx={{
                                 padding: '10px',
                                 margin: '10px 20px',
@@ -69,13 +56,8 @@ export default function UsersLayout() {
                             }}
                         />
                     </TabList>
-                    <SearchInput
-                        value={search.value}
-                        onChange={(e) => {
-                            search.onChange(e);
-                        }}
-                    />
                 </Box>
+                <UserPageFilter selectedRole={value} />
                 <TabPanel
                     value={value}
                     sx={{
@@ -92,3 +74,16 @@ export default function UsersLayout() {
         </>
     );
 }
+
+const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
+    textTransform: 'none',
+    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: theme.typography.pxToRem(15),
+    marginRight: theme.spacing(1),
+    color: '#676567',
+    transition: '0.1s ease-in-out',
+    '&.Mui-selected': {
+        color: '#1165c9',
+        backgroundColor: '#edf4fc',
+    },
+}));
