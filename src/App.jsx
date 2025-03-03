@@ -16,7 +16,7 @@ const navigation = [
         title: 'Управление',
     },
     {
-        segment: '',
+        segment: 'home',
         title: 'Главная',
         icon: <HomeIcon />,
     },

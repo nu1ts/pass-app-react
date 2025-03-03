@@ -9,3 +9,7 @@ ul .MuiListSubheader-root.MuiListSubheader-gutters {
 svg {
     color: $white-color;
 }
+
+main.MuiBox-root {
+    overflow-y: hidden;
+}
