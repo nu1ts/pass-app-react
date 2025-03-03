@@ -4,8 +4,9 @@ import { Box } from '@mui/system';
 import SearchInput from '../search/SearchInput';
 import { useInput } from '../../hooks/useInput';
 import InfoChip from '../chip/InfoChip';
+import DateInput from '../datePicker/DateInput';
 
-const AbsencesFilter = () => {
+export const AbsencesFilter = () => {
     const [groupNumber, setGroupNumber] = React.useState('');
     const [status, setStatus] = React.useState('all');
     const search = useInput('', {});
@@ -50,13 +51,13 @@ const AbsencesFilter = () => {
                             size='medium'
                             onChange={handleChange}
                         >
-                            <MenuItem sx={{ backgroundColor: '#fff' }} value={'all'}>
+                            <MenuItem value={'all'}>
                                 <InfoChip title='Все' color='default' />
                             </MenuItem>
-                            <MenuItem sx={{ backgroundColor: '#fff' }} value={'approved'}>
+                            <MenuItem value={'approved'}>
                                 <InfoChip title='Одобрен' color='success' />
                             </MenuItem>
-                            <MenuItem sx={{ backgroundColor: '#fff' }} value={'rejected'}>
+                            <MenuItem value={'rejected'}>
                                 <InfoChip title='Отклонен' color='error' />
                             </MenuItem>
                         </Select>
@@ -96,4 +97,65 @@ const AbsencesFilter = () => {
     );
 };
 
-export default AbsencesFilter;
+export const RequestFilters = () => {
+    const [groupNumber, setGroupNumber] = React.useState('');
+    const search = useInput('', {});
+
+    return (
+        <>
+            <Box
+                sx={{
+                    boxSizing: 'border-box',
+                    padding: '10px 20px',
+                    margin: '0 20px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderBottom: 1,
+                    borderColor: 'divider',
+                }}
+            >
+                <SearchInput
+                    value={search.value}
+                    onChange={(e) => {
+                        search.onChange(e);
+                    }}
+                />
+                <div className='flex row-d align-items-center justify-content-sb'>
+                    <DateInput />
+                    <TextField
+                        label={'Группа'}
+                        inputProps={{
+                            maxLength: 6,
+                            type: 'number',
+                        }}
+                        inputMode={'numeric'}
+                        size='medium'
+                        sx={{ width: '120px' }}
+                        value={groupNumber}
+                        onInput={(e) => {
+                            let group = Math.max(0, parseInt(e.target.value))
+                                .toString()
+                                .slice(0, e.target.maxLength);
+                            setGroupNumber(group);
+                        }}
+                    />
+
+                    <Button
+                        variant={'contained'}
+                        size={'medium'}
+                        sx={{
+                            boxShadow: 'none',
+                            textTransform: 'none',
+                            marginLeft: '20px',
+                            height: '56px',
+                        }}
+                    >
+                        Применить
+                    </Button>
+                </div>
+            </Box>
+        </>
+    );
+};

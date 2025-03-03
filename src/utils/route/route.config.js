@@ -9,6 +9,7 @@ import HomeLayout from '../../components/layout/HomeLayout';
 import UserAbsences from '../../pages/absences/UserAbsences';
 import UsersPage from '../../pages/users/UsersPage';
 import UsersLayout from '../../components/layout/UsersLayout';
+import RequestAbsences from '../../pages/absences/RequestAbsences';
 
 const router = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/absences/requests',
-                        Component: LoginPage,
+                        Component: RequestAbsences,
                         
                     },
                     {

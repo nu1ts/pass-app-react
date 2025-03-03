@@ -4,7 +4,7 @@ import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import PassTableItem from './PassTableItem';
 
-export default function PassTable() {
+export default function PassTable({ absences = [] }) {
     return (
         <TableContainer sx={{ padding: '20px 40px' }}>
             <Table sx={{ overflow: 'scroll' }}>

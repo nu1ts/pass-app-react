@@ -27,7 +27,7 @@ const navigation = [
         icon: <PeopleIcon />,
     },
     {
-        segment: 'archive',
+        segment: 'absences/requests',
         title: 'Заявки',
         icon: <NotificationsActive />,
     },
