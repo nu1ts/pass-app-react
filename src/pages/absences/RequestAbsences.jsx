@@ -1,12 +1,13 @@
 import React from 'react';
-import { AbsencesFilter } from '../../components/filters/AbsencesFilter';
+import { RequestFilters } from '../../components/filters/AbsencesFilter';
 import PassTable from '../../components/table/PassTable';
 import './index.scss';
-const UserAbsences = () => {
+
+const RequestAbsences = () => {
     return (
         <>
             <div className='absences-page'>
-                <AbsencesFilter />
+                <RequestFilters />
                 <div className='inner'>
                     <PassTable />
                 </div>
@@ -15,4 +16,4 @@ const UserAbsences = () => {
     );
 };
 
-export default UserAbsences;
+export default RequestAbsences;

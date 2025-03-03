@@ -1,0 +1,26 @@
+@import '../../scss/variables.scss';
+
+.users-page {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+
+    .inner-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+
+        .users-wrapper {
+            width: 100%;
+            box-sizing: border-box;
+
+            .wrapper {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+    }
+}

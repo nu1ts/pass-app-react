@@ -2,14 +2,13 @@ import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
-
 import PassTableItem from './PassTableItem';
 
-export default function PassTable() {
+export default function PassTable({ absences = [] }) {
     return (
-        <TableContainer>
-            <Table>
-                <TableBody sx={{ border: '1px solid #d9d9d9' }}>
+        <TableContainer sx={{ padding: '20px 40px' }}>
+            <Table sx={{ overflow: 'scroll' }}>
+                <TableBody sx={{ border: '1px solid #d9d9d9', borderRadius: '8px' }}>
                     {rows.map((row, index) => (
                         <PassTableItem key={index} row={row} />
                     ))}
@@ -24,7 +23,7 @@ function createData(name, status, date) {
         name,
         status,
         date,
-        history: [
+        details: [
             {
                 start_date: '05/01/2020',
                 end_date: '01/02/2020',

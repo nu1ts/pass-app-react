@@ -20,18 +20,19 @@ const navigation = [
         title: 'Главная',
         icon: <HomeIcon />,
     },
+
     {
-        segment: 'archive',
-        title: 'Заявки',
-        icon: <NotificationsActive />,
-    },
-    {
-        segment: 'notifications',
+        segment: 'users',
         title: 'Пользователи',
         icon: <PeopleIcon />,
     },
     {
-        segment: 'absence',
+        segment: 'absences/requests',
+        title: 'Заявки',
+        icon: <NotificationsActive />,
+    },
+    {
+        segment: 'absences/history',
         title: 'История пропусков',
         icon: <HistoryIcon />,
     },

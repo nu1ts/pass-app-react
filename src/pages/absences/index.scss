@@ -1,14 +1,15 @@
+@import '../../scss/variables.scss';
+
 .absences-page {
     box-sizing: border-box;
-    margin-top: 20px;
+    padding: 20px 0;
     width: 100%;
     min-height: 400px;
     height: auto;
     max-height: 620px;
-    div.inner-wrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
+
+    .inner {
+        height: calc(100vh - (150px));
+        overflow-y: scroll;
     }
 }

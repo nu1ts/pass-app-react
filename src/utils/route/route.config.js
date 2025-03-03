@@ -7,6 +7,9 @@ import { Component } from 'react';
 import ProfilePage from '../../pages/profile/ProfilePage';
 import HomeLayout from '../../components/layout/HomeLayout';
 import UserAbsences from '../../pages/absences/UserAbsences';
+import UsersPage from '../../pages/users/UsersPage';
+import UsersLayout from '../../components/layout/UsersLayout';
+import RequestAbsences from '../../pages/absences/RequestAbsences';
 
 const router = createBrowserRouter([
     {
@@ -22,25 +25,30 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/home',
-                        Component: HomeLayout,
+                        Component: ProfilePage
+                    },
+                    {
+                        path: '/users',
+                        Component: UsersLayout,
                         children: [
 
                             {
-                                path: '/home/profile',
-                                Component: ProfilePage,
-                            },
-                            {
-                                path: '/home',
-                                Component: UserAbsences,
+                                path: '/users/',
+                                Component: UsersPage,
                             }
                         ]
                     },
                     {
-                        path: '/archive',
-                        Component: LoginPage,
+                        path: '/absences/requests',
+                        Component: RequestAbsences,
+                        
+                    },
+                    {
+                        path: '/absences/history',
+                        Component: UserAbsences,
                         children: [
                             {
-                                path: '/archive/sub',
+                                path: '/absences/history/export',
                                 Component: HomePage,
                             },
                         ],
