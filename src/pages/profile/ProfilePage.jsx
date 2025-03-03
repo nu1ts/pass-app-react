@@ -4,6 +4,7 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import './index.scss';
 import { Button, TextField } from '@mui/material';
 import { useInput } from '../../hooks/useInput';
+import RoleChip from '../../components/chip/RoleChip';
 
 const ProfilePage = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -35,9 +36,7 @@ const ProfilePage = () => {
                         <PermIdentityIcon
                             sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
                         />
-                        <div className='role-span flex-centered'>
-                            <span>{'Декан'}</span>
-                        </div>
+                        <RoleChip role='Декан' color={'info'} />
                     </div>
                     <div className='profile-info flex column-d'>
                         <h2>Данные пользователя</h2>
