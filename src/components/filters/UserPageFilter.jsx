@@ -31,14 +31,14 @@ const UserPageFilter = ({ selectedRole }) => {
                 <div className='flex row-d align-items-center justify-content-sb'>
                     {selectedRole === 'students' && (
                         <TextField
-                            label={'Номер группы'}
+                            label={'Группа'}
                             inputProps={{
                                 maxLength: 6,
                                 type: 'number',
                             }}
-                            size={'small'}
+                            size={'medium'}
                             inputMode={'numeric'}
-                            sx={{ height: '40px', boxSizing: 'border-box' }}
+                            sx={{ height: '56px', boxSizing: 'border-box', width: '120px' }}
                             value={groupNumber}
                             onInput={(e) => {
                                 let group = Math.max(0, parseInt(e.target.value))
@@ -54,7 +54,7 @@ const UserPageFilter = ({ selectedRole }) => {
                             boxShadow: 'none',
                             textTransform: 'none',
                             marginLeft: '20px',
-                            height: '40px',
+                            height: '56px',
                         }}
                     >
                         Применить

@@ -32,7 +32,7 @@ const navigation = [
         icon: <NotificationsActive />,
     },
     {
-        segment: 'absence',
+        segment: 'absences/history',
         title: 'История пропусков',
         icon: <HistoryIcon />,
     },

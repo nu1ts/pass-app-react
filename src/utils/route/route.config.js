@@ -24,18 +24,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/home',
-                        Component: HomeLayout,
-                        children: [
-
-                            {
-                                path: '/home/profile',
-                                Component: ProfilePage,
-                            },
-                            {
-                                path: '/home',
-                                Component: UserAbsences,
-                            }
-                        ]
+                        Component: ProfilePage
                     },
                     {
                         path: '/users',
@@ -49,11 +38,16 @@ const router = createBrowserRouter([
                         ]
                     },
                     {
-                        path: '/archive',
+                        path: '/absences/requests',
                         Component: LoginPage,
+                        
+                    },
+                    {
+                        path: '/absences/history',
+                        Component: UserAbsences,
                         children: [
                             {
-                                path: '/archive/sub',
+                                path: '/absences/history/export',
                                 Component: HomePage,
                             },
                         ],
