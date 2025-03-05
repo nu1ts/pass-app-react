@@ -10,7 +10,6 @@ const usersSlice = createSlice({
             state.users = action.payload;
         }
     }
-
 })
 
 

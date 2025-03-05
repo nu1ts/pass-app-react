@@ -33,15 +33,19 @@ const LoginPage = () => {
                     return user.email === emailInput.value && user.password === passwordInput.value;
                 });
                 if (result) {
-                    SuccessToast('Добро пожаловать');
-                    dispatch(
-                        fetchProfile({
-                            fullName: result.fullName,
-                            email: result.email,
-                            role: result.role,
-                        }),
-                    );
-                    navigate('/');
+                    if (result.role === 'dean') {
+                        SuccessToast('Добро пожаловать');
+                        dispatch(
+                            fetchProfile({
+                                fullName: result.fullName,
+                                email: result.email,
+                                role: result.role,
+                            }),
+                        );
+                        navigate('/');
+                    } else {
+                        ErrorToast('Доступ запрещен');
+                    }
                 } else {
                     ErrorToast('Неверный логин или пароль');
                 }

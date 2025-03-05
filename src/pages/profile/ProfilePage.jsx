@@ -18,7 +18,6 @@ const ProfilePage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('asdsa');
         setIsLoading(true);
     };
 
@@ -29,6 +28,7 @@ const ProfilePage = () => {
             setIsValidForm(true);
         }
     };
+
     useEffect(() => {
         email.setValue(profile.email);
         fullName.setValue(profile.fullName);
@@ -37,6 +37,7 @@ const ProfilePage = () => {
     useEffect(() => {
         handleForm();
     }, [email.value, fullName.value]);
+
     return (
         <div>
             <div className='profile-page'>
