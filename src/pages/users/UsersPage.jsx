@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { List } from '@mui/material';
 
 import './index.scss';
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 const UsersPage = () => {
     const { users } = useSelector((state) => state.users);
+
     return (
         <>
             <div className='users-page'>

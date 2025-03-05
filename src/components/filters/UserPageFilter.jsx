@@ -16,8 +16,8 @@ const UserPageFilter = ({ selectedRole }) => {
     const { usersFilters } = useSelector((state) => state.filters);
     const dispatch = useDispatch();
 
-    const handleClick = () => {
-        if (selectedRole === 'students') {
+    const handleClick = async () => {
+        if (selectedRole === 'student') {
             dispatch(
                 setUsersFilters({
                     fullName: search.value || null,
@@ -41,6 +41,15 @@ const UserPageFilter = ({ selectedRole }) => {
     };
 
     useEffect(() => {
+        dispatch(
+            setUsersFilters({
+                fullName: '',
+                role: selectedRole,
+                group: null,
+                size: 5,
+                page: 1,
+            }),
+        );
         search.setValue('');
     }, [selectedRole]);
 
