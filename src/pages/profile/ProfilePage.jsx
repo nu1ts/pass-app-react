@@ -8,11 +8,14 @@ import RoleChip from '../../components/chip/RoleChip';
 import { useSelector } from 'react-redux';
 
 const ProfilePage = () => {
+    const { profile } = useSelector((state) => state.profile);
+
     const [isLoading, setIsLoading] = useState(false);
     const [isValidForm, setIsValidForm] = useState(false);
+
     const email = useInput('', { isEmailValid: true, isEmpty: true });
     const fullName = useInput('', { isEmpty: true });
-    const { profile } = useSelector((state) => state.profile);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('asdsa');
@@ -27,6 +30,11 @@ const ProfilePage = () => {
         }
     };
     useEffect(() => {
+        email.setValue(profile.email);
+        fullName.setValue(profile.fullName);
+    }, []);
+
+    useEffect(() => {
         handleForm();
     }, [email.value, fullName.value]);
     return (
@@ -37,7 +45,7 @@ const ProfilePage = () => {
                         <PermIdentityIcon
                             sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
                         />
-                        <RoleChip role='Декан' color={'info'} />
+                        <RoleChip role={profile.role} color={'info'} />
                     </div>
                     <div className='profile-info flex column-d'>
                         <h2>Данные пользователя</h2>
