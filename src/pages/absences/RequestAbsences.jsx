@@ -1,7 +1,8 @@
 import React from 'react';
+
+import './index.scss';
 import { RequestFilters } from '../../components/filters/AbsencesFilter';
 import PassTable from '../../components/table/PassTable';
-import './index.scss';
 
 const RequestAbsences = () => {
     return (

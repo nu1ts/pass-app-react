@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet } from 'react-router';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { styled } from '@mui/material';
+
 import UserPageFilter from '../filters/UserPageFilter';
 
 export default function UsersLayout() {

@@ -1,8 +1,8 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import './index.scss';
 import { Button, TextField } from '@mui/material';
+
+import './index.scss';
 import { useInput } from '../../hooks/useInput';
 import RoleChip from '../../components/chip/RoleChip';
 

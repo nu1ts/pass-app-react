@@ -1,6 +1,6 @@
 import React from 'react';
-import { Outlet } from 'react-router';
 import './index.scss';
+
 const HomePage = () => {
     return (
         <div>
