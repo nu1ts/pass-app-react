@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 
@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUsersFilters } from '../../store/reducers/filterReducer';
 
 const UserPageFilter = ({ selectedRole }) => {
-    const [groupNumber, setGroupNumber] = React.useState('');
+    const [groupNumber, setGroupNumber] = useState('');
     const search = useInput('', {});
-    const dispatch = useDispatch();
     const { usersFilters } = useSelector((state) => state.filters);
+    const dispatch = useDispatch();
 
     const handleClick = () => {
         if (selectedRole === 'students') {
@@ -36,6 +36,10 @@ const UserPageFilter = ({ selectedRole }) => {
             );
         }
     };
+
+    useEffect(() => {
+        search.setValue('');
+    }, [selectedRole]);
 
     useEffect(() => {
         console.log(usersFilters);

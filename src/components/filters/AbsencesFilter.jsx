@@ -1,19 +1,48 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { Box } from '@mui/system';
+import { useDispatch, useSelector } from 'react-redux';
 
-import SearchInput from '../search/SearchInput';
 import { useInput } from '../../hooks/useInput';
 import InfoChip from '../chip/InfoChip';
+import SearchInput from '../search/SearchInput';
 import DateInput from '../datePicker/DateInput';
+import { setAbsencesHistoryFiltersParams } from '../../store/actions/filterAction';
+import { setAbsencesFiltersParams } from '../../store/actions/filterAction';
 
 export const AbsencesFilter = () => {
-    const [groupNumber, setGroupNumber] = React.useState('');
-    const [status, setStatus] = React.useState('all');
+    const { absencesHistoryFilters } = useSelector((state) => state.filters);
+    const [groupNumber, setGroupNumber] = useState(absencesHistoryFilters.group);
+    const [status, setStatus] = useState(absencesHistoryFilters.status);
     const search = useInput('', {});
+    const dispatch = useDispatch();
+
     const handleChange = (e) => {
         setStatus(e.target.value);
     };
+
+    const handleClick = () => {
+        dispatch(
+            setAbsencesHistoryFiltersParams({
+                fullName: search.value,
+                status: status,
+                group: groupNumber || null,
+                size: 5,
+                page: 1,
+            }),
+        );
+    };
+
+    useEffect(() => {
+        setGroupNumber(absencesHistoryFilters.group);
+        setStatus(absencesHistoryFilters.status);
+        search.setValue(absencesHistoryFilters.fullName);
+    }, []);
+
+    useEffect(() => {
+        console.log(absencesHistoryFilters);
+    }, [absencesHistoryFilters]);
+
     return (
         <>
             <Box
@@ -89,6 +118,7 @@ export const AbsencesFilter = () => {
                             marginLeft: '20px',
                             height: '56px',
                         }}
+                        onClick={handleClick}
                     >
                         Применить
                     </Button>
@@ -99,9 +129,31 @@ export const AbsencesFilter = () => {
 };
 
 export const RequestFilters = () => {
-    const [groupNumber, setGroupNumber] = React.useState('');
+    const [groupNumber, setGroupNumber] = useState('');
+    const [date, setDate] = useState(null);
     const search = useInput('', {});
+    const dispatch = useDispatch();
+    const { absencesFilters } = useSelector((state) => state.filters);
 
+    const handleClick = () => {
+        dispatch(
+            setAbsencesFiltersParams({
+                fullName: search.value,
+                date: date,
+                group: groupNumber || null,
+                size: 5,
+                page: 1,
+            }),
+        );
+    };
+    useEffect(() => {
+        setGroupNumber(absencesFilters.group);
+        setDate(absencesFilters.date);
+        search.setValue(absencesFilters.fullName);
+    }, []);
+    useEffect(() => {
+        console.log(absencesFilters);
+    }, [absencesFilters]);
     return (
         <>
             <Box
@@ -124,7 +176,7 @@ export const RequestFilters = () => {
                     }}
                 />
                 <div className='flex row-d align-items-center justify-content-sb'>
-                    <DateInput />
+                    <DateInput date={date} setDate={setDate} />
                     <TextField
                         label={'Группа'}
                         inputProps={{
@@ -152,6 +204,7 @@ export const RequestFilters = () => {
                             marginLeft: '20px',
                             height: '56px',
                         }}
+                        onClick={handleClick}
                     >
                         Применить
                     </Button>

@@ -19,7 +19,7 @@ const filterSlice = createSlice({
         },
         absencesHistoryFilters: {
             fullName:'',
-            status: '',
+            status: 'all',
             group: '',
             size: 5,
             page: 1
