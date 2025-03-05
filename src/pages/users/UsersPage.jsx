@@ -3,6 +3,7 @@ import { List } from '@mui/material';
 
 import './index.scss';
 import UserItem from '../../components/listItem/UserItem';
+import { users } from '../../utils/fakeDB';
 
 const UsersPage = () => {
     return (
@@ -11,8 +12,8 @@ const UsersPage = () => {
                 <div className='inner-wrapper'>
                     <div className='users-wrapper'>
                         <List sx={{ width: 1, paddingX: '16px' }}>
-                            {[...Array(5)].map((item) => {
-                                return <UserItem />;
+                            {users.map((item) => {
+                                return <UserItem {...item} />;
                             })}
                         </List>
                     </div>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Chip, ListItem, Typography } from '@mui/material';
+import { Link, useNavigate } from 'react-router';
 
-const UserItem = ({ props }) => {
+const UserItem = ({ id, fullName, email, role }) => {
+    const navigate = useNavigate();
     return (
         <div>
             <ListItem
@@ -16,8 +18,8 @@ const UserItem = ({ props }) => {
                 }}
             >
                 <div className='wrapper flex row-d align-items-center justify-content-sb'>
-                    <Typography>Иван Иванович</Typography>
-                    <Typography sx={{ fontWeight: '400' }}>email@example.com</Typography>
+                    <Typography>{fullName}</Typography>
+                    <Typography sx={{ fontWeight: '400' }}>{role}</Typography>
                 </div>
                 <Chip
                     size='small'
@@ -25,6 +27,9 @@ const UserItem = ({ props }) => {
                     color='primary'
                     variant='outlined'
                     sx={{ padding: '4px', cursor: 'pointer' }}
+                    onClick={() => {
+                        navigate(`${id}`);
+                    }}
                 />
             </ListItem>
         </div>

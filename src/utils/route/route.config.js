@@ -10,6 +10,7 @@ import UserAbsences from '../../pages/absences/UserAbsences';
 import UsersPage from '../../pages/users/UsersPage';
 import UsersLayout from '../../components/layout/UsersLayout';
 import RequestAbsences from '../../pages/absences/RequestAbsences';
+import UserProfilePage from '../../pages/users/UserProfilePage';
 
 const router = createBrowserRouter([
     {
@@ -36,7 +37,12 @@ const router = createBrowserRouter([
                                 path: '/users/',
                                 Component: UsersPage,
                             }
-                        ]
+                        ],
+                        
+                    },
+                    {
+                        path: '/users/:id',
+                        Component: UserProfilePage,
                     },
                     {
                         path: '/absences/requests',
