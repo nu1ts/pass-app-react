@@ -6,6 +6,12 @@ import { useState } from 'react';
 import './index.scss';
 import src from '../../assets/logo.png';
 import { useInput } from '../../hooks/useInput';
+import { loginUserJsonServer } from '../../api/account/accountService';
+import { ErrorToast, SuccessToast } from '../../utils/notifications/notifications';
+import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { fetchProfile } from '../../store/actions/profileAction';
 
 const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -14,15 +20,36 @@ const LoginPage = () => {
     const emailInput = useInput('', { isEmailValid: true, isEmpty: true });
     const passwordInput = useInput('', { isEmpty: true, minLength: 8 });
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (isValidForm) {
-            console.log({
-                email: emailInput.value,
-                password: passwordInput.value,
-            });
             setIsLoading(true);
+            let users = await loginUserJsonServer();
+            if (users) {
+                let result = users.find((user) => {
+                    return user.email === emailInput.value && user.password === passwordInput.value;
+                });
+                if (result) {
+                    SuccessToast('Добро пожаловать');
+                    dispatch(
+                        fetchProfile({
+                            fullName: result.fullName,
+                            email: result.email,
+                            role: result.role,
+                        }),
+                    );
+                    navigate('/');
+                } else {
+                    ErrorToast('Неверный логин или пароль');
+                }
+            } else {
+                ErrorToast('Ошибка сервера');
+            }
         }
+        setIsLoading(false);
     };
 
     const handleForm = () => {
@@ -94,6 +121,7 @@ const LoginPage = () => {
                         </div>
                     </div>
                 </div>
+                <ToastContainer limit={1} />
             </section>
         </div>
     );

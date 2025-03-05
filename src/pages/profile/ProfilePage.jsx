@@ -5,13 +5,14 @@ import { Button, TextField } from '@mui/material';
 import './index.scss';
 import { useInput } from '../../hooks/useInput';
 import RoleChip from '../../components/chip/RoleChip';
+import { useSelector } from 'react-redux';
 
 const ProfilePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isValidForm, setIsValidForm] = useState(false);
     const email = useInput('', { isEmailValid: true, isEmpty: true });
     const fullName = useInput('', { isEmpty: true });
-
+    const { profile } = useSelector((state) => state.profile);
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('asdsa');
