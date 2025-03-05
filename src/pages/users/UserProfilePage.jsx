@@ -6,13 +6,13 @@ import { Button, TextField } from '@mui/material';
 import './index.scss';
 import { useInput } from '../../hooks/useInput';
 import RoleChip from '../../components/chip/RoleChip';
+import EditModal from '../../components/modal/EditModal';
 import { users } from '../../utils/fakeDB';
 
 const UserProfilePage = () => {
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(false);
-    const [isValidForm, setIsValidForm] = useState(false);
-
+    const [open, setOpen] = useState(false);
     const [user, setUser] = useState({});
     const [role, setRole] = useState(user?.role);
     const email = useInput(user?.email, { isEmailValid: true, isEmpty: true });
@@ -23,28 +23,25 @@ const UserProfilePage = () => {
         setIsLoading(true);
     };
 
-    const handleForm = () => {
-        if (email.isEmptyError || fullName.isEmptyError || email.emailError) {
-            setIsValidForm(false);
-        } else {
-            setIsValidForm(true);
-        }
-    };
     useEffect(() => {
         setIsLoading(true);
         setUser(users.find((item) => Number(item.id) === Number(id)));
     }, []);
+
     useEffect(() => {
         setIsLoading(false);
         email.setValue(user.email);
         fullName.setValue(user.fullName);
         setRole(user.role);
     }, [user]);
-    useEffect(() => {
-        handleForm();
-    }, [email.value, fullName.value]);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <>
+            <EditModal isOpen={open} handleClose={handleClose} user={user} />
             <div className='profile-page'>
                 <div className='inner-wrapper '>
                     <div className='img-wrapper'>
@@ -65,16 +62,25 @@ const UserProfilePage = () => {
                                     onChange={(e) => {
                                         fullName.onChange(e);
                                     }}
+                                    slotProps={{
+                                        input: {
+                                            readOnly: true,
+                                        },
+                                    }}
                                 />
                                 <TextField
-                                    label={email.emailError ? 'Невалидный email' : 'Email'}
+                                    label={'Email'}
                                     type={'email'}
                                     sx={{ width: 1 }}
                                     value={email.value}
                                     onChange={(e) => {
                                         email.onChange(e);
                                     }}
-                                    error={email.emailError}
+                                    slotProps={{
+                                        input: {
+                                            readOnly: true,
+                                        },
+                                    }}
                                 />
                                 <Button
                                     variant='contained'
@@ -85,10 +91,11 @@ const UserProfilePage = () => {
                                         backgroundColor: '#ffbf03',
                                         color: '#000',
                                     }}
-                                    loading={isLoading}
-                                    disabled={!isValidForm}
+                                    onClick={() => {
+                                        setOpen(true);
+                                    }}
                                 >
-                                    Сохранить
+                                    Редактировать
                                 </Button>
                             </div>
                         </form>
