@@ -1,5 +1,13 @@
-import { setFilters } from "../reducers/filterReducer";
+import { setAbsencesFilters, setAbsencesHistoryFilters, setUsersFilters } from "../reducers/filterReducer";
 
-export const setFilterParams = (params = {}) => async(dispatch)=> {
-    dispatch(setFilters(params));
+export const setUsersFilterParams = (params = {}) => async(dispatch)=> {
+    dispatch(setUsersFilters(params));
+}
+
+export const setAbsencesFiltersParams = (params={}) => async(dispatch) => {
+    dispatch(setAbsencesFilters(params));
+}
+
+export const setAbsencesHistoryFiltersParams = (params={}) => async(dispatch) => {
+    dispatch(setAbsencesHistoryFilters(params));
 }
