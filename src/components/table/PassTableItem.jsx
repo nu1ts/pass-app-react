@@ -54,7 +54,7 @@ export default function PassTableItem(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell component='th' scope='row'>
-                    {row.name}
+                    {row.fullName}
                 </TableCell>
                 <TableCell align='center'>
                     <InfoChip title={row.status} color={statuses[row.status]} />

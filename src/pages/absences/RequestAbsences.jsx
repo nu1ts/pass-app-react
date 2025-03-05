@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './index.scss';
-import { RequestFilters } from '../../components/filters/AbsencesFilter';
+import { AbsencesFilters } from '../../components/filters/AbsencesFilter';
 import PassTable from '../../components/table/PassTable';
+import { useSelector } from 'react-redux';
 
 const RequestAbsences = () => {
     return (
         <>
             <div className='absences-page'>
-                <RequestFilters />
+                <AbsencesFilters />
                 <div className='inner'>
                     <PassTable />
                 </div>

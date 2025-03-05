@@ -7,7 +7,8 @@ import './index.scss';
 import { useInput } from '../../hooks/useInput';
 import RoleChip from '../../components/chip/RoleChip';
 import EditModal from '../../components/modal/EditModal';
-import { users } from '../../utils/fakeDB';
+
+import { fetchConcreteUserJsonServer } from '../../api/users/usersService';
 
 const UserProfilePage = () => {
     const { id } = useParams();
@@ -25,14 +26,18 @@ const UserProfilePage = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        setUser(users.find((item) => Number(item.id) === Number(id)));
+        (async () => {
+            const data = await fetchConcreteUserJsonServer(id);
+            setUser(data[0]);
+            console.log(data[0]);
+        })();
+        setIsLoading(false);
     }, []);
 
     useEffect(() => {
-        setIsLoading(false);
-        email.setValue(user.email);
-        fullName.setValue(user.fullName);
-        setRole(user.role);
+        email.setValue(user?.email);
+        fullName.setValue(user?.fullName);
+        setRole(user?.role);
     }, [user]);
 
     const handleClose = () => {

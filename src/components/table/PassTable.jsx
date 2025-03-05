@@ -19,9 +19,9 @@ export default function PassTable({ absences = [] }) {
     );
 }
 
-function createData(name, status, date) {
+function createData(fullName, status, date) {
     return {
-        name,
+        fullName,
         status,
         date,
         details: [

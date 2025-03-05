@@ -26,13 +26,13 @@ const getUsersParamQuery = (params) => {
 const getAbsencesParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}`;
+        queryStr += `fullName=${params.fullName}&`;
     }
     if(params.date) {
-        queryStr +=`&date=${params.date}`;
+        queryStr +=`date=${params.date}&`;
     }
     if(params.group) {
-        queryStr +=`&group=${params.group}`;
+        queryStr +=`group=${params.group}&`;
     }
     return queryStr;
 }
@@ -40,13 +40,13 @@ const getAbsencesParamQuery = (params) => {
 const getHistoryParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}`;
+        queryStr += `fullName=${params.fullName}&`;
     }
     if(params.status) {
-        queryStr +=`&status=${params.status}`;
+        queryStr +=`status=${params.status}&`;
     }
     if(params.group) {
-        queryStr +=`&group=${params.group}`;
+        queryStr +=`group=${params.group}&`;
     }
     return queryStr;
 }

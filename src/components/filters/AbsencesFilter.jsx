@@ -9,9 +9,13 @@ import SearchInput from '../search/SearchInput';
 import DateInput from '../datePicker/DateInput';
 import { setAbsencesHistoryFiltersParams } from '../../store/actions/filterAction';
 import { setAbsencesFiltersParams } from '../../store/actions/filterAction';
+import { fetchAbsences } from '../../store/actions/absencesAction';
+import { getStringQuery } from '../../utils/converter/paramsConverter';
+import { HISTORY } from '../../utils/constants/filterType';
 
-export const AbsencesFilter = () => {
+export const HistoryFilters = () => {
     const { absencesHistoryFilters } = useSelector((state) => state.filters);
+    const { historyAbsences } = useSelector((state) => state.absences);
     const [groupNumber, setGroupNumber] = useState(absencesHistoryFilters.group);
     const [status, setStatus] = useState(absencesHistoryFilters.status);
     const search = useInput('', {});
@@ -41,6 +45,8 @@ export const AbsencesFilter = () => {
 
     useEffect(() => {
         console.log(absencesHistoryFilters);
+        dispatch(fetchAbsences(getStringQuery(absencesHistoryFilters, HISTORY)), HISTORY);
+        console.log(historyAbsences);
     }, [absencesHistoryFilters]);
 
     return (
@@ -84,10 +90,10 @@ export const AbsencesFilter = () => {
                             <MenuItem value={'all'}>
                                 <InfoChip title='Все' color='default' />
                             </MenuItem>
-                            <MenuItem value={'approved'}>
+                            <MenuItem value={'Approved'}>
                                 <InfoChip title='Одобрен' color='success' />
                             </MenuItem>
-                            <MenuItem value={'rejected'}>
+                            <MenuItem value={'Rejected'}>
                                 <InfoChip title='Отклонен' color='error' />
                             </MenuItem>
                         </Select>
@@ -128,7 +134,7 @@ export const AbsencesFilter = () => {
     );
 };
 
-export const RequestFilters = () => {
+export const AbsencesFilters = () => {
     const [groupNumber, setGroupNumber] = useState('');
     const [date, setDate] = useState(null);
     const search = useInput('', {});
@@ -151,9 +157,11 @@ export const RequestFilters = () => {
         setDate(absencesFilters.date);
         search.setValue(absencesFilters.fullName);
     }, []);
+
     useEffect(() => {
         console.log(absencesFilters);
     }, [absencesFilters]);
+
     return (
         <>
             <Box
