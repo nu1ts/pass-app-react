@@ -3,20 +3,40 @@ import { createSlice } from "@reduxjs/toolkit";
 const filterSlice = createSlice({
     name:'filters',
     initialState: {
-        filters: {
+        usersFilters: {
             fullName: '',
             role: '',
+            group: '',
+            size: 5,
+            page: 1
+        },
+        absencesFilters: {
+            fullName:'',
+            date: '',
+            group: '',
+            size: 5,
+            page: 1
+        },
+        absencesHistoryFilters: {
+            fullName:'',
+            status: '',
             group: '',
             size: 5,
             page: 1
         }
     }, 
     reducers: {
-        setFilters: (state, action)=> {
-            state.filters = action.payload
+        setUsersFilters: (state, action)=> {
+            state.usersFilters = action.payload
+        },
+        setAbsencesFilters: (state, action) => {
+            state.absencesFilters = action.payload
+        },
+        setAbsencesHistoryFilters: (state, action) => {
+            state.absencesHistoryFilters = action.payload
         }
     }
 })
 
-export const {setFilters} = filterSlice.actions;
+export const {setUsersFilters, setAbsencesFilters, setAbsencesHistoryFilters} = filterSlice.actions;
 export default filterSlice.reducer;

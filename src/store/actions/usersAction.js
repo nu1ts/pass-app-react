@@ -1,3 +1,3 @@
-export const fetchUsers = () = async(dispatch) => {
-    
+export const fetchUsers = (params = {}) = async(dispatch) => {
+
 }
