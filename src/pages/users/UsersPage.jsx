@@ -3,9 +3,10 @@ import { List } from '@mui/material';
 
 import './index.scss';
 import UserItem from '../../components/listItem/UserItem';
-import { users } from '../../utils/fakeDB';
+import { useSelector } from 'react-redux';
 
 const UsersPage = () => {
+    const { users } = useSelector((state) => state.users);
     return (
         <>
             <div className='users-page'>

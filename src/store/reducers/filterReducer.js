@@ -5,7 +5,7 @@ const filterSlice = createSlice({
     initialState: {
         usersFilters: {
             fullName: '',
-            role: '',
+            role: 'student',
             group: '',
             size: 5,
             page: 1

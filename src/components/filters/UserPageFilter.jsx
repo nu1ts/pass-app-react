@@ -6,6 +6,9 @@ import SearchInput from '../search/SearchInput';
 import { useInput } from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUsersFilters } from '../../store/reducers/filterReducer';
+import { getStringQuery } from '../../utils/converter/paramsConverter';
+import { USERS } from '../../utils/constants/filterType';
+import { fetchUsers } from '../../store/actions/usersAction';
 
 const UserPageFilter = ({ selectedRole }) => {
     const [groupNumber, setGroupNumber] = useState('');
@@ -42,7 +45,7 @@ const UserPageFilter = ({ selectedRole }) => {
     }, [selectedRole]);
 
     useEffect(() => {
-        console.log(usersFilters);
+        dispatch(fetchUsers(getStringQuery(usersFilters, USERS)));
     }, [usersFilters]);
 
     return (
@@ -67,7 +70,7 @@ const UserPageFilter = ({ selectedRole }) => {
                     }}
                 />
                 <div className='flex row-d align-items-center justify-content-sb'>
-                    {selectedRole === 'students' && (
+                    {selectedRole === 'student' && (
                         <TextField
                             label={'Группа'}
                             inputProps={{
