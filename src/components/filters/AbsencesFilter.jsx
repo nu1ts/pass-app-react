@@ -24,7 +24,7 @@ export const AbsencesFilter = () => {
     const handleClick = () => {
         dispatch(
             setAbsencesHistoryFiltersParams({
-                fullName: search.value,
+                fullName: search.value || null,
                 status: status,
                 group: groupNumber || null,
                 size: 5,
@@ -138,8 +138,8 @@ export const RequestFilters = () => {
     const handleClick = () => {
         dispatch(
             setAbsencesFiltersParams({
-                fullName: search.value,
-                date: date,
+                fullName: search.value || null,
+                date: date || null,
                 group: groupNumber || null,
                 size: 5,
                 page: 1,

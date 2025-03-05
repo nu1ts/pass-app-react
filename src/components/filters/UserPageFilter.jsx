@@ -17,7 +17,7 @@ const UserPageFilter = ({ selectedRole }) => {
         if (selectedRole === 'students') {
             dispatch(
                 setUsersFilters({
-                    fullName: search.value,
+                    fullName: search.value || null,
                     role: selectedRole,
                     group: groupNumber || null,
                     size: 5,
@@ -27,7 +27,7 @@ const UserPageFilter = ({ selectedRole }) => {
         } else {
             dispatch(
                 setUsersFilters({
-                    fullName: search.value,
+                    fullName: search.value || null,
                     role: selectedRole,
                     group: null,
                     size: 5,
