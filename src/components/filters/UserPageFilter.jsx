@@ -94,7 +94,7 @@ const UserPageFilter = ({ selectedRole }) => {
                                 let group = Math.max(0, parseInt(e.target.value))
                                     .toString()
                                     .slice(0, e.target.maxLength);
-                                setGroupNumber(group);
+                                setGroupNumber(isNaN(group) ? '' : group);
                             }}
                         />
                     )}
