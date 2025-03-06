@@ -28,7 +28,7 @@ export default function EditModal({ isOpen, handleClose, user }) {
     };
 
     const handleForm = () => {
-        if (email.isEmptyError || fullName.isEmptyError || email.emailError) {
+        if (email.isEmptyError || fullName.isEmptyError || email.emailError || group.isEmptyError) {
             setIsValidForm(false);
         } else {
             setIsValidForm(true);
@@ -111,7 +111,7 @@ export default function EditModal({ isOpen, handleClose, user }) {
                                         size='medium'
                                         sx={{ width: '49%', height: '56px' }}
                                         value={group.value}
-                                        onInput={(e) => {
+                                        onChange={(e) => {
                                             let res = Math.max(0, parseInt(e.target.value))
                                                 .toString()
                                                 .slice(0, e.target.maxLength);

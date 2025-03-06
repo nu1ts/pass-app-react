@@ -54,7 +54,7 @@ const UserProfilePage = () => {
                                 <TextField
                                     sx={{ width: 1, marginBottom: '20px' }}
                                     value={user?.fullName}
-                                    otProps={{
+                                    slotProps={{
                                         input: {
                                             readOnly: true,
                                         },
@@ -74,9 +74,6 @@ const UserProfilePage = () => {
                                     <TextField
                                         sx={{ width: 1, marginBottom: '20px' }}
                                         value={user?.group}
-                                        onChange={(e) => {
-                                            fullName.onChange(e);
-                                        }}
                                         slotProps={{
                                             input: {
                                                 readOnly: true,
