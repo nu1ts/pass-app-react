@@ -13,13 +13,14 @@ const filterSlice = createSlice({
         absencesFilters: {
             fullName:'',
             date: '',
+            status: 'Pending',
             group: '',
             size: 5,
             page: 1
         },
         absencesHistoryFilters: {
             fullName:'',
-            status: 'all',
+            status: '',
             group: '',
             size: 5,
             page: 1

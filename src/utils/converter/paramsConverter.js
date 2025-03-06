@@ -34,6 +34,7 @@ const getAbsencesParamQuery = (params) => {
     if(params.group) {
         queryStr +=`group=${params.group}&`;
     }
+    queryStr+='status=Pending'
     return queryStr;
 }
 
@@ -42,7 +43,7 @@ const getHistoryParamQuery = (params) => {
     if(params.fullName) {
         queryStr += `fullName=${params.fullName}&`;
     }
-    if(params.status) {
+    if(params.status && params.status !== 'all') {
         queryStr +=`status=${params.status}&`;
     }
     if(params.group) {

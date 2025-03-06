@@ -11,7 +11,7 @@ import { setAbsencesHistoryFiltersParams } from '../../store/actions/filterActio
 import { setAbsencesFiltersParams } from '../../store/actions/filterAction';
 import { fetchAbsences } from '../../store/actions/absencesAction';
 import { getStringQuery } from '../../utils/converter/paramsConverter';
-import { HISTORY } from '../../utils/constants/filterType';
+import { ABSENCES, HISTORY } from '../../utils/constants/filterType';
 
 export const HistoryFilters = () => {
     const { absencesHistoryFilters } = useSelector((state) => state.filters);
@@ -44,9 +44,7 @@ export const HistoryFilters = () => {
     }, []);
 
     useEffect(() => {
-        console.log(absencesHistoryFilters);
-        dispatch(fetchAbsences(getStringQuery(absencesHistoryFilters, HISTORY)), HISTORY);
-        console.log(historyAbsences);
+        dispatch(fetchAbsences(getStringQuery(absencesHistoryFilters, HISTORY), HISTORY));
     }, [absencesHistoryFilters]);
 
     return (
@@ -140,12 +138,14 @@ export const AbsencesFilters = () => {
     const search = useInput('', {});
     const dispatch = useDispatch();
     const { absencesFilters } = useSelector((state) => state.filters);
+    const { absences } = useSelector((state) => state.absences);
 
     const handleClick = () => {
         dispatch(
             setAbsencesFiltersParams({
                 fullName: search.value || null,
                 date: date || null,
+                status: 'Pending',
                 group: groupNumber || null,
                 size: 5,
                 page: 1,
@@ -159,7 +159,7 @@ export const AbsencesFilters = () => {
     }, []);
 
     useEffect(() => {
-        console.log(absencesFilters);
+        dispatch(fetchAbsences(getStringQuery(absencesFilters, ABSENCES), ABSENCES));
     }, [absencesFilters]);
 
     return (
