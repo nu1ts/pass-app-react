@@ -61,10 +61,13 @@ export default function AbsenceItem(props) {
                 <TableCell component='th' scope='row'>
                     {row.owner.fullName}
                 </TableCell>
-                <TableCell align='center'>
+                <TableCell align='right'>
                     <InfoChip title={row.status} color={statuses[row.status]} />
                 </TableCell>
-                <TableCell align='center'>{row?.date || ''}</TableCell>
+                <TableCell align='right'>
+                    <InfoChip title={transformDate(row?.owner?.group)} color={'info'} />
+                </TableCell>
+                <TableCell align='center'>{transformDate(row?.date)}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell

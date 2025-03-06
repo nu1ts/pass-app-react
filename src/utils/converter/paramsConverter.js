@@ -46,7 +46,7 @@ const getHistoryParamQuery = (params) => {
     if(params.status && params.status !== 'all') {
         queryStr +=`status=${params.status}&`;
     } else {
-        queryStr +=`status=Approved&status=Rejected`
+        queryStr +=`status=Approved&status=Rejected&`
     }  
     if(params.group) {
         queryStr +=`group=${params.group}&`;

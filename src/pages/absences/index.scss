@@ -7,9 +7,16 @@
     min-height: 400px;
     height: auto;
     max-height: 620px;
+    position: relative;
 
     .inner {
         height: calc(100vh - (150px));
         overflow-y: scroll;
     }
+}
+.absolute {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 20px;
 }

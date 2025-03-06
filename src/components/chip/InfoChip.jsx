@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip } from '@mui/material';
 
-const InfoChip = ({ title = '', color = 'info' }) => {
+const InfoChip = ({ title = '', color = 'info', variant = 'outlined' }) => {
     return (
         <>
             <Chip
@@ -20,7 +20,7 @@ const InfoChip = ({ title = '', color = 'info' }) => {
                 size='small'
                 label={title}
                 color={color}
-                variant={'outlined'}
+                variant={variant}
             />
         </>
     );
