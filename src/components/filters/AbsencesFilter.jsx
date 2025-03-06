@@ -1,18 +1,52 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { Box } from '@mui/system';
-import SearchInput from '../search/SearchInput';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useInput } from '../../hooks/useInput';
 import InfoChip from '../chip/InfoChip';
+import SearchInput from '../search/SearchInput';
 import DateInput from '../datePicker/DateInput';
+import { setAbsencesHistoryFiltersParams } from '../../store/actions/filterAction';
+import { setAbsencesFiltersParams } from '../../store/actions/filterAction';
+import { fetchAbsences } from '../../store/actions/absencesAction';
+import { getStringQuery } from '../../utils/converter/paramsConverter';
+import { ABSENCES, HISTORY } from '../../utils/constants/filterType';
 
-export const AbsencesFilter = () => {
-    const [groupNumber, setGroupNumber] = React.useState('');
-    const [status, setStatus] = React.useState('all');
+export const HistoryFilters = () => {
+    const { absencesHistoryFilters } = useSelector((state) => state.filters);
+    const { historyAbsences } = useSelector((state) => state.absences);
+    const [groupNumber, setGroupNumber] = useState(absencesHistoryFilters.group);
+    const [status, setStatus] = useState(absencesHistoryFilters.status);
     const search = useInput('', {});
+    const dispatch = useDispatch();
+
     const handleChange = (e) => {
         setStatus(e.target.value);
     };
+
+    const handleClick = () => {
+        dispatch(
+            setAbsencesHistoryFiltersParams({
+                fullName: search.value || null,
+                status: status,
+                group: groupNumber || null,
+                size: 5,
+                page: 1,
+            }),
+        );
+    };
+
+    useEffect(() => {
+        setGroupNumber(absencesHistoryFilters.group);
+        setStatus(absencesHistoryFilters.status);
+        search.setValue(absencesHistoryFilters.fullName);
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchAbsences(getStringQuery(absencesHistoryFilters, HISTORY), HISTORY));
+    }, [absencesHistoryFilters]);
+
     return (
         <>
             <Box
@@ -54,10 +88,10 @@ export const AbsencesFilter = () => {
                             <MenuItem value={'all'}>
                                 <InfoChip title='Все' color='default' />
                             </MenuItem>
-                            <MenuItem value={'approved'}>
+                            <MenuItem value={'Approved'}>
                                 <InfoChip title='Одобрен' color='success' />
                             </MenuItem>
-                            <MenuItem value={'rejected'}>
+                            <MenuItem value={'Rejected'}>
                                 <InfoChip title='Отклонен' color='error' />
                             </MenuItem>
                         </Select>
@@ -88,6 +122,7 @@ export const AbsencesFilter = () => {
                             marginLeft: '20px',
                             height: '56px',
                         }}
+                        onClick={handleClick}
                     >
                         Применить
                     </Button>
@@ -97,9 +132,35 @@ export const AbsencesFilter = () => {
     );
 };
 
-export const RequestFilters = () => {
-    const [groupNumber, setGroupNumber] = React.useState('');
+export const AbsencesFilters = () => {
+    const [groupNumber, setGroupNumber] = useState('');
+    const [date, setDate] = useState(null);
     const search = useInput('', {});
+    const dispatch = useDispatch();
+    const { absencesFilters } = useSelector((state) => state.filters);
+    const { absences } = useSelector((state) => state.absences);
+
+    const handleClick = () => {
+        dispatch(
+            setAbsencesFiltersParams({
+                fullName: search.value || null,
+                date: date || null,
+                status: 'Pending',
+                group: groupNumber || null,
+                size: 5,
+                page: 1,
+            }),
+        );
+    };
+    useEffect(() => {
+        setGroupNumber(absencesFilters.group);
+        setDate(absencesFilters.date);
+        search.setValue(absencesFilters.fullName);
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchAbsences(getStringQuery(absencesFilters, ABSENCES), ABSENCES));
+    }, [absencesFilters]);
 
     return (
         <>
@@ -123,7 +184,7 @@ export const RequestFilters = () => {
                     }}
                 />
                 <div className='flex row-d align-items-center justify-content-sb'>
-                    <DateInput />
+                    <DateInput date={date} setDate={setDate} />
                     <TextField
                         label={'Группа'}
                         inputProps={{
@@ -151,6 +212,7 @@ export const RequestFilters = () => {
                             marginLeft: '20px',
                             height: '56px',
                         }}
+                        onClick={handleClick}
                     >
                         Применить
                     </Button>

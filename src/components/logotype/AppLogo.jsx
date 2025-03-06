@@ -1,5 +1,6 @@
 import { Stack } from '@mui/system';
 import { Typography, Chip } from '@mui/material';
+
 import imgSrc from '../../assets/logo.png';
 
 export function CustomAppTitle() {

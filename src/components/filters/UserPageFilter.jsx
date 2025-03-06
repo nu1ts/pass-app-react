@@ -1,12 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import { Box } from '@mui/system';
+
 import SearchInput from '../search/SearchInput';
 import { useInput } from '../../hooks/useInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUsersFilters } from '../../store/reducers/filterReducer';
+import { getStringQuery } from '../../utils/converter/paramsConverter';
+import { USERS } from '../../utils/constants/filterType';
+import { fetchUsers } from '../../store/actions/usersAction';
 
 const UserPageFilter = ({ selectedRole }) => {
-    const [groupNumber, setGroupNumber] = React.useState('');
+    const [groupNumber, setGroupNumber] = useState('');
     const search = useInput('', {});
+    const { usersFilters } = useSelector((state) => state.filters);
+    const dispatch = useDispatch();
+
+    const handleClick = async () => {
+        if (selectedRole === 'student') {
+            dispatch(
+                setUsersFilters({
+                    fullName: search.value || null,
+                    role: selectedRole,
+                    group: groupNumber || null,
+                    size: 5,
+                    page: 1,
+                }),
+            );
+        } else {
+            dispatch(
+                setUsersFilters({
+                    fullName: search.value || null,
+                    role: selectedRole,
+                    group: null,
+                    size: 5,
+                    page: 1,
+                }),
+            );
+        }
+    };
+
+    useEffect(() => {
+        dispatch(
+            setUsersFilters({
+                fullName: '',
+                role: selectedRole,
+                group: null,
+                size: 5,
+                page: 1,
+            }),
+        );
+        search.setValue('');
+    }, [selectedRole]);
+
+    useEffect(() => {
+        dispatch(fetchUsers(getStringQuery(usersFilters, USERS)));
+    }, [usersFilters]);
+
     return (
         <>
             <Box
@@ -29,7 +79,7 @@ const UserPageFilter = ({ selectedRole }) => {
                     }}
                 />
                 <div className='flex row-d align-items-center justify-content-sb'>
-                    {selectedRole === 'students' && (
+                    {selectedRole === 'student' && (
                         <TextField
                             label={'Группа'}
                             inputProps={{
@@ -56,6 +106,7 @@ const UserPageFilter = ({ selectedRole }) => {
                             marginLeft: '20px',
                             height: '56px',
                         }}
+                        onClick={handleClick}
                     >
                         Применить
                     </Button>

@@ -1,4 +1,4 @@
-import { Archive, Home, NotificationsActive } from '@mui/icons-material';
+import { NotificationsActive } from '@mui/icons-material';
 import { ReactRouterAppProvider } from '@toolpad/core/react-router';
 import { Outlet } from 'react-router-dom';
 import PeopleIcon from '@mui/icons-material/People';
@@ -6,9 +6,9 @@ import HistoryIcon from '@mui/icons-material/History';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HomeIcon from '@mui/icons-material/Home';
 
-import appTheme from './themes/appTheme';
 import './scss/styles.scss';
 import './scss/stylesMUI.scss';
+import appTheme from './themes/appTheme';
 
 const navigation = [
     {

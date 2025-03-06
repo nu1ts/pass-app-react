@@ -2,7 +2,8 @@
 
 .profile-page {
     box-sizing: border-box;
-    margin-top: 20px;
+
+    padding: 20px;
     width: 100%;
     min-height: 400px;
     height: auto;
@@ -36,6 +37,11 @@
                     font-size: 20px;
                     color: $white-color;
                 }
+            }
+            .role-chip {
+                position: absolute;
+                top: 6px;
+                left: 6px;
             }
         }
         .profile-info {

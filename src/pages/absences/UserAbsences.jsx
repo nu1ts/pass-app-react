@@ -1,12 +1,14 @@
 import React from 'react';
-import { AbsencesFilter } from '../../components/filters/AbsencesFilter';
-import PassTable from '../../components/table/PassTable';
+
 import './index.scss';
+import { HistoryFilters } from '../../components/filters/AbsencesFilter';
+import PassTable from '../../components/table/PassTable';
+
 const UserAbsences = () => {
     return (
         <>
             <div className='absences-page'>
-                <AbsencesFilter />
+                <HistoryFilters />
                 <div className='inner'>
                     <PassTable />
                 </div>

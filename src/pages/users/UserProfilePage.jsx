@@ -1,52 +1,59 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { Button, TextField } from '@mui/material';
 
 import './index.scss';
 import { useInput } from '../../hooks/useInput';
 import RoleChip from '../../components/chip/RoleChip';
-import { useSelector } from 'react-redux';
+import EditModal from '../../components/modal/EditModal';
 
-const ProfilePage = () => {
-    const { profile } = useSelector((state) => state.profile);
+import { fetchConcreteUserJsonServer } from '../../api/users/usersService';
 
+const UserProfilePage = () => {
+    const { id } = useParams();
     const [isLoading, setIsLoading] = useState(false);
-    const [isValidForm, setIsValidForm] = useState(false);
-
-    const email = useInput('', { isEmailValid: true, isEmpty: true });
-    const fullName = useInput('', { isEmpty: true });
+    const [open, setOpen] = useState(false);
+    const [user, setUser] = useState({});
+    const [role, setRole] = useState(user?.role);
+    const email = useInput(user?.email, { isEmailValid: true, isEmpty: true });
+    const fullName = useInput(user?.fullName, { isEmpty: true });
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
     };
 
-    const handleForm = () => {
-        if (email.isEmptyError || fullName.isEmptyError || email.emailError) {
-            setIsValidForm(false);
-        } else {
-            setIsValidForm(true);
-        }
-    };
-
     useEffect(() => {
-        email.setValue(profile.email);
-        fullName.setValue(profile.fullName);
+        setIsLoading(true);
+        (async () => {
+            const data = await fetchConcreteUserJsonServer(id);
+            setUser(data[0]);
+            console.log(data[0]);
+        })();
+        setIsLoading(false);
     }, []);
 
     useEffect(() => {
-        handleForm();
-    }, [email.value, fullName.value]);
+        email.setValue(user?.email);
+        fullName.setValue(user?.fullName);
+        setRole(user?.role);
+    }, [user]);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
-        <div>
+        <>
+            <EditModal isOpen={open} handleClose={handleClose} user={user} />
             <div className='profile-page'>
                 <div className='inner-wrapper '>
                     <div className='img-wrapper'>
                         <PermIdentityIcon
                             sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
                         />
-                        <RoleChip role={profile.role} color={'info'} />
+                        <RoleChip role={role} color={'info'} />
                     </div>
                     <div className='profile-info flex column-d'>
                         <h2>Данные пользователя</h2>
@@ -60,16 +67,25 @@ const ProfilePage = () => {
                                     onChange={(e) => {
                                         fullName.onChange(e);
                                     }}
+                                    slotProps={{
+                                        input: {
+                                            readOnly: true,
+                                        },
+                                    }}
                                 />
                                 <TextField
-                                    label={email.emailError ? 'Невалидный email' : 'Email'}
+                                    label={'Email'}
                                     type={'email'}
                                     sx={{ width: 1 }}
                                     value={email.value}
                                     onChange={(e) => {
                                         email.onChange(e);
                                     }}
-                                    error={email.emailError}
+                                    slotProps={{
+                                        input: {
+                                            readOnly: true,
+                                        },
+                                    }}
                                 />
                                 <Button
                                     variant='contained'
@@ -80,18 +96,19 @@ const ProfilePage = () => {
                                         backgroundColor: '#ffbf03',
                                         color: '#000',
                                     }}
-                                    loading={isLoading}
-                                    disabled={!isValidForm}
+                                    onClick={() => {
+                                        setOpen(true);
+                                    }}
                                 >
-                                    Сохранить
+                                    Редактировать
                                 </Button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
-export default ProfilePage;
+export default UserProfilePage;

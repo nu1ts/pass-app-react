@@ -2,6 +2,7 @@ import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
+
 import PassTableItem from './PassTableItem';
 
 export default function PassTable({ absences = [] }) {
@@ -18,9 +19,9 @@ export default function PassTable({ absences = [] }) {
     );
 }
 
-function createData(name, status, date) {
+function createData(fullName, status, date) {
     return {
-        name,
+        fullName,
         status,
         date,
         details: [
