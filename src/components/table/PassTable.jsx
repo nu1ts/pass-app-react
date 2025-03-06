@@ -10,7 +10,7 @@ export default function PassTable({ absences = [] }) {
         <TableContainer sx={{ padding: '20px 40px' }}>
             <Table sx={{ overflow: 'scroll' }}>
                 <TableBody sx={{ border: '1px solid #d9d9d9', borderRadius: '8px' }}>
-                    {rows.map((row, index) => (
+                    {absences.map((row, index) => (
                         <PassTableItem key={index} row={row} />
                     ))}
                 </TableBody>

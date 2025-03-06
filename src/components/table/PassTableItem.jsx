@@ -16,21 +16,21 @@ import DownloadIcon from '@mui/icons-material/Download';
 import InfoChip from '../chip/InfoChip';
 
 const statuses = {
-    'На проверке': 'default',
-    Одобрен: 'success',
-    Отклонен: 'error',
+    Pending: 'default',
+    Approved: 'success',
+    Rejected: 'error',
 };
 
 const passBgColor = {
-    'На проверке': '#f6f7f9',
-    Одобрен: '#effae9',
-    Отклонен: '#ffebeb',
+    Pending: '#f6f7f9',
+    Approved: '#effae9',
+    Rejected: '#ffebeb',
 };
 
 export default function PassTableItem(props) {
-    const { row } = props;
+    const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
-
+    console.log(row);
     return (
         <>
             <TableRow>
@@ -54,12 +54,12 @@ export default function PassTableItem(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell component='th' scope='row'>
-                    {row.fullName}
+                    {row.owner.fullName}
                 </TableCell>
                 <TableCell align='center'>
                     <InfoChip title={row.status} color={statuses[row.status]} />
                 </TableCell>
-                <TableCell align='center'>{row.date}</TableCell>
+                <TableCell align='center'>{row?.date || ''}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell

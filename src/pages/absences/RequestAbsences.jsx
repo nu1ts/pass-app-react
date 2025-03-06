@@ -5,17 +5,18 @@ import { AbsencesFilters } from '../../components/filters/AbsencesFilter';
 import PassTable from '../../components/table/PassTable';
 import { useSelector } from 'react-redux';
 
-const RequestAbsences = () => {
+const AbsencesPage = () => {
+    const { absences } = useSelector((state) => state.absences);
     return (
         <>
             <div className='absences-page'>
                 <AbsencesFilters />
                 <div className='inner'>
-                    <PassTable />
+                    <PassTable absences={absences} />
                 </div>
             </div>
         </>
     );
 };
 
-export default RequestAbsences;
+export default AbsencesPage;

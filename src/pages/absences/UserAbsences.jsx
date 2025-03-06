@@ -3,18 +3,20 @@ import React from 'react';
 import './index.scss';
 import { HistoryFilters } from '../../components/filters/AbsencesFilter';
 import PassTable from '../../components/table/PassTable';
+import { useSelector } from 'react-redux';
 
-const UserAbsences = () => {
+const AbsencesHistoryPage = () => {
+    const { historyAbsences } = useSelector((state) => state.absences);
     return (
         <>
             <div className='absences-page'>
                 <HistoryFilters />
                 <div className='inner'>
-                    <PassTable />
+                    <PassTable absences={historyAbsences} />
                 </div>
             </div>
         </>
     );
 };
 
-export default UserAbsences;
+export default AbsencesHistoryPage;
