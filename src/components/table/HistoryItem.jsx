@@ -11,9 +11,12 @@ import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from '@mui/material';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import DownloadIcon from '@mui/icons-material/Download';
 
+import { transformDate } from '../../utils/converter/dateConverter';
 import InfoChip from '../chip/InfoChip';
+import Textarea from '../textArea/TextArea';
 
 const statuses = {
     Pending: 'default',
@@ -75,22 +78,31 @@ export default function HistoryItem(props) {
                             <Typography variant='h6' gutterBottom component='div'>
                                 Детали пропуска
                             </Typography>
-                            <Table size='medium'>
-                                <TableHead>
-                                    <TableCell align='left'>Дата начала</TableCell>
-                                    <TableCell align='left'>Дата окончания</TableCell>
-                                    <TableCell align='center'>Причина</TableCell>
-                                </TableHead>
+                            <Table size='small'>
                                 <TableBody>
-                                    {row.details.map((detail) => (
-                                        <TableRow key={detail.date}>
-                                            <TableCell>{detail.start_date}</TableCell>
-                                            <TableCell>{detail.end_date}</TableCell>
-                                            <TableCell align='center'>{detail.reason}</TableCell>
-                                        </TableRow>
-                                    ))}
+                                    <TableRow key={row.details.date}>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Дата начала: '}
+                                            {transformDate(row.details.start_date)}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Дата окончания: '}
+                                            {transformDate(row.details.end_date)}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Причина: '}
+                                            {row.details.reason}
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
+                            {row.status === 'Rejected' && row.comment && (
+                                <Textarea comment={row?.comment} />
+                            )}
                             <Button
                                 sx={{
                                     margin: '16px 0 0 0',

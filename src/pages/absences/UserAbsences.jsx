@@ -12,7 +12,7 @@ const AbsencesHistoryPage = () => {
             <div className='absences-page'>
                 <HistoryFilters />
                 <div className='inner'>
-                    <AbsencesTable absences={historyAbsences} />
+                    <AbsencesTable history={historyAbsences} />
                 </div>
             </div>
         </>

@@ -15,7 +15,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 import InfoChip from '../chip/InfoChip';
 import { transformDate } from '../../utils/converter/dateConverter';
-
+import DeleteModal from '../modal/DeleteModal';
 const statuses = {
     Pending: 'default',
     Approved: 'success',
@@ -31,9 +31,13 @@ const passBgColor = {
 export default function AbsenceItem(props) {
     const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
-    console.log(row);
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const handleClose = () => {
+        setModalOpen(false);
+    };
     return (
         <>
+            <DeleteModal isOpen={modalOpen} handleClose={handleClose} id={row.id} />
             <TableRow>
                 <TableCell>
                     <IconButton
@@ -127,11 +131,22 @@ export default function AbsenceItem(props) {
                                 <Button
                                     variant='contained'
                                     color='success'
-                                    sx={{ marginRight: '10px' }}
+                                    sx={{
+                                        marginRight: '10px',
+                                        boxShadow: 'none',
+                                        textTransform: 'none',
+                                    }}
                                 >
                                     Одобрить
                                 </Button>
-                                <Button variant='contained' color='error'>
+                                <Button
+                                    variant='contained'
+                                    color='error'
+                                    sx={{ boxShadow: 'none', textTransform: 'none' }}
+                                    onClick={() => {
+                                        setModalOpen(true);
+                                    }}
+                                >
                                     Отклонить
                                 </Button>
                             </TableRow>
