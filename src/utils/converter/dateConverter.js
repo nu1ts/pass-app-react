@@ -23,5 +23,5 @@ export const dateIsValid = (date) => {
 
 export const transformDate = (date) => {
     let slicedDate = sliceDate(date);
-    return slicedDate.split('-').reverse().join('.');
+    return slicedDate.split('-').reverse().join('/');
 }

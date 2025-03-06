@@ -10,10 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 
 import InfoChip from '../chip/InfoChip';
+import { transformDate } from '../../utils/converter/dateConverter';
 
 const statuses = {
     Pending: 'default',
@@ -27,7 +28,7 @@ const passBgColor = {
     Rejected: '#ffebeb',
 };
 
-export default function PassTableItem(props) {
+export default function AbsenceItem(props) {
     const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
     console.log(row);
@@ -75,20 +76,26 @@ export default function PassTableItem(props) {
                             <Typography variant='h6' gutterBottom component='div'>
                                 Детали пропуска
                             </Typography>
-                            <Table size='medium'>
-                                <TableHead>
-                                    <TableCell align='left'>Дата начала</TableCell>
-                                    <TableCell align='left'>Дата окончания</TableCell>
-                                    <TableCell align='center'>Причина</TableCell>
-                                </TableHead>
+                            <Table size='small'>
                                 <TableBody>
-                                    {row.details.map((detail) => (
-                                        <TableRow key={detail.date}>
-                                            <TableCell>{detail.start_date}</TableCell>
-                                            <TableCell>{detail.end_date}</TableCell>
-                                            <TableCell align='center'>{detail.reason}</TableCell>
-                                        </TableRow>
-                                    ))}
+                                    <TableRow key={row.details.date}>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Дата начала: '}
+                                            {transformDate(row.details.start_date)}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Дата окончания: '}
+                                            {transformDate(row.details.end_date)}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Причина: '}
+                                            {row.details.reason}
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
                             <Button
@@ -108,6 +115,26 @@ export default function PassTableItem(props) {
                                     }}
                                 />
                             </Button>
+                            <TableRow
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'right',
+                                    paddingTop: '10px',
+                                }}
+                            >
+                                <Button
+                                    variant='contained'
+                                    color='success'
+                                    sx={{ marginRight: '10px' }}
+                                >
+                                    Одобрить
+                                </Button>
+                                <Button variant='contained' color='error'>
+                                    Отклонить
+                                </Button>
+                            </TableRow>
                         </Box>
                     </Collapse>
                 </TableCell>

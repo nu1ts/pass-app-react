@@ -2,7 +2,7 @@ import React from 'react';
 
 import './index.scss';
 import { HistoryFilters } from '../../components/filters/AbsencesFilter';
-import PassTable from '../../components/table/PassTable';
+import AbsencesTable from '../../components/table/AbsencesTable';
 import { useSelector } from 'react-redux';
 
 const AbsencesHistoryPage = () => {
@@ -12,7 +12,7 @@ const AbsencesHistoryPage = () => {
             <div className='absences-page'>
                 <HistoryFilters />
                 <div className='inner'>
-                    <PassTable absences={historyAbsences} />
+                    <AbsencesTable absences={historyAbsences} />
                 </div>
             </div>
         </>

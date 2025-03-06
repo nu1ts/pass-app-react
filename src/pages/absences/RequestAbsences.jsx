@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import './index.scss';
 import { AbsencesFilters } from '../../components/filters/AbsencesFilter';
-import PassTable from '../../components/table/PassTable';
+import AbsencesTable from '../../components/table/AbsencesTable';
 import { useSelector } from 'react-redux';
 
 const AbsencesPage = () => {
@@ -12,7 +12,7 @@ const AbsencesPage = () => {
             <div className='absences-page'>
                 <AbsencesFilters />
                 <div className='inner'>
-                    <PassTable absences={absences} />
+                    <AbsencesTable absences={absences} />
                 </div>
             </div>
         </>
