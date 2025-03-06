@@ -15,9 +15,6 @@ const UserProfilePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [user, setUser] = useState({});
-    const [role, setRole] = useState(user?.role);
-    const email = useInput(user?.email, { isEmailValid: true, isEmpty: true });
-    const fullName = useInput(user?.fullName, { isEmpty: true });
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,12 +31,6 @@ const UserProfilePage = () => {
         setIsLoading(false);
     }, []);
 
-    useEffect(() => {
-        email.setValue(user?.email);
-        fullName.setValue(user?.fullName);
-        setRole(user?.role);
-    }, [user]);
-
     const handleClose = () => {
         setOpen(false);
     };
@@ -53,7 +44,7 @@ const UserProfilePage = () => {
                         <PermIdentityIcon
                             sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
                         />
-                        <RoleChip role={role} color={'info'} />
+                        <RoleChip role={user?.role} color={'info'} />
                     </div>
                     <div className='profile-info flex column-d'>
                         <h2>Данные пользователя</h2>
@@ -61,38 +52,43 @@ const UserProfilePage = () => {
                         <form action='' onSubmit={handleSubmit}>
                             <div className='input-wrapper'>
                                 <TextField
-                                    label={'ФИО'}
                                     sx={{ width: 1, marginBottom: '20px' }}
-                                    value={fullName.value}
-                                    onChange={(e) => {
-                                        fullName.onChange(e);
-                                    }}
-                                    slotProps={{
+                                    value={user?.fullName}
+                                    otProps={{
                                         input: {
                                             readOnly: true,
                                         },
                                     }}
                                 />
                                 <TextField
-                                    label={'Email'}
                                     type={'email'}
-                                    sx={{ width: 1 }}
-                                    value={email.value}
-                                    onChange={(e) => {
-                                        email.onChange(e);
-                                    }}
+                                    sx={{ width: 1, marginBottom: '20px' }}
+                                    value={user?.email}
                                     slotProps={{
                                         input: {
                                             readOnly: true,
                                         },
                                     }}
                                 />
+                                {user.role === 'student' && (
+                                    <TextField
+                                        sx={{ width: 1, marginBottom: '20px' }}
+                                        value={user?.group}
+                                        onChange={(e) => {
+                                            fullName.onChange(e);
+                                        }}
+                                        slotProps={{
+                                            input: {
+                                                readOnly: true,
+                                            },
+                                        }}
+                                    />
+                                )}
                                 <Button
                                     variant='contained'
                                     type='submit'
                                     sx={{
                                         width: 1,
-                                        marginTop: '20px',
                                         backgroundColor: '#ffbf03',
                                         color: '#000',
                                     }}
