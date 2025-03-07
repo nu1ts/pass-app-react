@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Table, TableBody, TableContainer } from '@mui/material/Table';
+import { Table, TableBody, TableContainer } from '@mui/material';
 
 import AbsenceItem from './AbsenceItem';
 import HistoryItem from './HistoryItem';

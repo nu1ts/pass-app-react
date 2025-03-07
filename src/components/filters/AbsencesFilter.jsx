@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { Box } from '@mui/system';
+import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useInput } from '../../hooks/useInput';
 import InfoChip from '../chip/InfoChip';
 import SearchInput from '../search/SearchInput';
 import DateInput from '../datePicker/DateInput';
+import { useInput } from '../../hooks/useInput';
 import { setAbsencesHistoryFiltersParams } from '../../store/actions/filterAction';
 import { setAbsencesFiltersParams } from '../../store/actions/filterAction';
 import { fetchAbsences } from '../../store/actions/absencesAction';

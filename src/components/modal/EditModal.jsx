@@ -1,14 +1,9 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
-
+import { useState, useEffect } from 'react';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, MenuItem, FormControl, InputLabel, Select, TextField } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
-import { TextField } from '@mui/material';
 import { useInput } from '../../hooks/useInput';
-import { MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 
 export default function EditModal({ isOpen, handleClose, user }) {
     const theme = useTheme();

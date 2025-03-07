@@ -1,11 +1,9 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import { DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { Switch, FormControlLabel } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Button, Switch, FormControlLabel } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+
 import { useInput } from '../../hooks/useInput';
 
 export default function DeleteModal({ isOpen, handleClose, id }) {
