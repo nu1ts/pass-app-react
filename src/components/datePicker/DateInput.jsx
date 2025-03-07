@@ -6,7 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { transformDateJson } from '../../utils/converter/dateConverter';
 
-export default function DateInput({ date, setDate }) {
+export default function DateInput({ date, setDate, label = 'Дата подачи' }) {
     const setNewDate = (e) => {
         let date = new Date(e).toLocaleDateString(e);
         date = transformDateJson(date);
@@ -15,10 +15,10 @@ export default function DateInput({ date, setDate }) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
-                label='Дата подачи'
+                label={label}
                 value={date ? dayjs(date) : null}
                 sx={{
-                    marginRight: '10px',
+                    marginX: '10px',
                     width: '180px',
                 }}
                 onChange={(e) => setNewDate(e)}
