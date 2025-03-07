@@ -1,22 +1,12 @@
 import * as React from 'react';
-import TableHead from '@mui/material/TableHead';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button } from '@mui/material';
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
-import DownloadIcon from '@mui/icons-material/Download';
 
-import { transformDate } from '../../utils/converter/dateConverter';
+import { Table, TableBody, TableCell, TableRow } from '@mui/material';
+import { KeyboardArrowDown, KeyboardArrowUp, Download } from '@mui/icons-material';
+import { Box, Collapse, Button, IconButton, Typography } from '@mui/material';
+
 import InfoChip from '../chip/InfoChip';
 import Textarea from '../textArea/TextArea';
+import { transformDate } from '../../utils/converter/dateConverter';
 
 const statuses = {
     Pending: 'default',
@@ -50,15 +40,13 @@ export default function HistoryItem(props) {
                         onClick={() => setOpen(!open)}
                     >
                         {open ? (
-                            <KeyboardArrowUpIcon sx={{ color: '#9caab6' }} />
+                            <KeyboardArrowUp sx={{ color: '#9caab6' }} />
                         ) : (
-                            <KeyboardArrowDownIcon sx={{ color: '#9caab6' }} />
+                            <KeyboardArrowDown sx={{ color: '#9caab6' }} />
                         )}
                     </IconButton>
                 </TableCell>
-                <TableCell component='th' scope='row'>
-                    {row.owner.fullName}
-                </TableCell>
+                <TableCell>{row.owner.fullName}</TableCell>
                 <TableCell align='right'>
                     <InfoChip title={row.status} color={statuses[row.status]} />
                 </TableCell>
@@ -113,7 +101,7 @@ export default function HistoryItem(props) {
                                 }}
                             >
                                 {'Документ'}
-                                <DownloadIcon
+                                <Download
                                     sx={{
                                         width: '24px',
                                         height: '24px',
