@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-
+import Fab from '@mui/material/Fab';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import './index.scss';
 import { AbsencesFilters } from '../../components/filters/AbsencesFilter';
 import AbsencesTable from '../../components/table/AbsencesTable';
@@ -14,6 +15,11 @@ const AbsencesPage = () => {
                 <div className='inner'>
                     <AbsencesTable absences={absences} />
                 </div>
+            </div>
+            <div className='absolute'>
+                <Fab sx={{ width: '70px', height: '70px' }} color='primary'>
+                    <EditNoteIcon />
+                </Fab>
             </div>
         </>
     );
