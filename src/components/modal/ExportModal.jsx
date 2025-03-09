@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { Button, MenuItem, FormControl, InputLabel, Select, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Divider } from '@mui/material';
+import { Button } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useInput } from '../../hooks/useInput';
+
 import UserSelect from '../select/UserSelect';
 import DateInput from '../datePicker/DateInput';
 
@@ -32,6 +32,7 @@ export default function ExportModal({ isOpen, handleClose }) {
         <>
             <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose}>
                 <DialogTitle>Экспорт пропусков</DialogTitle>
+                <Divider sx={{ marginX: '20px' }} />
                 <DialogContent>
                     <form className='modal-form' action='' onSubmit={handleSubmit}>
                         <div className='input-wrapper'>
@@ -41,11 +42,13 @@ export default function ExportModal({ isOpen, handleClose }) {
                                     date={firstDate}
                                     setDate={setFirstDate}
                                     label={'Начало'}
+                                    sx={{ width: '49%' }}
                                 />
                                 <DateInput
                                     date={secondDate}
                                     setDate={setSecondDate}
                                     label={'Конец'}
+                                    sx={{ width: '49%' }}
                                 />
                             </div>
                         </div>

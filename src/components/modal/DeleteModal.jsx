@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { Button, Switch, FormControlLabel } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -7,6 +7,8 @@ import { useTheme } from '@mui/material/styles';
 import { useInput } from '../../hooks/useInput';
 
 export default function DeleteModal({ isOpen, handleClose, id }) {
+    const inputRef = useRef(null);
+
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -48,6 +50,12 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
         handleForm();
     }, [comment.minLengthError]);
 
+    useEffect(() => {
+        if (checked) {
+            inputRef.current?.focus();
+        }
+    }, [checked]);
+
     return (
         <>
             <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose}>
@@ -66,7 +74,8 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
                                 comment.onChange(e);
                             }}
                             disabled={!checked}
-                            sx={{ width: '100%' }}
+                            sx={{ width: '100%', marginBottom: '20px' }}
+                            inputRef={inputRef}
                         />
                         <FormControlLabel
                             value={checked}

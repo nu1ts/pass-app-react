@@ -24,10 +24,10 @@ export default function UserSelect() {
             }}
             renderInput={(params) => <TextField {...params} label='Пользователи' />}
             sx={{
-                minWidth: '400px',
-                maxWidth: '400px',
                 width: '100%',
-                margin: '10px 10px 20px 10px',
+
+                maxWidth: '524px',
+                margin: '0 0 20px 0',
             }}
             slotProps={{ chip: { color: 'primary' } }}
         />

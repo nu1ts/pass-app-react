@@ -11,6 +11,7 @@ import UsersPage from '../../pages/users/UsersPage';
 import UsersLayout from '../../components/layout/UsersLayout';
 import RequestAbsences from '../../pages/absences/RequestAbsences';
 import UserProfilePage from '../../pages/users/UserProfilePage';
+import CreateAbsence from '../../pages/absences/CreateAbsence';
 
 const router = createBrowserRouter([
     {
@@ -50,14 +51,13 @@ const router = createBrowserRouter([
                         
                     },
                     {
+                        path: '/absences/create',
+                        Component: CreateAbsence,
+                        
+                    },
+                    {
                         path: '/absences/history',
                         Component: UserAbsences,
-                        children: [
-                            {
-                                path: '/absences/history/export',
-                                Component: HomePage,
-                            },
-                        ],
                     },
                 ],
             },
