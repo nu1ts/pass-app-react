@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 
 import UserSelect from '../select/UserSelect';
 import DateInput from '../datePicker/DateInput';
+import { dateAreValid, endDateValid } from '../../utils/dateValidation';
 
 export default function ExportModal({ isOpen, handleClose }) {
     const theme = useTheme();
@@ -17,16 +18,28 @@ export default function ExportModal({ isOpen, handleClose }) {
     const [firstDate, setFirstDate] = useState(null);
     const [secondDate, setSecondDate] = useState(null);
 
+    const [selected, setSelected] = useState([]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
     };
 
-    const handleForm = () => {};
+    const handleForm = () => {
+        if (
+            endDateValid(secondDate) &&
+            dateAreValid(firstDate, secondDate) &&
+            selected.length > 0
+        ) {
+            setIsValidForm(true);
+        } else {
+            setIsValidForm(false);
+        }
+    };
 
     useEffect(() => {
         handleForm();
-    }, []);
+    }, [firstDate, secondDate, selected]);
 
     return (
         <>
@@ -36,7 +49,7 @@ export default function ExportModal({ isOpen, handleClose }) {
                 <DialogContent>
                     <form className='modal-form' action='' onSubmit={handleSubmit}>
                         <div className='input-wrapper'>
-                            <UserSelect />
+                            <UserSelect value={selected} setValue={setSelected} />
                             <div className='flex row-d justify-content-sb'>
                                 <DateInput
                                     date={firstDate}
