@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { List } from '@mui/material';
+import { Add } from '@mui/icons-material';
 
 import FileItem from './FileItem';
 import './index.scss';
@@ -20,25 +21,31 @@ const VisuallyHiddenInput = styled('input')({
 
 export default function InputFile() {
     const [files, setFiles] = React.useState([]);
+
     const handleFilesChange = (e) => {
         e.preventDefault();
         if (e.target.files && e.target.files[0]) {
-            setFiles([...e.target.files]);
+            setFiles((prev) => {
+                return [...prev, ...e.target.files];
+            });
         }
-        console.log(files);
+        setFiles((prev) => [...prev]);
     };
-    const removeFile = (id) => {
-        setFiles((prev) => {
-            prev.filter((file) => file.id !== id);
-        });
-    };
+
     return (
         <>
-            <List className='files-list'>
-                {files.map(({ name }, id) => {
-                    return <FileItem fileName={name} id={id} />;
-                })}
-            </List>
+            {files.length ? (
+                <List className='files-list'>
+                    {files.map((file, index) => {
+                        return <FileItem fileName={file.name} id={index} setFile={setFiles} />;
+                    })}
+                </List>
+            ) : (
+                <div className='inner-info'>
+                    {'Прикрепите файлы'}
+                    {<Add sx={{ color: '#d9d9d9' }} />}
+                </div>
+            )}
             <Button
                 component='label'
                 variant='contained'
@@ -48,9 +55,9 @@ export default function InputFile() {
                 {'Загрузить документы'}
                 <VisuallyHiddenInput
                     type='file'
-                    onChange={handleFilesChange}
-                    multiple={true}
                     accept='.png, .jpeg, image/*'
+                    onChange={handleFilesChange}
+                    multiple
                 />
             </Button>
         </>
