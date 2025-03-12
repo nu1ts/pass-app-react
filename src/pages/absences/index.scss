@@ -13,7 +13,8 @@
         box-sizing: border-box;
         max-width: 996px;
         width: 100%;
-        height: 400px;
+        min-height: 400px;
+        height: auto;
         margin: auto;
         border: 1px solid $stroke-color;
         box-shadow: 1px 1px 4px $stroke-color;
@@ -55,4 +56,12 @@
     input {
         background-color: $white-color;
     }
+}
+
+.files-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px 0;
+    width: 100%;
 }

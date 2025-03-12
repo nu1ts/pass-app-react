@@ -11,6 +11,7 @@ import {
     FormControl,
     Divider,
 } from '@mui/material';
+import InputFile from '../../components/input/InputFile';
 
 const CreateAbsence = () => {
     const [isValidForm, setIsValidForm] = useState(false);
@@ -65,8 +66,8 @@ const CreateAbsence = () => {
                                     value={status}
                                     sx={{
                                         width: '100%',
-                                        minWidth: '200px',
-                                        maxWidth: '200px',
+                                        minWidth: '300px',
+                                        maxWidth: '300px',
                                         marginRight: '10px',
                                         height: '56px',
                                         color: '#000',
@@ -83,6 +84,10 @@ const CreateAbsence = () => {
                                 </Select>
                             </FormControl>
                         </div>
+                        <div className='files-container'>
+                            <InputFile />
+                        </div>
+                        <Button>Отправить</Button>
                     </form>
                 </div>
             </div>
