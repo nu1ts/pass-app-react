@@ -51,11 +51,12 @@ export default function InputFile() {
                 variant='contained'
                 tabIndex={-1}
                 startIcon={<CloudUploadIcon />}
+                sx={{ width: 1 }}
             >
                 {'Загрузить документы'}
                 <VisuallyHiddenInput
                     type='file'
-                    accept='.png, .jpeg, image/*'
+                    accept='image/*'
                     onChange={handleFilesChange}
                     multiple
                 />
