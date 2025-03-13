@@ -12,6 +12,7 @@ import UsersLayout from '../../components/layout/UsersLayout';
 import RequestAbsences from '../../pages/absences/RequestAbsences';
 import UserProfilePage from '../../pages/users/UserProfilePage';
 import CreateAbsence from '../../pages/absences/CreateAbsence';
+import NotMatch from '../../pages/errorPages/NotMatch';
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
                 ],
             },
             { path: '/login', Component: LoginPage },
+             { path: '*', Component: NotMatch },
         ],
     },
 ]);
