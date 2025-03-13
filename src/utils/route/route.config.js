@@ -22,6 +22,7 @@ const router = createBrowserRouter([
                 path: '/',
                 Component: AppDashboard,
                 children: [
+                    { path: '*', Component: NotMatch },
                     {
                         path: '/',
                         Component: HomePage,
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
                 ],
             },
             { path: '/login', Component: LoginPage },
-             { path: '*', Component: NotMatch },
+            
         ],
     },
 ]);

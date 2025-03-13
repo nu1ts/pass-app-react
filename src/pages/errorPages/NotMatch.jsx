@@ -1,8 +1,16 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import './index.scss';
+import { useNavigate } from 'react-router-dom';
 
 const NotMatch = () => {
+    const navigate = useNavigate();
+    const handleToHome = () => {
+        navigate('/home');
+    };
+    const handleGoBack = () => {
+        navigate(-1);
+    };
     return (
         <>
             <div className='not-match-page'>
@@ -14,8 +22,12 @@ const NotMatch = () => {
                     <div className='inner__inner-content'>
                         <span>Неправильно набран адрес либо такой страницы не существует</span>
                         <div className='inner__buttons-wrapper'>
-                            <Button variant='outlined'>Назад</Button>
-                            <Button variant='contained'>На главную</Button>
+                            <Button variant='outlined' onClick={handleGoBack}>
+                                Назад
+                            </Button>
+                            <Button variant='contained' onClick={handleToHome}>
+                                На главную
+                            </Button>
                         </div>
                     </div>
                 </div>
