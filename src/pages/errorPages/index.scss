@@ -1,6 +1,6 @@
 @import '../../scss//variables.scss';
 
-.not-match-page {
+.error-page {
     box-sizing: border-box;
     padding: 80px 20px 20px 20px;
     width: 100%;
@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: start;
     background-color: $light-bg-color;
-    .not-match-page__inner {
+    .error-page__inner {
         height: auto;
         width: auto;
         box-sizing: border-box;
@@ -27,12 +27,18 @@
                 margin: 0;
                 color: $hint-color;
                 text-align: center;
+                &.forbidden {
+                    color: #bd5c55;
+                }
             }
             h3 {
                 font-size: 32px;
                 font-weight: 300;
                 margin: 10px;
                 text-align: center;
+                &.forbidden {
+                    color: #bd5c55;
+                }
             }
         }
         .inner__inner-content {
@@ -47,6 +53,9 @@
                 margin: 0;
                 padding: 0;
                 text-align: center;
+                &.forbidden {
+                    color: #bd5c55;
+                }
             }
             .inner__buttons-wrapper {
                 box-sizing: border-box;
@@ -64,4 +73,8 @@
             }
         }
     }
+}
+
+.forbidden {
+    background-color: $error_light-color;
 }

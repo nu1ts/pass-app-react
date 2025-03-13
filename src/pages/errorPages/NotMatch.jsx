@@ -13,8 +13,8 @@ const NotMatch = () => {
     };
     return (
         <>
-            <div className='not-match-page'>
-                <div className='not-match-page__inner'>
+            <div className='error-page'>
+                <div className='error-page__inner'>
                     <div className='inner__inner-head'>
                         <h1>404</h1>
                         <h3>Страница не найдена</h3>

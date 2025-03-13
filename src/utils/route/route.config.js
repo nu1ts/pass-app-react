@@ -13,6 +13,7 @@ import RequestAbsences from '../../pages/absences/RequestAbsences';
 import UserProfilePage from '../../pages/users/UserProfilePage';
 import CreateAbsence from '../../pages/absences/CreateAbsence';
 import NotMatch from '../../pages/errorPages/NotMatch';
+import ForbiddenPage from '../../pages/errorPages/ForbiddenPage';
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
                 Component: AppDashboard,
                 children: [
                     { path: '*', Component: NotMatch },
+                    { path: '/forbidden', Component: ForbiddenPage},
                     {
                         path: '/',
                         Component: HomePage,
