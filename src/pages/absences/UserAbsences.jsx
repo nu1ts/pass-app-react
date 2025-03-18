@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Fab from '@mui/material/Fab';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import './index.scss';
@@ -6,6 +6,7 @@ import { HistoryFilters } from '../../components/filters/AbsencesFilter';
 import AbsencesTable from '../../components/table/AbsencesTable';
 import { useSelector } from 'react-redux';
 import ExportModal from '../../components/modal/ExportModal';
+import EmptyResult from '../../components/emptyResult/EmptyResult';
 
 const AbsencesHistoryPage = () => {
     const [open, setOpen] = useState(false);
@@ -13,6 +14,9 @@ const AbsencesHistoryPage = () => {
     const handleClose = () => {
         setOpen(false);
     };
+    useEffect(() => {
+        console.log(historyAbsences);
+    }, [historyAbsences]);
     return (
         <>
             <ExportModal isOpen={open} handleClose={handleClose} />

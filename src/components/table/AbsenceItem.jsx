@@ -75,18 +75,22 @@ export default function AbsenceItem(props) {
                             </Typography>
                             <Table size='small'>
                                 <TableBody>
-                                    <TableRow key={row.details.date}>
-                                        <TableCell sx={{ fontWeight: '500' }}>
-                                            {'Дата начала: '}
-                                            {transformDate(row.details.start_date)}
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell sx={{ fontWeight: '500' }}>
-                                            {'Дата окончания: '}
-                                            {transformDate(row.details.end_date)}
-                                        </TableCell>
-                                    </TableRow>
+                                    {row.details?.start_date && row.details.end_date && (
+                                        <>
+                                            <TableRow key={row.details.date}>
+                                                <TableCell sx={{ fontWeight: '500' }}>
+                                                    {'Дата начала: '}
+                                                    {transformDate(row.details.start_date)}
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell sx={{ fontWeight: '500' }}>
+                                                    {'Дата окончания: '}
+                                                    {transformDate(row.details.end_date)}
+                                                </TableCell>
+                                            </TableRow>
+                                        </>
+                                    )}
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Причина: '}

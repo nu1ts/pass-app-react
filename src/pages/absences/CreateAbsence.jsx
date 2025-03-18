@@ -45,6 +45,7 @@ const CreateAbsence = () => {
     useEffect(() => {
         handleForm();
     }, [firstDate, secondDate]);
+
     return (
         <>
             <div className='absences-page'>
