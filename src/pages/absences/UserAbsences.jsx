@@ -23,7 +23,11 @@ const AbsencesHistoryPage = () => {
             <div className='absences-page'>
                 <HistoryFilters />
                 <div className='inner'>
-                    <AbsencesTable history={historyAbsences} />
+                    {historyAbsences.length > 0 ? (
+                        <AbsencesTable history={historyAbsences} />
+                    ) : (
+                        <EmptyResult />
+                    )}
                 </div>
             </div>
             <div className='absolute'>

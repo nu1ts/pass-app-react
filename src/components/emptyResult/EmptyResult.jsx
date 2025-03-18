@@ -1,10 +1,10 @@
 import React from 'react';
-
-const EmptyResult = (text = 'Ничего не найдено') => {
+import './index.scss';
+const EmptyResult = () => {
     return (
         <>
             <div className='empty-container'>
-                <span>{text}</span>
+                <span>{'Ничего не найдено'}</span>
             </div>
         </>
     );
