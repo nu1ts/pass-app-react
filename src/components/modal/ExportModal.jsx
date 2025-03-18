@@ -26,15 +26,7 @@ export default function ExportModal({ isOpen, handleClose }) {
     };
 
     const handleForm = () => {
-        if (
-            endDateValid(secondDate) &&
-            dateAreValid(firstDate, secondDate) &&
-            selected.length > 0
-        ) {
-            setIsValidForm(true);
-        } else {
-            setIsValidForm(false);
-        }
+        return setIsValidForm(dateAreValid(firstDate, secondDate) && selected.length > 0);
     };
 
     useEffect(() => {
