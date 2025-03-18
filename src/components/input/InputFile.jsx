@@ -19,18 +19,22 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-export default function InputFile() {
+export default function InputFile({ setDocuments = null }) {
     const [files, setFiles] = React.useState([]);
 
     const handleFilesChange = (e) => {
         e.preventDefault();
         if (e.target.files && e.target.files[0]) {
-            setFiles((prev) => {
+            return setFiles((prev) => {
                 return [...prev, ...e.target.files];
             });
         }
-        setFiles((prev) => [...prev]);
+        return setFiles((prev) => [...prev]);
     };
+
+    React.useEffect(() => {
+        setDocuments(files);
+    }, [files]);
 
     return (
         <>

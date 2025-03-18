@@ -23,6 +23,7 @@ const CreateAbsence = () => {
     const [secondDate, setSecondDate] = useState(null);
     const [checked, setChecked] = useState(false);
     const [isDateError, setError] = useState(false);
+    const [documents, setDocuments] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,16 +36,20 @@ const CreateAbsence = () => {
         setType(e.target.value);
     };
     const handleForm = () => {
-        if (endDateValid(secondDate) && dateAreValid(firstDate, secondDate)) {
-            setIsValidForm(true);
+        if (type === 'Family' && checked) {
+            return setIsValidForm(true);
+        } else if (type === 'Family' && !checked) {
+            return setIsValidForm(documents.length !== 0);
         } else {
-            setIsValidForm(false);
+            return setIsValidForm(
+                dateAreValid(firstDate, secondDate) && type && documents.length !== 0,
+            );
         }
     };
 
     useEffect(() => {
         handleForm();
-    }, [firstDate, secondDate]);
+    }, [firstDate, secondDate, checked, type, documents]);
 
     return (
         <>
@@ -114,7 +119,11 @@ const CreateAbsence = () => {
                             )}
                         </div>
                         <div className='files-container'>
-                            {type === 'Family' && checked ? <></> : <InputFile />}
+                            {type === 'Family' && checked ? (
+                                <></>
+                            ) : (
+                                <InputFile setDocuments={setDocuments} />
+                            )}
                         </div>
                         <Button
                             variant='contained'
