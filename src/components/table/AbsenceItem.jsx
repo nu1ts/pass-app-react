@@ -29,11 +29,18 @@ const passBgColor = {
     Rejected: '#ffebeb',
 };
 
+const reason = {
+    Sick: 'Болезнь',
+    Family: 'Семейные обстоятельства',
+    Academic: 'Учебная',
+};
+
 export default function AbsenceItem(props) {
     const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
     const [modalOpen, setModalOpen] = React.useState(false);
     const navigate = useNavigate();
+
     const handleClose = () => {
         setModalOpen(false);
     };
@@ -116,28 +123,22 @@ export default function AbsenceItem(props) {
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Причина: '}
-                                            {row.type}
+                                            {reason[row.type]}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
-                            <Button
-                                sx={{
-                                    margin: '16px 0 0 0',
-                                    textTransform: 'none',
+                            <Chip
+                                size='small'
+                                label='Детали'
+                                color='primary'
+                                variant='outlined'
+                                sx={{ padding: '4px', cursor: 'pointer' }}
+                                onClick={() => {
+                                    navigate(`/absences/${row.id}`);
                                 }}
-                            >
-                                {'Документ'}
-                                <Download
-                                    sx={{
-                                        width: '24px',
-                                        height: '24px',
-                                        color: '#0072bb',
-                                        boxSizing: 'border-box',
-                                        marginLeft: '4px',
-                                    }}
-                                />
-                            </Button>
+                            />
+
                             <TableRow
                                 sx={{
                                     display: 'flex',

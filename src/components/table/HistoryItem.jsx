@@ -27,6 +27,12 @@ const passBgColor = {
     Rejected: '#ffebeb',
 };
 
+const reason = {
+    Sick: 'Болезнь',
+    Family: 'Семейные обстоятельства',
+    Academic: 'Учебная',
+};
+
 export default function HistoryItem(props) {
     const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
@@ -94,7 +100,7 @@ export default function HistoryItem(props) {
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Причина: '}
-                                            {row.type}
+                                            {reason[row.type]}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>

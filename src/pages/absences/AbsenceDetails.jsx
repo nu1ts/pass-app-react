@@ -42,28 +42,38 @@ const AbsenceDetails = () => {
             <div className='absences-page'>
                 <div className='flex column-d align-items-center'>
                     <form className='absence-create-form' action=''>
-                        <div className='flex row-d align-items-center justify-content-sb w-100 '>
-                            <h1>Детали пропуска</h1>
-                            <InfoChip
-                                title={statusName[details?.status]}
-                                color={statuses[details?.status]}
-                            />
-                        </div>
-                        <div className='absence-details'>
-                            <span>Причина: {reason[details?.type]}</span>
-                            {details?.startDate && (
-                                <span>Дата начала: {transformDate(details?.startDate)}</span>
+                        <div className='flex column-d justify-content-sb w-100 '>
+                            <div className='flex row-d align-items-center justify-content-sb w-100 '>
+                                <h1>Детали пропуска</h1>
+                                <InfoChip
+                                    title={statusName[details?.status]}
+                                    color={statuses[details?.status]}
+                                />
+                            </div>
+                            <div className='absence-details'>
+                                <span>Причина: {reason[details?.type]}</span>
+                                {details?.startDate && (
+                                    <span>Дата начала: {transformDate(details?.startDate)}</span>
+                                )}
+                                {details?.endDate && (
+                                    <span>Дата окончания: {transformDate(details?.endDate)}</span>
+                                )}
+                                <span>
+                                    Заявление в деканат:{' '}
+                                    {details?.declarationToDean ? 'Есть' : 'Нет'}
+                                </span>
+                                {details.rejectionReason && (
+                                    <span>Комментарий: {details?.rejectionReason}</span>
+                                )}
+                            </div>
+                            {details?.documents && (
+                                <Button
+                                    variant='outlined'
+                                    sx={{ marginTop: '10px', maxWidth: '200px', width: 1 }}
+                                >
+                                    Скачать документы
+                                </Button>
                             )}
-                            {details?.endDate && (
-                                <span>Дата окончания: {transformDate(details?.endDate)}</span>
-                            )}
-                            <span>
-                                Заявление в деканат: {details?.declarationToDean ? 'Есть' : 'Нет'}
-                            </span>
-                            {details.rejectionReason && (
-                                <span>Комментарий: {details?.rejectionReason}</span>
-                            )}
-                            <Button variant='outlined'>Скачать документы</Button>
                         </div>
                     </form>
                 </div>
