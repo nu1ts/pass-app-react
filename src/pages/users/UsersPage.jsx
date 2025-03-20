@@ -6,17 +6,11 @@ import UserItem from '../../components/listItem/UserItem';
 import { useSelector } from 'react-redux';
 import EmptyResult from '../../components/emptyResult/EmptyResult';
 import Loader from '../../components/loader/Loader';
-import { ErrorToast } from '../../utils/notifications/notifications';
-import { SERVER_ERROR } from '../../utils/constants/errorCode';
 import { ToastContainer } from 'react-toastify';
 
 const UsersPage = () => {
-    const { users, isLoading, error } = useSelector((state) => state.users);
-    useEffect(() => {
-        if (error) {
-            return ErrorToast(SERVER_ERROR);
-        }
-    }, [error]);
+    const { users, isLoading } = useSelector((state) => state.users);
+
     return (
         <>
             <div className='users-page'>

@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 export const isTeacher = (roles) => {
     return roles.find(role => role === 'Teacher');
 }
@@ -16,5 +18,11 @@ export const getHighestRole = (roles) => {
     } else {
         return 'Студент'
     }
-    
+}
+
+
+export const getRoles = (token) => {
+    let roleKey = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+    let decodedToken = jwtDecode(localStorage.getItem('ACCESS_TOKEN'), { payload: true });
+    return decodedToken[roleKey];
 }

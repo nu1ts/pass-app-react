@@ -14,6 +14,7 @@ import { CLIENT_ERROR, SERVER_ERROR } from '../../utils/constants/errorCode';
 import Loader from '../../components/loader/Loader';
 import { getHighestRole } from '../../utils/userRight';
 import { setRoles } from '../../store/reducers/rolesReducer';
+import { jwtDecode } from 'jwt-decode';
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState({});
@@ -21,6 +22,7 @@ const ProfilePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isValidForm, setIsValidForm] = useState(false);
     const { roles } = useSelector((state) => state.roles);
+    const [userRole, setRole] = useState('');
     const email = useInput('', { isEmailValid: true, isEmpty: true });
     const fullName = useInput('', { isEmpty: true });
 
@@ -60,6 +62,7 @@ const ProfilePage = () => {
 
     useEffect(() => {
         loadProfile();
+        setRole(getHighestRole(roles || []));
     }, []);
 
     useEffect(() => {
@@ -82,7 +85,7 @@ const ProfilePage = () => {
                             <PermIdentityIcon
                                 sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
                             />
-                            <RoleChip role={getHighestRole(roles)} color={'info'} />
+                            <RoleChip role={userRole} color={'info'} />
                         </div>
                         <div className='profile-info flex column-d'>
                             <h2>Данные пользователя</h2>

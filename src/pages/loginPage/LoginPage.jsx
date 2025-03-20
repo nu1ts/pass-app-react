@@ -13,7 +13,7 @@ import { ErrorToast, SuccessToast } from '../../utils/notifications/notification
 import { clearSession, setAuth } from '../../store/actions/authAction';
 import { setUserRoles } from '../../store/actions/rolesAction';
 import { isTeacher, isDean } from '../../utils/userRight';
-import { ERROR_403, LOGIN_ERROR } from '../../utils/constants/errorCode';
+import { ERROR_403, LOGIN_ERROR, SERVER_ERROR } from '../../utils/constants/errorCode';
 
 const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -49,13 +49,11 @@ const LoginPage = () => {
                 email: emailInput.value,
                 password: passwordInput.value,
             });
-            if (response.ok) {
+            if (response?.ok) {
                 const token = await response.json();
                 await setSession(token.token);
             } else {
-                if (response.status === 400) {
-                    ErrorToast(LOGIN_ERROR);
-                }
+                response?.status === 400 ? ErrorToast(LOGIN_ERROR) : ErrorToast(SERVER_ERROR);
             }
             setIsLoading(false);
         }
