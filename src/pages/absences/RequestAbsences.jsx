@@ -19,8 +19,8 @@ const AbsencesPage = () => {
                 <AbsencesFilters />
                 <div className='inner'>
                     {absences.length > 0 ? <AbsencesTable absences={absences} /> : <EmptyResult />}
-                    <PaginationComponent />
                 </div>
+                <PaginationComponent />
             </div>
             <div className='absolute'>
                 <Fab

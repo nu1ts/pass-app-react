@@ -40,7 +40,7 @@ const filterSlice = createSlice({
         },
         setAbsencesHistoryFilters: (state, action) => {
             state.absencesHistoryFilters = action.payload
-        }
+        },
     }
 })
 

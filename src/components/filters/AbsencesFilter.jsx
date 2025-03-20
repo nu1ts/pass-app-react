@@ -143,14 +143,14 @@ export const HistoryFilters = () => {
 
 export const AbsencesFilters = () => {
     const [groupNumber, setGroupNumber] = useState('');
-    const [date, setDate] = useState(null);
     const [checked, setChecked] = useState(false);
+    const [page, setPage] = useState(1);
     const [type, setType] = useState('');
     const [sorting, setSorting] = useState('');
     const search = useInput('', {});
     const dispatch = useDispatch();
     const { absencesFilters } = useSelector((state) => state.filters);
-    const { absences } = useSelector((state) => state.absences);
+    const { absences, pagination } = useSelector((state) => state.absences);
 
     const handleTypeChange = (e) => {
         setType(e.target.value);
@@ -173,16 +173,27 @@ export const AbsencesFilters = () => {
                 type: type || null,
                 sorting: null,
                 size: 10,
-                page: 1,
+                page: pagination.current,
             }),
         );
     };
     useEffect(() => {
         setGroupNumber(absencesFilters.group);
-        setDate(absencesFilters.date);
         search.setValue(absencesFilters.fullName);
     }, []);
-
+    useEffect(() => {
+        dispatch(
+            setAbsencesFiltersParams({
+                fullName: search.value || null,
+                status: 'Pending',
+                group: groupNumber || null,
+                type: type || null,
+                sorting: null,
+                size: 10,
+                page: pagination.current,
+            }),
+        );
+    }, [pagination.current]);
     useEffect(() => {
         dispatch(fetchAbsences(getStringQuery(absencesFilters, ABSENCES), ABSENCES));
     }, [absencesFilters]);
