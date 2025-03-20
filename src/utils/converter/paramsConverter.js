@@ -12,13 +12,13 @@ export const getStringQuery = (params, type) => {
 const getUsersParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}&`;
-    }
-    if(params.role) {
-        queryStr +=`role=${params.role}&`;
+        queryStr += `name=${params.fullName}&`;
     }
     if(params.group) {
         queryStr +=`group=${params.group}&`;
+    }
+    if(params.role) {
+        queryStr +=`role=${params.role}&`;
     }
     return queryStr;
 }

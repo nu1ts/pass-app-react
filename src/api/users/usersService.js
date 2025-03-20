@@ -1,7 +1,11 @@
-export const fetchUsers = async(queryParams) => {
+export const fetchAllUsers = async(queryParams) => {
     try {
-        const response = await fetch(`api/users?` + queryParams, {
+        const response = await fetch(`https://absences-api.orexi4.ru/api/users?` + queryParams, {
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+            }
         })
         return response;
     } catch (error) {

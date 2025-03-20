@@ -10,7 +10,7 @@ import { fetchUserProfile } from '../../api/account/accountService';
 import { useNavigate } from 'react-router-dom';
 import { clearSession } from '../../store/actions/authAction';
 import { ErrorToast } from '../../utils/notifications/notifications';
-import { SERVER_ERROR } from '../../utils/constants/errorCode';
+import { CLIENT_ERROR, SERVER_ERROR } from '../../utils/constants/errorCode';
 import Loader from '../../components/loader/Loader';
 import { getHighestRole } from '../../utils/userRight';
 import { setRoles } from '../../store/reducers/rolesReducer';
@@ -35,20 +35,18 @@ const ProfilePage = () => {
     const loadProfile = async () => {
         setIsLoading(true);
         const response = await fetchUserProfile();
-        if (response.ok) {
+        if (response && response.ok) {
             setProfile(await response.json());
             setIsLoading(false);
         } else {
-            if (response.status === 401) {
+            if (response?.status === 401) {
                 dispatch(clearSession());
                 return navigate('/login');
             }
-            if (response.status === 403) {
+            if (response?.status === 403) {
                 return navigate('/forbidden');
             }
-            if (response.status >= 500) {
-                ErrorToast(SERVER_ERROR);
-            }
+            return ErrorToast(CLIENT_ERROR);
         }
     };
 

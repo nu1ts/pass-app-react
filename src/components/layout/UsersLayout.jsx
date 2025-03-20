@@ -7,7 +7,7 @@ import { styled } from '@mui/material';
 import UserPageFilter from '../filters/UserPageFilter';
 
 export default function UsersLayout() {
-    const [value, setValue] = React.useState('student');
+    const [value, setValue] = React.useState('Student');
     const handleChange = (e, newValue) => {
         setValue(newValue);
     };
@@ -31,7 +31,7 @@ export default function UsersLayout() {
                     <TabList onChange={handleChange}>
                         <StyledTab
                             label='Студенты'
-                            value='student'
+                            value='Student'
                             sx={{
                                 padding: '10px',
                                 margin: '10px 20px',
@@ -43,7 +43,7 @@ export default function UsersLayout() {
                         />
                         <StyledTab
                             label='Преподаватели'
-                            value='teacher'
+                            value='Teacher'
                             sx={{
                                 padding: '10px',
                                 margin: '10px 20px',

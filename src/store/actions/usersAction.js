@@ -1,7 +1,14 @@
-import { fetchUsersJsonServer } from "../../api/users/usersService"
-import { setUsers } from "../reducers/userReducer";
+import { fetchAllUsers, fetchUsersJsonServer } from "../../api/users/usersService"
+import { setError, setLoadUsers, setUsers } from "../reducers/userReducer";
 
 export const fetchUsers = (query) => async(dispatch) => {
-    const users = await fetchUsersJsonServer(query);
-    dispatch(setUsers(users));
+    dispatch(setLoadUsers())
+    const response = await fetchAllUsers(query);
+    if(response && response.ok) {
+        dispatch(setUsers(await response.json()));
+    } else {
+        dispatch(setUsers([]));
+        dispatch(setError())
+    }
+    
 }
