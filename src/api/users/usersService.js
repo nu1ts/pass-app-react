@@ -14,12 +14,12 @@ export const fetchAllUsers = async(queryParams) => {
 }
 
 export const fetchUserById = async(id) => {
-    let token = localStorage.getItem('ACCESS_TOKEN');
     try {
-        return await fetch(`api/users/${id}`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/users/${id}`,{
             method:'GET',
             headers: {
-                'Authorization':'Bearer ' + token
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
             }
         })
     } catch (error) {

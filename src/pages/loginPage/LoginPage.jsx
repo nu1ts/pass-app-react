@@ -22,6 +22,7 @@ const LoginPage = () => {
     const emailInput = useInput('', { isEmailValid: true, isEmpty: true });
     const passwordInput = useInput('', { isEmpty: true, minLength: 8 });
     const { roles } = useSelector((state) => state.roles);
+    const { token } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -31,7 +32,7 @@ const LoginPage = () => {
     };
 
     const checkRights = async (roles) => {
-        if (isTeacher(roles) || isDean(roles)) {
+        if (token && (isTeacher(roles) || isDean(roles))) {
             SuccessToast('Добро пожаловать');
             return navigate('/');
         } else {
@@ -70,6 +71,10 @@ const LoginPage = () => {
             setIsValidForm(true);
         }
     };
+
+    useEffect(() => {
+        dispatch(clearSession());
+    }, []);
 
     useEffect(() => {
         handleForm();
