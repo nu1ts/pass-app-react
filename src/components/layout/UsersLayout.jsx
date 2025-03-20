@@ -1,16 +1,13 @@
 import * as React from 'react';
 import { Outlet } from 'react-router';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import { Box, Tab } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { styled } from '@mui/material';
 
 import UserPageFilter from '../filters/UserPageFilter';
 
 export default function UsersLayout() {
-    const [value, setValue] = React.useState('student');
+    const [value, setValue] = React.useState('Student');
     const handleChange = (e, newValue) => {
         setValue(newValue);
     };
@@ -34,7 +31,7 @@ export default function UsersLayout() {
                     <TabList onChange={handleChange}>
                         <StyledTab
                             label='Студенты'
-                            value='student'
+                            value='Student'
                             sx={{
                                 padding: '10px',
                                 margin: '10px 20px',
@@ -46,7 +43,7 @@ export default function UsersLayout() {
                         />
                         <StyledTab
                             label='Преподаватели'
-                            value='teacher'
+                            value='Teacher'
                             sx={{
                                 padding: '10px',
                                 margin: '10px 20px',

@@ -1,36 +1,29 @@
 import * as React from 'react';
-import TableHead from '@mui/material/TableHead';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button } from '@mui/material';
-import DownloadIcon from '@mui/icons-material/Download';
+
+import { Table, TableBody, TableCell, TableRow } from '@mui/material';
+import { KeyboardArrowDown, KeyboardArrowUp, Download } from '@mui/icons-material';
+import { Box, Collapse, Button, IconButton, Typography } from '@mui/material';
 
 import InfoChip from '../chip/InfoChip';
+import Textarea from '../textArea/TextArea';
+import { transformDate } from '../../utils/converter/dateConverter';
 
 const statuses = {
-    'На проверке': 'default',
-    Одобрен: 'success',
-    Отклонен: 'error',
+    Pending: 'default',
+    Approved: 'success',
+    Rejected: 'error',
 };
 
 const passBgColor = {
-    'На проверке': '#f6f7f9',
-    Одобрен: '#effae9',
-    Отклонен: '#ffebeb',
+    Pending: '#f6f7f9',
+    Approved: '#effae9',
+    Rejected: '#ffebeb',
 };
 
-export default function PassTableItem(props) {
-    const { row } = props;
+export default function HistoryItem(props) {
+    const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
-
+    console.log(row);
     return (
         <>
             <TableRow>
@@ -47,19 +40,20 @@ export default function PassTableItem(props) {
                         onClick={() => setOpen(!open)}
                     >
                         {open ? (
-                            <KeyboardArrowUpIcon sx={{ color: '#9caab6' }} />
+                            <KeyboardArrowUp sx={{ color: '#9caab6' }} />
                         ) : (
-                            <KeyboardArrowDownIcon sx={{ color: '#9caab6' }} />
+                            <KeyboardArrowDown sx={{ color: '#9caab6' }} />
                         )}
                     </IconButton>
                 </TableCell>
-                <TableCell component='th' scope='row'>
-                    {row.fullName}
-                </TableCell>
-                <TableCell align='center'>
+                <TableCell>{row.owner.fullName}</TableCell>
+                <TableCell align='right'>
                     <InfoChip title={row.status} color={statuses[row.status]} />
                 </TableCell>
-                <TableCell align='center'>{row.date}</TableCell>
+                <TableCell align='right'>
+                    <InfoChip title={transformDate(row?.owner?.group)} color={'info'} />
+                </TableCell>
+                <TableCell align='center'>{transformDate(row?.date)}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell
@@ -75,22 +69,31 @@ export default function PassTableItem(props) {
                             <Typography variant='h6' gutterBottom component='div'>
                                 Детали пропуска
                             </Typography>
-                            <Table size='medium'>
-                                <TableHead>
-                                    <TableCell align='left'>Дата начала</TableCell>
-                                    <TableCell align='left'>Дата окончания</TableCell>
-                                    <TableCell align='center'>Причина</TableCell>
-                                </TableHead>
+                            <Table size='small'>
                                 <TableBody>
-                                    {row.details.map((detail) => (
-                                        <TableRow key={detail.date}>
-                                            <TableCell>{detail.start_date}</TableCell>
-                                            <TableCell>{detail.end_date}</TableCell>
-                                            <TableCell align='center'>{detail.reason}</TableCell>
-                                        </TableRow>
-                                    ))}
+                                    <TableRow key={row.details.date}>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Дата начала: '}
+                                            {transformDate(row.details.start_date)}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Дата окончания: '}
+                                            {transformDate(row.details.end_date)}
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow>
+                                        <TableCell sx={{ fontWeight: '500' }}>
+                                            {'Причина: '}
+                                            {row.details.reason}
+                                        </TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
+                            {row.status === 'Rejected' && row.comment && (
+                                <Textarea comment={row?.comment} />
+                            )}
                             <Button
                                 sx={{
                                     margin: '16px 0 0 0',
@@ -98,7 +101,7 @@ export default function PassTableItem(props) {
                                 }}
                             >
                                 {'Документ'}
-                                <DownloadIcon
+                                <Download
                                     sx={{
                                         width: '24px',
                                         height: '24px',

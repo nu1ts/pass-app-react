@@ -1,14 +1,9 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
-
+import { useState, useEffect } from 'react';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, MenuItem, FormControl, InputLabel, Select, TextField } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
-import { TextField } from '@mui/material';
 import { useInput } from '../../hooks/useInput';
-import { MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 
 export default function EditModal({ isOpen, handleClose, user }) {
     const theme = useTheme();
@@ -16,21 +11,19 @@ export default function EditModal({ isOpen, handleClose, user }) {
 
     const [isValidForm, setIsValidForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [role, setRole] = useState('');
 
-    const email = useInput(user?.email, { isEmailValid: true, isEmpty: true });
-    const fullName = useInput(user?.fullName, { isEmpty: true });
-    const [role, setRole] = React.useState(user?.role);
+    const fullName = useInput('', { isEmpty: true });
+    const group = useInput('', { isEmpty: true });
+    const email = useInput('', { isEmailValid: true, isEmpty: true });
 
-    const handleChange = (e) => {
-        setRole(e.target.value);
-    };
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
     };
 
     const handleForm = () => {
-        if (email.isEmptyError || fullName.isEmptyError || email.emailError) {
+        if (email.isEmptyError || fullName.isEmptyError || email.emailError || group.isEmptyError) {
             setIsValidForm(false);
         } else {
             setIsValidForm(true);
@@ -40,28 +33,31 @@ export default function EditModal({ isOpen, handleClose, user }) {
     useEffect(() => {
         email.setValue(user.email);
         fullName.setValue(user.fullName);
-    }, []);
+        group.setValue(user.group);
+        setRole(user.role);
+    }, [user]);
 
     useEffect(() => {
         handleForm();
-    }, [email.value, fullName.value]);
+    }, [email.value, fullName.value, role, group.value]);
 
     return (
         <>
             <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose}>
-                <DialogTitle sx={{ margin: 0, paddingX: 3 }}>Редактирование данных</DialogTitle>
+                <DialogTitle>Редактирование данных</DialogTitle>
                 <DialogContent
                     sx={{
                         boxSizing: 'border-box',
                         maxWidth: '900px',
                         width: '100%',
+                        height: 'auto',
                     }}
                 >
                     <form action='' onSubmit={handleSubmit}>
                         <div className='input-wrapper'>
                             <TextField
                                 label={'ФИО'}
-                                sx={{ width: 1, marginBottom: '20px' }}
+                                sx={{ width: 1, marginBottom: '10px' }}
                                 value={fullName.value}
                                 onChange={(e) => {
                                     fullName.onChange(e);
@@ -77,27 +73,48 @@ export default function EditModal({ isOpen, handleClose, user }) {
                                 }}
                                 error={email.emailError}
                             />
-                            <FormControl
-                                sx={{ width: 1, maxWidth: '200px', boxSizing: 'border-box' }}
-                            >
-                                <InputLabel id='status-label'>Роль</InputLabel>
-                                <Select
-                                    labelId='status-label'
-                                    sx={{
-                                        width: 1,
-
-                                        height: '56px',
-                                        color: '#000',
-                                        backgroundColor: '#fff',
-                                    }}
-                                    label='Статус'
-                                    size='medium'
-                                    onChange={handleChange}
-                                >
-                                    <MenuItem value={'Student'}>Студент</MenuItem>
-                                    <MenuItem value={'Teacher'}>Преподаватель</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <div className='flex row-d justify-content-sb'>
+                                <FormControl sx={{ width: '49%', boxSizing: 'border-box' }}>
+                                    <InputLabel id='status-label'>Роль</InputLabel>
+                                    <Select
+                                        labelId='status-label'
+                                        sx={{
+                                            width: 1,
+                                            height: '56px',
+                                            color: '#000',
+                                            backgroundColor: '#fff',
+                                        }}
+                                        label='Статус'
+                                        size='medium'
+                                        value={role}
+                                        onChange={(e) => {
+                                            setRole(e.target.value);
+                                        }}
+                                    >
+                                        <MenuItem value={'student'}>Студент</MenuItem>
+                                        <MenuItem value={'teacher'}>Преподаватель</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                {role === 'student' && (
+                                    <TextField
+                                        label={'Группа'}
+                                        inputProps={{
+                                            maxLength: 6,
+                                            type: 'number',
+                                        }}
+                                        inputMode={'numeric'}
+                                        size='medium'
+                                        sx={{ width: '49%', height: '56px' }}
+                                        value={group.value}
+                                        onChange={(e) => {
+                                            let res = Math.max(0, parseInt(e.target.value))
+                                                .toString()
+                                                .slice(0, e.target.maxLength);
+                                            group.setValue(isNaN(res) ? '' : res);
+                                        }}
+                                    />
+                                )}
+                            </div>
                         </div>
                     </form>
                 </DialogContent>

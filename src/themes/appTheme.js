@@ -7,6 +7,7 @@ const appTheme = createTheme({
                 background: { default: '#ffffff', paper: '#0072bb' },
             },
         },
+        
     },
     textColor: {
         main: '#fff',

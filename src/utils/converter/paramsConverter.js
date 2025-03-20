@@ -12,13 +12,13 @@ export const getStringQuery = (params, type) => {
 const getUsersParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}&`;
-    }
-    if(params.role) {
-        queryStr +=`role=${params.role}&`;
+        queryStr += `name=${params.fullName}&`;
     }
     if(params.group) {
         queryStr +=`group=${params.group}&`;
+    }
+    if(params.role) {
+        queryStr +=`role=${params.role}&`;
     }
     return queryStr;
 }
@@ -26,13 +26,22 @@ const getUsersParamQuery = (params) => {
 const getAbsencesParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}&`;
+        queryStr += `StudentName=${params.fullName}&`;
     }
-    if(params.date) {
-        queryStr +=`date=${params.date}&`;
+    if(params.type) {
+        queryStr +=`Type=${params.type}&`;
     }
     if(params.group) {
-        queryStr +=`group=${params.group}&`;
+        queryStr +=`Group=${params.group}&`;
+    }
+    if(params.sorting) {
+        queryStr +=`sorting=${params.sorting}&`;
+    }
+    if(params.onlyMy) {
+        queryStr +=`onlyMy=${params.onlyMy}&`;
+    }
+    if(params.page) {
+        queryStr +=`page=${params.page}&`;
     }
     queryStr+='status=Pending'
     return queryStr;
@@ -41,13 +50,22 @@ const getAbsencesParamQuery = (params) => {
 const getHistoryParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}&`;
+        queryStr += `StudentName=${params.fullName}&`;
     }
     if(params.status && params.status !== 'all') {
-        queryStr +=`status=${params.status}&`;
-    }
+        queryStr +=`Status=${params.status}&`;
+    } 
     if(params.group) {
-        queryStr +=`group=${params.group}&`;
+        queryStr +=`Group=${params.group}&`;
+    }
+    if(params.sorting) {
+        queryStr +=`sorting=${params.sorting}&`;
+    }
+    if(params.type) {
+        queryStr +=`Type=${params.type}&`;
+    }
+    if(params.page) {
+        queryStr +=`page=${params.page}&`;
     }
     return queryStr;
 }

@@ -7,22 +7,27 @@ const filterSlice = createSlice({
             fullName: '',
             role: 'student',
             group: '',
-            size: 5,
+            size: 10,
             page: 1
         },
         absencesFilters: {
             fullName:'',
-            date: '',
+            sorting: 'CreateAsc',
             status: 'Pending',
+            type: '',
             group: '',
-            size: 5,
+            onlyMy: false,
+            size: 10,
             page: 1
         },
         absencesHistoryFilters: {
             fullName:'',
-            status: '',
+            status: 'Approved',
+            sorting: 'CreateAsc',
+            type: '',
             group: '',
-            size: 5,
+            onlyMy: false,
+            size: 10,
             page: 1
         }
     }, 
@@ -35,7 +40,7 @@ const filterSlice = createSlice({
         },
         setAbsencesHistoryFilters: (state, action) => {
             state.absencesHistoryFilters = action.payload
-        }
+        },
     }
 })
 

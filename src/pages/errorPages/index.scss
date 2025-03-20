@@ -1,0 +1,80 @@
+@import '../../scss//variables.scss';
+
+.error-page {
+    box-sizing: border-box;
+    padding: 80px 20px 20px 20px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    background-color: $light-bg-color;
+    .error-page__inner {
+        height: auto;
+        width: auto;
+        box-sizing: border-box;
+        padding: 10px;
+        .inner__inner-head {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: auto;
+            color: $soft-black;
+            h1 {
+                font-size: 64px;
+                margin: 0;
+                color: $hint-color;
+                text-align: center;
+                &.forbidden {
+                    color: #bd5c55;
+                }
+            }
+            h3 {
+                font-size: 32px;
+                font-weight: 300;
+                margin: 10px;
+                text-align: center;
+                &.forbidden {
+                    color: #bd5c55;
+                }
+            }
+        }
+        .inner__inner-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 32px 0;
+            span {
+                color: $hint-color;
+                font-size: 16px;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                &.forbidden {
+                    color: #bd5c55;
+                }
+            }
+            .inner__buttons-wrapper {
+                box-sizing: border-box;
+                max-width: 350px;
+                padding: 20px 0;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                button {
+                    width: 49% !important;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}
+
+.forbidden {
+    background-color: $error_light-color;
+}

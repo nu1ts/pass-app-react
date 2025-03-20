@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import { Send } from '@mui/icons-material';
-import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './index.scss';
 import src from '../../assets/logo.png';
 import { useInput } from '../../hooks/useInput';
-import { loginUserJsonServer } from '../../api/account/accountService';
+import { loginUser } from '../../api/account/accountService';
 import { ErrorToast, SuccessToast } from '../../utils/notifications/notifications';
-import { ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { fetchProfile } from '../../store/actions/profileAction';
+import { clearSession, setAuth } from '../../store/actions/authAction';
+import { setUserRoles } from '../../store/actions/rolesAction';
+import { isTeacher, isDean } from '../../utils/userRight';
+import { ERROR_403, LOGIN_ERROR, SERVER_ERROR } from '../../utils/constants/errorCode';
 
 const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -19,39 +21,41 @@ const LoginPage = () => {
 
     const emailInput = useInput('', { isEmailValid: true, isEmpty: true });
     const passwordInput = useInput('', { isEmpty: true, minLength: 8 });
-
+    const { roles } = useSelector((state) => state.roles);
+    const { token } = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const setSession = async (token) => {
+        dispatch(setAuth(token));
+        dispatch(setUserRoles());
+    };
+
+    const checkRights = async (roles) => {
+        if (token && (isTeacher(roles) || isDean(roles))) {
+            SuccessToast('Добро пожаловать');
+            return navigate('/');
+        } else {
+            dispatch(clearSession());
+            return ErrorToast(ERROR_403);
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isValidForm) {
             setIsLoading(true);
-            let users = await loginUserJsonServer();
-            if (users) {
-                let result = users.find((user) => {
-                    return user.email === emailInput.value && user.password === passwordInput.value;
-                });
-                if (result) {
-                    if (result.role === 'dean') {
-                        SuccessToast('Добро пожаловать');
-                        dispatch(
-                            fetchProfile({
-                                fullName: result.fullName,
-                                email: result.email,
-                                role: result.role,
-                            }),
-                        );
-                        navigate('/');
-                    } else {
-                        ErrorToast('Доступ запрещен');
-                    }
-                } else {
-                    ErrorToast('Неверный логин или пароль');
-                }
+            let response = await loginUser({
+                email: emailInput.value,
+                password: passwordInput.value,
+            });
+            if (response?.ok) {
+                const token = await response.json();
+                await setSession(token.token);
             } else {
-                ErrorToast('Ошибка сервера');
+                response?.status === 400 ? ErrorToast(LOGIN_ERROR) : ErrorToast(SERVER_ERROR);
             }
+            setIsLoading(false);
         }
         setIsLoading(false);
     };
@@ -67,9 +71,18 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
+        dispatch(clearSession());
+    }, []);
+
+    useEffect(() => {
         handleForm();
     }, [emailInput.emailError, passwordInput.minLengthError]);
 
+    useEffect(() => {
+        if (roles.length > 0) {
+            checkRights(roles);
+        }
+    }, [roles]);
     return (
         <div>
             <section className='content'>

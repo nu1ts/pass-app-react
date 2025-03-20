@@ -17,7 +17,7 @@ const UserPageFilter = ({ selectedRole }) => {
     const dispatch = useDispatch();
 
     const handleClick = async () => {
-        if (selectedRole === 'student') {
+        if (selectedRole === 'Student') {
             dispatch(
                 setUsersFilters({
                     fullName: search.value || null,
@@ -79,25 +79,6 @@ const UserPageFilter = ({ selectedRole }) => {
                     }}
                 />
                 <div className='flex row-d align-items-center justify-content-sb'>
-                    {selectedRole === 'student' && (
-                        <TextField
-                            label={'Группа'}
-                            inputProps={{
-                                maxLength: 6,
-                                type: 'number',
-                            }}
-                            size={'medium'}
-                            inputMode={'numeric'}
-                            sx={{ height: '56px', boxSizing: 'border-box', width: '120px' }}
-                            value={groupNumber}
-                            onInput={(e) => {
-                                let group = Math.max(0, parseInt(e.target.value))
-                                    .toString()
-                                    .slice(0, e.target.maxLength);
-                                setGroupNumber(group);
-                            }}
-                        />
-                    )}
                     <Button
                         variant={'contained'}
                         sx={{
