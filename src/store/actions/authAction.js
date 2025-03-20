@@ -1,4 +1,5 @@
 import { clearToken, setToken } from "../reducers/authReducer";
+import { setRoles } from "../reducers/rolesReducer";
 import { setUserRoles } from "./rolesAction";
 
 export const setAuth = (token) => async(dispatch) => {
@@ -8,4 +9,5 @@ export const setAuth = (token) => async(dispatch) => {
 
 export const clearSession = () => async(dispatch) => {
     dispatch(clearToken());
+    dispatch(setRoles([]))
 }

@@ -3,15 +3,24 @@ import * as React from 'react';
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp, Download } from '@mui/icons-material';
 import { Box, Collapse, Button, IconButton, Typography } from '@mui/material';
-
+import { Chip } from '@mui/material';
 import InfoChip from '../chip/InfoChip';
 import DeleteModal from '../modal/DeleteModal';
 import { transformDate } from '../../utils/converter/dateConverter';
+import { approveAbsence } from '../../api/absences/absencesService';
+import { ErrorToast } from '../../utils/notifications/notifications';
+import { ERROR_401, SERVER_ERROR } from '../../utils/constants/errorCode';
+import { useNavigate } from 'react-router';
 
 const statuses = {
     Pending: 'default',
     Approved: 'success',
     Rejected: 'error',
+};
+const statusName = {
+    Pending: 'На проверке',
+    Approved: 'Одобрен',
+    Rejected: 'Отклонен',
 };
 
 const passBgColor = {
@@ -24,9 +33,22 @@ export default function AbsenceItem(props) {
     const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
     const [modalOpen, setModalOpen] = React.useState(false);
+    const navigate = useNavigate();
     const handleClose = () => {
         setModalOpen(false);
     };
+    const approve = async () => {
+        const response = await approveAbsence(row.id);
+        if (response.ok) {
+        } else {
+            if (response.status === 401) {
+                ErrorToast(ERROR_401);
+            } else {
+                ErrorToast(SERVER_ERROR);
+            }
+        }
+    };
+
     return (
         <>
             <DeleteModal isOpen={modalOpen} handleClose={handleClose} id={row.id} />
@@ -52,7 +74,7 @@ export default function AbsenceItem(props) {
                 </TableCell>
                 <TableCell>{row.studentName}</TableCell>
                 <TableCell align='right'>
-                    <InfoChip title={row.status} color={statuses[row.status]} />
+                    <InfoChip title={statusName[row.status]} color={statuses[row.status]} />
                 </TableCell>
                 <TableCell align='right'>
                     <InfoChip title={transformDate(row.group)} color={'info'} />
@@ -133,6 +155,7 @@ export default function AbsenceItem(props) {
                                         boxShadow: 'none',
                                         textTransform: 'none',
                                     }}
+                                    onClick={approve}
                                 >
                                     Одобрить
                                 </Button>

@@ -3,7 +3,6 @@ import { ReactRouterAppProvider } from '@toolpad/core/react-router';
 import { Outlet } from 'react-router-dom';
 import PeopleIcon from '@mui/icons-material/People';
 import HistoryIcon from '@mui/icons-material/History';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import HomeIcon from '@mui/icons-material/Home';
 
 import './scss/styles.scss';
@@ -35,18 +34,6 @@ const navigation = [
         segment: 'absences/history',
         title: 'История пропусков',
         icon: <HistoryIcon />,
-    },
-    {
-        kind: 'divider',
-    },
-    {
-        kind: 'header',
-        title: 'Действия',
-    },
-    {
-        segment: '/logout',
-        title: 'Выйти',
-        icon: <ExitToAppIcon />,
     },
 ];
 

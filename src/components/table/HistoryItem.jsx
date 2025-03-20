@@ -1,17 +1,24 @@
 import * as React from 'react';
 
-import { Table, TableBody, TableCell, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableRow, Chip } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp, Download } from '@mui/icons-material';
 import { Box, Collapse, Button, IconButton, Typography } from '@mui/material';
 
 import InfoChip from '../chip/InfoChip';
 import Textarea from '../textArea/TextArea';
 import { transformDate } from '../../utils/converter/dateConverter';
+import { useNavigate } from 'react-router';
 
 const statuses = {
     Pending: 'default',
     Approved: 'success',
     Rejected: 'error',
+};
+
+const statusName = {
+    Pending: 'На проверке',
+    Approved: 'Одобрен',
+    Rejected: 'Отклонен',
 };
 
 const passBgColor = {
@@ -23,7 +30,8 @@ const passBgColor = {
 export default function HistoryItem(props) {
     const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
-    console.log(row);
+
+    const navigate = useNavigate();
     return (
         <>
             <TableRow>
@@ -46,14 +54,14 @@ export default function HistoryItem(props) {
                         )}
                     </IconButton>
                 </TableCell>
-                <TableCell>{row.owner.fullName}</TableCell>
+                <TableCell>{row.studentName}</TableCell>
                 <TableCell align='right'>
-                    <InfoChip title={row.status} color={statuses[row.status]} />
+                    <InfoChip title={statusName[row.status]} color={statuses[row.status]} />
                 </TableCell>
                 <TableCell align='right'>
-                    <InfoChip title={transformDate(row?.owner?.group)} color={'info'} />
+                    <InfoChip title={transformDate(row?.group)} color={'info'} />
                 </TableCell>
-                <TableCell align='center'>{transformDate(row?.date)}</TableCell>
+                <TableCell align='center'>{transformDate(row?.createdAt)}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell
@@ -71,22 +79,22 @@ export default function HistoryItem(props) {
                             </Typography>
                             <Table size='small'>
                                 <TableBody>
-                                    <TableRow key={row.details.date}>
+                                    <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Дата начала: '}
-                                            {transformDate(row.details.start_date)}
+                                            {transformDate(row.start_date)}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Дата окончания: '}
-                                            {transformDate(row.details.end_date)}
+                                            {transformDate(row.end_date)}
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Причина: '}
-                                            {row.details.reason}
+                                            {row.type}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -94,23 +102,16 @@ export default function HistoryItem(props) {
                             {row.status === 'Rejected' && row.comment && (
                                 <Textarea comment={row?.comment} />
                             )}
-                            <Button
-                                sx={{
-                                    margin: '16px 0 0 0',
-                                    textTransform: 'none',
+                            <Chip
+                                size='small'
+                                label='Детали'
+                                color='primary'
+                                variant='outlined'
+                                sx={{ padding: '4px', cursor: 'pointer' }}
+                                onClick={() => {
+                                    navigate(`/absences/${row.id}`);
                                 }}
-                            >
-                                {'Документ'}
-                                <Download
-                                    sx={{
-                                        width: '24px',
-                                        height: '24px',
-                                        color: '#0072bb',
-                                        boxSizing: 'border-box',
-                                        marginLeft: '4px',
-                                    }}
-                                />
-                            </Button>
+                            />
                         </Box>
                     </Collapse>
                 </TableCell>

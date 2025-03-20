@@ -63,12 +63,12 @@ export const exportAbsences = async(queryParams) => {
 }
 
 export const approveAbsence = async(id) => {
-    let token = localStorage.getItem('ACCESS_TOKEN');
     try {
-        return await fetch(`api/absences/${id}/approve`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/absences/${id}/approve`,{
             method:'PATCH',
             headers: {
-                'Authorization':'Bearer ' + token
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
             }
         })
     } catch (error) {
@@ -76,14 +76,18 @@ export const approveAbsence = async(id) => {
     }
 }
 
-export const rejectAbsence = async(id) => {
-    let token = localStorage.getItem('ACCESS_TOKEN');
+export const rejectAbsence = async(id, reason) => {
+
     try {
-        return await fetch(`api/absences/${id}/reject`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/absences/${id}/reject`,{
             method:'PATCH',
             headers: {
-                'Authorization':'Bearer ' + token
-            }
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+            },
+            body: reason ? JSON.stringify({
+                reason: reason
+            }) : null
         })
     } catch (error) {
         console.error(error)
@@ -91,12 +95,13 @@ export const rejectAbsence = async(id) => {
 }
 
 export const extendAbsence = async(id) => {
-    let token = localStorage.getItem('ACCESS_TOKEN');
+    
     try {
-        return await fetch(`api/absences/${id}/extend`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/absences/${id}/extend`,{
             method:'PATCH',
             headers: {
-                'Authorization':'Bearer ' + token
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
             }
         })
     } catch (error) {
@@ -104,6 +109,20 @@ export const extendAbsence = async(id) => {
     }
 }
 
+
+export const fetchAbsenceById = async(id)=> {
+    try {
+        return await fetch(`https://absences-api.orexi4.ru/api/absences/${id}`,{
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+            }
+        })
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export const fetchAbsencesJsonServer = async(queryParams) => {
     try {

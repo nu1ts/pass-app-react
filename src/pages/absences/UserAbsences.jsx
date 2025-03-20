@@ -7,10 +7,11 @@ import AbsencesTable from '../../components/table/AbsencesTable';
 import { useSelector } from 'react-redux';
 import ExportModal from '../../components/modal/ExportModal';
 import EmptyResult from '../../components/emptyResult/EmptyResult';
-
+import Loader from '../../components/loader/Loader';
+import PaginationComponent from '../../components/pagination/Pagination';
 const AbsencesHistoryPage = () => {
     const [open, setOpen] = useState(false);
-    const { historyAbsences } = useSelector((state) => state.absences);
+    const { historyAbsences, isLoading } = useSelector((state) => state.absences);
     const handleClose = () => {
         setOpen(false);
     };
@@ -22,13 +23,18 @@ const AbsencesHistoryPage = () => {
             <ExportModal isOpen={open} handleClose={handleClose} />
             <div className='absences-page'>
                 <HistoryFilters />
-                <div className='inner'>
-                    {historyAbsences.length > 0 ? (
-                        <AbsencesTable history={historyAbsences} />
-                    ) : (
-                        <EmptyResult />
-                    )}
-                </div>
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <div className='inner'>
+                        {historyAbsences.length > 0 ? (
+                            <AbsencesTable history={historyAbsences} />
+                        ) : (
+                            <EmptyResult />
+                        )}
+                        <PaginationComponent />
+                    </div>
+                )}
             </div>
             <div className='absolute'>
                 <Fab

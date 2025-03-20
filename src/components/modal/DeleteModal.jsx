@@ -5,6 +5,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 import { useInput } from '../../hooks/useInput';
+import { rejectAbsence } from '../../api/absences/absencesService';
+import { ErrorToast } from '../../utils/notifications/notifications';
+import { CLIENT_ERROR, ERROR_401, SERVER_ERROR } from '../../utils/constants/errorCode';
 
 export default function DeleteModal({ isOpen, handleClose, id }) {
     const inputRef = useRef(null);
@@ -56,6 +59,22 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
         }
     }, [checked]);
 
+    const reject = async () => {
+        const response = await rejectAbsence(id, comment.value);
+        if (response.ok) {
+        } else {
+            if (response.status === 400) {
+                ErrorToast(CLIENT_ERROR);
+            }
+            if (response.status === 401) {
+                ErrorToast(ERROR_401);
+            }
+            if (response.status >= 500) {
+                ErrorToast(SERVER_ERROR);
+            }
+        }
+    };
+
     return (
         <>
             <Dialog fullScreen={fullScreen} open={isOpen} onClose={handleClose}>
@@ -98,7 +117,7 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
                     <Button
                         variant='contained'
                         type='submit'
-                        onClick={handleClose}
+                        onClick={reject}
                         sx={{
                             boxShadow: 'none',
                         }}
