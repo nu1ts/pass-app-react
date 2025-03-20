@@ -28,12 +28,12 @@ export const fetchUserById = async(id) => {
 }
 
 export const deleteUserById = async(id)=> {
-    let token = localStorage.getItem('ACCESS_TOKEN');
     try {
-        return await fetch(`api/users/${id}`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/users/${id}`,{
             method:'DELETE',
             headers: {
-                'Authorization':'Bearer ' + token
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
             }
         })
     } catch (error) {
@@ -41,33 +41,40 @@ export const deleteUserById = async(id)=> {
     }
 }
 
-export const updateUsersProfile = async(id)=> {
-    let token = localStorage.getItem('ACCESS_TOKEN');
+export const updateUsersProfile = async(id, data)=> {
     try {
-        return await fetch(`api/users/${id}`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/users/${id}`,{
             method:'PUT',
             headers: {
-                'Authorization':'Bearer ' + token
-            }
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+            }, 
+            body: JSON.stringify({
+                ...data
+            })
         })
     } catch (error) {
         console.error(error);
     }
 }
 
-export const changeUsersRole = async(id)=> {
-    let token = localStorage.getItem('ACCESS_TOKEN');
+export const changeUsersRole = async(id, roles)=> {
     try {
-        return await fetch(`api/users/${id}/role`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/users/${id}/role`,{
             method:'PATCH',
             headers: {
-                'Authorization':'Bearer ' + token
-            }
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+            }, body:JSON.stringify([
+                ...roles
+            ])
         })
     } catch (error) {
         console.error(error);
     }
 }
+
+
 
 export const fetchConcreteUserJsonServer = async(id) => {
     try {

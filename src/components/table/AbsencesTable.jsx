@@ -9,8 +9,7 @@ export default function AbsencesTable({ absences = null, history = null }) {
         <TableContainer sx={{ padding: '20px 40px' }}>
             <Table sx={{ overflow: 'scroll' }}>
                 <TableBody sx={{ border: '1px solid #d9d9d9', borderRadius: '8px' }}>
-                    {absences &&
-                        absences.map((row, index) => <AbsenceItem key={index} row={row} />)}
+                    {absences && absences.map((row) => <AbsenceItem key={row.id} row={row} />)}
                     {history &&
                         history.map((row, index) => {
                             if (row.status !== 'Pending') {

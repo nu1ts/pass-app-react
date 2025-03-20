@@ -67,3 +67,17 @@
     margin: 20px 0 5px 0;
     width: 100%;
 }
+
+.absence-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    padding: 20px;
+    span {
+        font-size: 18px;
+        font-weight: 500;
+        color: $soft-black;
+    }
+}

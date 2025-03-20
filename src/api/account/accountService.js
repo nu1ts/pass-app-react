@@ -28,15 +28,17 @@ export const fetchUserProfile = async() => {
     }
 }
 
-export const logoutUser = async(token) => {
+export const logoutUser = async() => {
     try {
-        const response = await fetch(`/api/account/logout`, {
-            method: 'POST',
-            'Authorization': 'Bearer ' + token
+        return await fetch(`https://absences-api.orexi4.ru/api/account/logout`,{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+            }
         })
-        return response
     } catch (error) {
-        console.error('Logout failed with: ' + error)
+        console.error(error);
     }
 }
 

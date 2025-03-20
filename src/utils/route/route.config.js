@@ -14,6 +14,7 @@ import UserProfilePage from '../../pages/users/UserProfilePage';
 import CreateAbsence from '../../pages/absences/CreateAbsence';
 import NotMatch from '../../pages/errorPages/NotMatch';
 import ForbiddenPage from '../../pages/errorPages/ForbiddenPage';
+import AbsenceDetails from '../../pages/absences/AbsenceDetails';
 
 const router = createBrowserRouter([
     {
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
                     {
                         path: '/absences/requests',
                         Component: RequestAbsences,
+                        
+                    },
+                    {
+                        path: '/absences/:id',
+                        Component: AbsenceDetails,
                         
                     },
                     {
