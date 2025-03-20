@@ -12,6 +12,8 @@ import { clearSession } from '../../store/actions/authAction';
 import { ErrorToast } from '../../utils/notifications/notifications';
 import { SERVER_ERROR } from '../../utils/constants/errorCode';
 import Loader from '../../components/loader/Loader';
+import { getHighestRole } from '../../utils/userRight';
+import { setRoles } from '../../store/reducers/rolesReducer';
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState({});
@@ -82,7 +84,7 @@ const ProfilePage = () => {
                             <PermIdentityIcon
                                 sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
                             />
-                            <RoleChip role={profile.role} color={'info'} />
+                            <RoleChip role={getHighestRole(roles)} color={'info'} />
                         </div>
                         <div className='profile-info flex column-d'>
                             <h2>Данные пользователя</h2>

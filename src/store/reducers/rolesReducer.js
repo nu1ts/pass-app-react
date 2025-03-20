@@ -8,6 +8,7 @@ const rolesSlice = createSlice({
     reducers: {
         setRoles: (state, action) => {
             state.roles = action.payload;
+            localStorage.setItem('ROLES', JSON.stringify(action.payload))
         }, 
         clearRoles: (state) => {
             state.roles = [];
