@@ -1,10 +1,11 @@
 export const createAbsence = async(data) => {
-    let token = localStorage.getItem('ACCESS_TOKEN');
+
     try {
-        return await fetch(`api/absences`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/absences`,{
             method:'POST',
             headers: {
-                'Authorization':'Bearer ' + token
+                'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
             }, 
             body: JSON.stringify({
                 ...data
@@ -15,12 +16,13 @@ export const createAbsence = async(data) => {
     }
 }
 
-export const fetchAbsences = async(queryParams) => {
+export const fetchUsersAbsences = async(queryParams) => {
     let token = localStorage.getItem('ACCESS_TOKEN');
     try {
-        return await fetch(`api/absences?${queryParams}`,{
+        return await fetch(`https://absences-api.orexi4.ru/api/absences?${queryParams}`,{
             method:'GET',
             headers: {
+                'Content-Type': 'application/json', 'accept':'application/json',
                 'Authorization':'Bearer ' + token
             }
         })

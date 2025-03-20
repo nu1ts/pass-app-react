@@ -27,3 +27,12 @@ span.MuiCircularProgress-root.MuiCircularProgress-indeterminate.MuiCircularProgr
         color: $dark-blue-bg !important;
     }
 }
+
+.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.Mui-selected.MuiPaginationItem-page {
+    background-color: $light-blue-bg;
+    color: $white-color;
+}
+.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeLarge.MuiPaginationItem-text.MuiPaginationItem-rounded.Mui-selected.MuiPaginationItem-page {
+    background-color: $light-blue-bg;
+    color: $white-color;
+}

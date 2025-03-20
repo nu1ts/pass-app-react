@@ -50,14 +50,14 @@ export default function AbsenceItem(props) {
                         )}
                     </IconButton>
                 </TableCell>
-                <TableCell>{row.owner.fullName}</TableCell>
+                <TableCell>{row.studentName}</TableCell>
                 <TableCell align='right'>
                     <InfoChip title={row.status} color={statuses[row.status]} />
                 </TableCell>
                 <TableCell align='right'>
-                    <InfoChip title={transformDate(row?.owner?.group)} color={'info'} />
+                    <InfoChip title={transformDate(row.group)} color={'info'} />
                 </TableCell>
-                <TableCell align='center'>{transformDate(row?.date)}</TableCell>
+                <TableCell align='center'>{transformDate(row?.createdAt)}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell
@@ -94,7 +94,7 @@ export default function AbsenceItem(props) {
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Причина: '}
-                                            {row.details.reason}
+                                            {row.type}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>

@@ -26,13 +26,19 @@ const getUsersParamQuery = (params) => {
 const getAbsencesParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}&`;
+        queryStr += `StudentName=${params.fullName}&`;
     }
-    if(params.date) {
-        queryStr +=`date=${params.date}&`;
+    if(params.type) {
+        queryStr +=`Type=${params.type}&`;
     }
     if(params.group) {
-        queryStr +=`group=${params.group}&`;
+        queryStr +=`Group=${params.group}&`;
+    }
+    if(params.sorting) {
+        queryStr +=`sorting=${params.sorting}&`;
+    }
+    if(params.onlyMy) {
+        queryStr +=`onlyMy=${params.onlyMy}&`;
     }
     queryStr+='status=Pending'
     return queryStr;
@@ -41,7 +47,7 @@ const getAbsencesParamQuery = (params) => {
 const getHistoryParamQuery = (params) => {
     let queryStr = '';
     if(params.fullName) {
-        queryStr += `fullName=${params.fullName}&`;
+        queryStr += `StudentName=${params.fullName}&`;
     }
     if(params.status && params.status !== 'all') {
         queryStr +=`status=${params.status}&`;
@@ -49,7 +55,13 @@ const getHistoryParamQuery = (params) => {
         queryStr +=`status=Approved&status=Rejected&`
     }  
     if(params.group) {
-        queryStr +=`group=${params.group}&`;
+        queryStr +=`Group=${params.group}&`;
+    }
+    if(params.sorting) {
+        queryStr +=`sorting=${params.sorting}&`;
+    }
+    if(params.type) {
+        queryStr +=`Type=${params.type}&`;
     }
     return queryStr;
 }

@@ -7,6 +7,8 @@ import AbsencesTable from '../../components/table/AbsencesTable';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import EmptyResult from '../../components/emptyResult/EmptyResult';
+import Pagination from '../../components/pagination/Pagination';
+import PaginationComponent from '../../components/pagination/Pagination';
 
 const AbsencesPage = () => {
     const navigate = useNavigate();
@@ -17,6 +19,7 @@ const AbsencesPage = () => {
                 <AbsencesFilters />
                 <div className='inner'>
                     {absences.length > 0 ? <AbsencesTable absences={absences} /> : <EmptyResult />}
+                    <PaginationComponent />
                 </div>
             </div>
             <div className='absolute'>

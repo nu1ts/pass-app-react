@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Box } from '@mui/system';
-import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import {
+    Button,
+    TextField,
+    Select,
+    MenuItem,
+    InputLabel,
+    FormControl,
+    Switch,
+    FormControlLabel,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import InfoChip from '../chip/InfoChip';
@@ -135,19 +144,35 @@ export const HistoryFilters = () => {
 export const AbsencesFilters = () => {
     const [groupNumber, setGroupNumber] = useState('');
     const [date, setDate] = useState(null);
+    const [checked, setChecked] = useState(false);
+    const [type, setType] = useState('');
+    const [sorting, setSorting] = useState('');
     const search = useInput('', {});
     const dispatch = useDispatch();
     const { absencesFilters } = useSelector((state) => state.filters);
     const { absences } = useSelector((state) => state.absences);
 
+    const handleTypeChange = (e) => {
+        setType(e.target.value);
+    };
+
+    const handleSortChange = (e) => {
+        setSorting(e.target.value);
+    };
+
+    const handleCheck = (event) => {
+        setChecked(event.target.checked);
+    };
+
     const handleClick = () => {
         dispatch(
             setAbsencesFiltersParams({
                 fullName: search.value || null,
-                date: date || null,
                 status: 'Pending',
                 group: groupNumber || null,
-                size: 5,
+                type: type || null,
+                sorting: null,
+                size: 10,
                 page: 1,
             }),
         );
@@ -169,39 +194,102 @@ export const AbsencesFilters = () => {
                     boxSizing: 'border-box',
                     padding: '10px 20px',
                     margin: '0 20px',
+                    height: 'auto',
                     display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    flexDirection: 'column',
+                    alignItems: 'start',
                     justifyContent: 'space-between',
                     borderBottom: 1,
                     borderColor: 'divider',
                 }}
             >
-                <SearchInput
-                    value={search.value}
-                    onChange={(e) => {
-                        search.onChange(e);
-                    }}
-                />
-                <div className='flex row-d align-items-center justify-content-sb'>
-                    <DateInput date={date} setDate={setDate} />
-                    <TextField
-                        label={'Группа'}
-                        inputProps={{
-                            maxLength: 6,
-                            type: 'number',
-                        }}
-                        inputMode={'numeric'}
-                        size='medium'
-                        sx={{ width: '120px' }}
-                        value={groupNumber}
-                        onInput={(e) => {
-                            let group = Math.max(0, parseInt(e.target.value))
-                                .toString()
-                                .slice(0, e.target.maxLength);
-                            setGroupNumber(isNaN(group) ? '' : group);
+                <div className='flex row-d align-items-center justify-content-sb w-100'>
+                    <SearchInput
+                        value={search.value}
+                        onChange={(e) => {
+                            search.onChange(e);
                         }}
                     />
+                    <FormControlLabel
+                        value={checked}
+                        control={
+                            <Switch
+                                checked={checked}
+                                onChange={handleCheck}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                        }
+                        label='Мои заявки'
+                        labelPlacement='end'
+                    />
+                </div>
+                <div className='flex row-d align-items-center justify-content-sb mt-20 w-100'>
+                    <div className='flex row-d align-items-center'>
+                        <FormControl>
+                            <InputLabel id='status-label'>Тип заявки</InputLabel>
+                            <Select
+                                labelId='status-label'
+                                value={type}
+                                sx={{
+                                    width: '100%',
+                                    minWidth: '200px',
+                                    maxWidth: '200px',
+                                    marginRight: '10px',
+                                    height: '56px',
+                                    color: '#000',
+                                    backgroundColor: '#fff',
+                                }}
+                                label='Тип заявки'
+                                size='medium'
+                                onChange={handleTypeChange}
+                            >
+                                <MenuItem value={'Sick'}>Больничный</MenuItem>
+                                <MenuItem value={'Academic'}>Учебная</MenuItem>
+                                <MenuItem value={'Family'}>Семейные обстоятельства</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <FormControl>
+                            <InputLabel id='status-label'>Сортировка</InputLabel>
+                            <Select
+                                labelId='status-label'
+                                value={sorting}
+                                sx={{
+                                    width: '100%',
+                                    minWidth: '200px',
+                                    maxWidth: '200px',
+                                    marginRight: '10px',
+                                    height: '56px',
+                                    color: '#000',
+                                    backgroundColor: '#fff',
+                                }}
+                                label='Сортировка'
+                                size='medium'
+                                onChange={handleSortChange}
+                            >
+                                <MenuItem value={'CreateAsc'}>Новые</MenuItem>
+                                <MenuItem value={'CreateDesc'}>Старые</MenuItem>
+                                <MenuItem value={'UpdateAsc'}>Обновленные</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <TextField
+                            label={'Группа'}
+                            inputProps={{
+                                maxLength: 6,
+                                type: 'number',
+                            }}
+                            inputMode={'numeric'}
+                            size='medium'
+                            sx={{ width: '120px' }}
+                            value={groupNumber}
+                            onInput={(e) => {
+                                let group = Math.max(0, parseInt(e.target.value))
+                                    .toString()
+                                    .slice(0, e.target.maxLength);
+                                setGroupNumber(isNaN(group) ? '' : group);
+                            }}
+                        />
+                    </div>
 
                     <Button
                         variant={'contained'}
