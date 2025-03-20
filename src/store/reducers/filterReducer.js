@@ -22,7 +22,7 @@ const filterSlice = createSlice({
         },
         absencesHistoryFilters: {
             fullName:'',
-            status: '',
+            status: 'Approved',
             sorting: 'CreateAsc',
             type: '',
             group: '',

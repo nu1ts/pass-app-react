@@ -9,18 +9,29 @@ import { useNavigate } from 'react-router-dom';
 import EmptyResult from '../../components/emptyResult/EmptyResult';
 import Pagination from '../../components/pagination/Pagination';
 import PaginationComponent from '../../components/pagination/Pagination';
+import Loader from '../../components/loader/Loader';
 
 const AbsencesPage = () => {
     const navigate = useNavigate();
-    const { absences } = useSelector((state) => state.absences);
+    const { absences, isLoading } = useSelector((state) => state.absences);
     return (
         <>
             <div className='absences-page'>
                 <AbsencesFilters />
-                <div className='inner'>
-                    {absences.length > 0 ? <AbsencesTable absences={absences} /> : <EmptyResult />}
-                </div>
-                <PaginationComponent />
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <>
+                        <div className='inner'>
+                            {absences.length > 0 ? (
+                                <AbsencesTable absences={absences} />
+                            ) : (
+                                <EmptyResult />
+                            )}
+                        </div>
+                        <PaginationComponent />
+                    </>
+                )}
             </div>
             <div className='absolute'>
                 <Fab

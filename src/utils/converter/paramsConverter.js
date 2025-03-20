@@ -53,10 +53,8 @@ const getHistoryParamQuery = (params) => {
         queryStr += `StudentName=${params.fullName}&`;
     }
     if(params.status && params.status !== 'all') {
-        queryStr +=`status=${params.status}&`;
-    } else {
-        queryStr +=`status=Approved&status=Rejected&`
-    }  
+        queryStr +=`Status=${params.status}&`;
+    } 
     if(params.group) {
         queryStr +=`Group=${params.group}&`;
     }

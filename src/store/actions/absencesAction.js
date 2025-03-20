@@ -1,17 +1,36 @@
 import { ConstructionOutlined } from "@mui/icons-material";
 import { current } from "@reduxjs/toolkit";
 import { fetchAbsencesJsonServer, fetchUsersAbsences } from "../../api/absences/absencesService";
-import { setAbsences, setHistory, setPagination } from "../reducers/absencesReducer";
+import { setAbsences, setHistory, setLoadAbsences, setPagination } from "../reducers/absencesReducer";
 
 export const fetchAbsences = (query, type) => async(dispatch) => {
     console.log(`Type: ${type}\nQuery: ${query}`);
+    dispatch(setLoadAbsences(true))
+    let response = null;
     switch (type) {
         case 'HISTORY':
             console.log()
-            dispatch(setHistory(await fetchAbsencesJsonServer(query)));
+            response = await fetchUsersAbsences(query);
+            if(response.ok) {
+                    const absences = await response.json();
+                    dispatch(setHistory(absences.absences))
+                    console.log(absences.absences)
+                    dispatch(setPagination(
+                        {count:absences.count, size:absences.size, current:absences.current}))
+                   
+                } else {
+                    if(response.status === 401) {
+                        dispatch(setAbsences([]));
+                        return WarningToast(ERROR_401);
+                    }
+                    if(response.status >= 500) {
+                        return ErrorToast(SERVER_ERROR)
+                    }
+                }
+            
             break;
         case 'ABSENCES':
-            const response = await fetchUsersAbsences(query);
+            response = await fetchUsersAbsences(query);
             if(response.ok) {
                     const absences = await response.json();
                     dispatch(setAbsences(absences.absences))

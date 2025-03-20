@@ -24,12 +24,26 @@ import { ABSENCES, HISTORY } from '../../utils/constants/filterType';
 
 export const HistoryFilters = () => {
     const { absencesHistoryFilters } = useSelector((state) => state.filters);
-    const { historyAbsences } = useSelector((state) => state.absences);
+    const { pagination } = useSelector((state) => state.absences);
     const [groupNumber, setGroupNumber] = useState(absencesHistoryFilters.group);
     const [status, setStatus] = useState(absencesHistoryFilters.status);
     const search = useInput('', {});
-    const dispatch = useDispatch();
+    const [checked, setChecked] = useState(false);
+    const [type, setType] = useState('');
+    const [sorting, setSorting] = useState('');
 
+    const dispatch = useDispatch();
+    const handleTypeChange = (e) => {
+        setType(e.target.value);
+    };
+
+    const handleSortChange = (e) => {
+        setSorting(e.target.value);
+    };
+
+    const handleCheck = (event) => {
+        setChecked(event.target.checked);
+    };
     const handleChange = (e) => {
         setStatus(e.target.value);
     };
@@ -40,11 +54,22 @@ export const HistoryFilters = () => {
                 fullName: search.value || null,
                 status: status,
                 group: groupNumber || null,
-                size: 5,
+                size: 10,
                 page: 1,
             }),
         );
     };
+    useEffect(() => {
+        dispatch(
+            setAbsencesHistoryFiltersParams({
+                fullName: search.value || null,
+                status: status,
+                group: groupNumber || null,
+                size: 10,
+                page: pagination.current,
+            }),
+        );
+    }, [pagination.current]);
 
     useEffect(() => {
         setGroupNumber(absencesHistoryFilters.group);
@@ -64,64 +89,125 @@ export const HistoryFilters = () => {
                     padding: '10px 20px',
                     margin: '0 20px',
                     display: 'flex',
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     borderBottom: 1,
                     borderColor: 'divider',
                 }}
             >
-                <SearchInput
-                    value={search.value}
-                    onChange={(e) => {
-                        search.onChange(e);
-                    }}
-                />
-                <div className='flex row-d align-items-center justify-content-sb'>
-                    <FormControl>
-                        <InputLabel id='status-label'>Статус</InputLabel>
-                        <Select
-                            labelId='status-label'
-                            value={status}
-                            sx={{
-                                minWidth: '120px',
-                                marginRight: '10px',
-                                height: '56px',
-                                color: '#000',
-                                backgroundColor: '#fff',
-                            }}
-                            label='Статус'
-                            size='medium'
-                            onChange={handleChange}
-                        >
-                            <MenuItem value={'all'}>
-                                <InfoChip title='Все' color='default' />
-                            </MenuItem>
-                            <MenuItem value={'Approved'}>
-                                <InfoChip title='Одобрен' color='success' />
-                            </MenuItem>
-                            <MenuItem value={'Rejected'}>
-                                <InfoChip title='Отклонен' color='error' />
-                            </MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TextField
-                        label={'Группа'}
-                        inputProps={{
-                            maxLength: 6,
-                            type: 'number',
-                        }}
-                        inputMode={'numeric'}
-                        size='medium'
-                        sx={{ width: '120px' }}
-                        value={groupNumber}
-                        onInput={(e) => {
-                            let group = Math.max(0, parseInt(e.target.value))
-                                .toString()
-                                .slice(0, e.target.maxLength);
-                            setGroupNumber(isNaN(group) ? '' : group);
+                <div className='flex row-d align-items-center justify-content-sb w-100'>
+                    <SearchInput
+                        value={search.value}
+                        onChange={(e) => {
+                            search.onChange(e);
                         }}
                     />
+                    <FormControlLabel
+                        value={checked}
+                        control={
+                            <Switch
+                                checked={checked}
+                                onChange={handleCheck}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                        }
+                        label='Мои заявки'
+                        labelPlacement='end'
+                    />
+                </div>
+                <div className='flex row-d align-items-center justify-content-sb mt-20 w-100'>
+                    <div className='flex row-d align-items-center'>
+                        <TextField
+                            label={'Группа'}
+                            inputProps={{
+                                maxLength: 6,
+                                type: 'number',
+                            }}
+                            inputMode={'numeric'}
+                            size='medium'
+                            sx={{ width: '120px', marginRight: '10px' }}
+                            value={groupNumber}
+                            onInput={(e) => {
+                                let group = Math.max(0, parseInt(e.target.value))
+                                    .toString()
+                                    .slice(0, e.target.maxLength);
+                                setGroupNumber(isNaN(group) ? '' : group);
+                            }}
+                        />
+                        <FormControl>
+                            <InputLabel id='status-label'>Статус</InputLabel>
+                            <Select
+                                labelId='status-label'
+                                value={status}
+                                sx={{
+                                    minWidth: '120px',
+                                    marginRight: '10px',
+                                    height: '56px',
+                                    color: '#000',
+                                    backgroundColor: '#fff',
+                                }}
+                                label='Статус'
+                                size='medium'
+                                onChange={handleChange}
+                            >
+                                <MenuItem value={'Approved'}>
+                                    <InfoChip title='Одобрен' color='success' />
+                                </MenuItem>
+                                <MenuItem value={'Rejected'}>
+                                    <InfoChip title='Отклонен' color='error' />
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel id='status-label'>Тип заявки</InputLabel>
+                            <Select
+                                labelId='status-label'
+                                value={type}
+                                sx={{
+                                    width: '100%',
+                                    minWidth: '200px',
+                                    maxWidth: '200px',
+                                    marginRight: '10px',
+                                    height: '56px',
+                                    color: '#000',
+                                    backgroundColor: '#fff',
+                                }}
+                                label='Тип заявки'
+                                size='medium'
+                                onChange={handleTypeChange}
+                            >
+                                <MenuItem value={'Sick'}>Больничный</MenuItem>
+                                <MenuItem value={'Academic'}>Учебная</MenuItem>
+                                <MenuItem value={'Family'}>Семейные обстоятельства</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <FormControl>
+                            <InputLabel id='status-label'>Сортировка</InputLabel>
+                            <Select
+                                labelId='status-label'
+                                value={sorting}
+                                sx={{
+                                    width: '100%',
+                                    minWidth: '200px',
+                                    maxWidth: '200px',
+                                    marginRight: '10px',
+                                    height: '56px',
+                                    color: '#000',
+                                    backgroundColor: '#fff',
+                                }}
+                                label='Сортировка'
+                                size='medium'
+                                onChange={handleSortChange}
+                            >
+                                <MenuItem value={'CreateAsc'}>Новые</MenuItem>
+                                <MenuItem value={'CreateDesc'}>Старые</MenuItem>
+                                <MenuItem value={'UpdateAsc'}>Обновленные</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
                     <Button
                         variant={'contained'}
                         size={'medium'}
@@ -144,13 +230,14 @@ export const HistoryFilters = () => {
 export const AbsencesFilters = () => {
     const [groupNumber, setGroupNumber] = useState('');
     const [checked, setChecked] = useState(false);
-    const [page, setPage] = useState(1);
+
     const [type, setType] = useState('');
     const [sorting, setSorting] = useState('');
+
     const search = useInput('', {});
     const dispatch = useDispatch();
     const { absencesFilters } = useSelector((state) => state.filters);
-    const { absences, pagination } = useSelector((state) => state.absences);
+    const { pagination } = useSelector((state) => state.absences);
 
     const handleTypeChange = (e) => {
         setType(e.target.value);
@@ -173,7 +260,8 @@ export const AbsencesFilters = () => {
                 type: type || null,
                 sorting: null,
                 size: 10,
-                page: pagination.current,
+                page: 1,
+                onlyMy: checked,
             }),
         );
     };
@@ -181,6 +269,7 @@ export const AbsencesFilters = () => {
         setGroupNumber(absencesFilters.group);
         search.setValue(absencesFilters.fullName);
     }, []);
+
     useEffect(() => {
         dispatch(
             setAbsencesFiltersParams({
@@ -191,6 +280,7 @@ export const AbsencesFilters = () => {
                 sorting: null,
                 size: 10,
                 page: pagination.current,
+                onlyMy: checked,
             }),
         );
     }, [pagination.current]);

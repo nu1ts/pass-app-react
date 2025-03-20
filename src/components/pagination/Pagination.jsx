@@ -18,13 +18,14 @@ export default function PaginationComponent({ count = 10 }) {
         dispatch(setPagination({ count: pagination.count, size: pagination.size, current: page }));
     }, [page]);
 
-    React.useEffect(() => {
-        console.log(pagination);
-    }, [pagination]);
     return (
         <Stack spacing={2}>
             <Pagination
-                count={Math.ceil(pagination.count / pagination.size)}
+                count={
+                    Math.ceil(pagination.count / pagination.size) > 1
+                        ? Math.ceil(pagination.count / pagination.size)
+                        : 0
+                }
                 className='pagination'
                 page={page}
                 sx={{
