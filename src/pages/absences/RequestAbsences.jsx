@@ -14,6 +14,7 @@ import Loader from '../../components/loader/Loader';
 const AbsencesPage = () => {
     const navigate = useNavigate();
     const { absences, isLoading } = useSelector((state) => state.absences);
+    const { roles } = useSelector((state) => state.roles);
     return (
         <>
             <div className='absences-page'>
@@ -33,17 +34,19 @@ const AbsencesPage = () => {
                     </>
                 )}
             </div>
-            <div className='absolute'>
-                <Fab
-                    sx={{ width: '70px', height: '70px' }}
-                    color='primary'
-                    onClick={() => {
-                        navigate('/absences/create');
-                    }}
-                >
-                    <EditNoteIcon />
-                </Fab>
-            </div>
+            {roles.includes('Student') && (
+                <div className='absolute'>
+                    <Fab
+                        sx={{ width: '70px', height: '70px' }}
+                        color='primary'
+                        onClick={() => {
+                            navigate('/absences/create');
+                        }}
+                    >
+                        <EditNoteIcon />
+                    </Fab>
+                </div>
+            )}
         </>
     );
 };
