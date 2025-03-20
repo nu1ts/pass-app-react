@@ -2,12 +2,15 @@
 
 .profile-page {
     box-sizing: border-box;
-
     padding: 20px;
     width: 100%;
     min-height: 400px;
     height: auto;
     max-height: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     div.inner-wrapper {
         display: flex;

@@ -21,3 +21,9 @@ main.MuiBox-root {
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded {
     background-color: $white-color;
 }
+
+span.MuiCircularProgress-root.MuiCircularProgress-indeterminate.MuiCircularProgress-colorPrimary {
+    svg {
+        color: $dark-blue-bg !important;
+    }
+}
