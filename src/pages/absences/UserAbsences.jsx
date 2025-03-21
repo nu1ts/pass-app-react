@@ -15,9 +15,7 @@ const AbsencesHistoryPage = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    useEffect(() => {
-        console.log(historyAbsences);
-    }, [historyAbsences]);
+
     return (
         <>
             <ExportModal isOpen={open} handleClose={handleClose} />

@@ -3,6 +3,12 @@ import DateInput from '../../components/datePicker/DateInput';
 import { useState, useEffect } from 'react';
 import { FormControlLabel } from '@mui/material';
 import { Switch } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { List } from '@mui/material';
+import { Add } from '@mui/icons-material';
+import FileItem from '../../components/input/FileItem';
+import './index.scss';
 import {
     Button,
     TextField,
@@ -12,8 +18,24 @@ import {
     FormControl,
     Divider,
 } from '@mui/material';
-import InputFile from '../../components/input/InputFile';
+
 import { dateAreValid, endDateValid } from '../../utils/dateValidation';
+import { createAbsence } from '../../api/absences/absencesService';
+import { ErrorToast, SuccessToast } from '../../utils/notifications/notifications';
+import { ERROR_400, ERROR_401, SERVER_ERROR } from '../../utils/constants/errorCode';
+import { ToastContainer } from 'react-toastify';
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 const CreateAbsence = () => {
     const [isValidForm, setIsValidForm] = useState(false);
@@ -24,10 +46,49 @@ const CreateAbsence = () => {
     const [checked, setChecked] = useState(false);
     const [isDateError, setError] = useState(false);
     const [documents, setDocuments] = useState([]);
+    const [files, setFiles] = React.useState([]);
 
-    const handleSubmit = (e) => {
+    const handleFilesChange = (e) => {
+        e.preventDefault();
+        if (e.target.files && e.target.files[0]) {
+            setFiles((prev) => {
+                return [...prev, ...e.target.files];
+            });
+        }
+
+        setFiles((prev) => [...prev]);
+        return (e.target.value = null);
+    };
+
+    React.useEffect(() => {
+        setDocuments(files);
+    }, [files]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        let formData = new FormData();
+        formData.append('Type', type);
+        formData.append('StartDate', checked ? '' : firstDate);
+        formData.append('EndDate', checked ? '' : secondDate);
+        formData.append('DeclarationToDean', checked);
+        if (documents) {
+            formData.append('Documents', documents);
+        }
+        const response = await createAbsence(formData);
+        if (response.ok) {
+            return SuccessToast('Заявка отправлена');
+        } else {
+            if (response.status === 400) {
+                ErrorToast(ERROR_400);
+            }
+            if (response.status === 401) {
+                ErrorToast(ERROR_401);
+            }
+            if (response.status >= 500) {
+                ErrorToast(SERVER_ERROR);
+            }
+        }
     };
     const handleCheck = (event) => {
         setChecked(event.target.checked);
@@ -41,6 +102,7 @@ const CreateAbsence = () => {
         } else if (type === 'Family' && !checked) {
             return setIsValidForm(documents.length !== 0);
         } else {
+            setChecked(false);
             return setIsValidForm(
                 dateAreValid(firstDate, secondDate) && type && documents.length !== 0,
             );
@@ -55,7 +117,7 @@ const CreateAbsence = () => {
         <>
             <div className='absences-page'>
                 <div className='flex column-d align-items-center'>
-                    <form className='absence-create-form' action=''>
+                    <form className='absence-create-form' action='' onSubmit={handleSubmit}>
                         <h1>Форма создания заявки</h1>
                         {type !== 'Family' && (
                             <div className='date-inputs-wrapper'>
@@ -122,11 +184,46 @@ const CreateAbsence = () => {
                             {type === 'Family' && checked ? (
                                 <></>
                             ) : (
-                                <InputFile setDocuments={setDocuments} />
+                                <>
+                                    {files.length ? (
+                                        <List className='files-list'>
+                                            {files.map((file, index) => {
+                                                return (
+                                                    <FileItem
+                                                        fileName={file.name}
+                                                        id={index}
+                                                        setFile={setFiles}
+                                                    />
+                                                );
+                                            })}
+                                        </List>
+                                    ) : (
+                                        <div className='inner-info'>
+                                            {'Прикрепите файлы'}
+                                            {<Add sx={{ color: '#d9d9d9' }} />}
+                                        </div>
+                                    )}
+                                    <Button
+                                        component='label'
+                                        variant='contained'
+                                        tabIndex={-1}
+                                        startIcon={<CloudUploadIcon />}
+                                        sx={{ width: 1 }}
+                                    >
+                                        {'Загрузить документы'}
+                                        <VisuallyHiddenInput
+                                            type='file'
+                                            accept='image/*'
+                                            onChange={handleFilesChange}
+                                            multiple
+                                        />
+                                    </Button>
+                                </>
                             )}
                         </div>
                         <Button
                             variant='contained'
+                            type='submit'
                             sx={{ width: 1, margin: 0 }}
                             disabled={!isValidForm}
                         >
@@ -135,6 +232,7 @@ const CreateAbsence = () => {
                     </form>
                 </div>
             </div>
+            <ToastContainer />
         </>
     );
 };

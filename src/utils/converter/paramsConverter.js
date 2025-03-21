@@ -37,11 +37,11 @@ const getAbsencesParamQuery = (params) => {
     if(params.sorting) {
         queryStr +=`sorting=${params.sorting}&`;
     }
-    if(params.onlyMy) {
-        queryStr +=`onlyMy=${params.onlyMy}&`;
-    }
     if(params.page) {
         queryStr +=`page=${params.page}&`;
+    }
+    if(params.onlyMy) {
+        queryStr +=`onlyMy=${params.onlyMy}&`;
     }
     queryStr+='status=Pending'
     return queryStr;
@@ -66,6 +66,9 @@ const getHistoryParamQuery = (params) => {
     }
     if(params.page) {
         queryStr +=`page=${params.page}&`;
+    }
+    if(params.onlyMy) {
+        queryStr +=`page=${params.onlyMy}&`;
     }
     return queryStr;
 }

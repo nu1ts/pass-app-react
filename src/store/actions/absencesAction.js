@@ -1,6 +1,4 @@
-import { ConstructionOutlined } from "@mui/icons-material";
-import { current } from "@reduxjs/toolkit";
-import { fetchAbsencesJsonServer, fetchUsersAbsences } from "../../api/absences/absencesService";
+import { fetchUsersAbsences } from "../../api/absences/absencesService";
 import { setAbsences, setHistory, setLoadAbsences, setPagination } from "../reducers/absencesReducer";
 
 export const fetchAbsences = (query, type) => async(dispatch) => {
@@ -14,7 +12,6 @@ export const fetchAbsences = (query, type) => async(dispatch) => {
             if(response.ok) {
                     const absences = await response.json();
                     dispatch(setHistory(absences.absences))
-                    console.log(absences.absences)
                     dispatch(setPagination(
                         {count:absences.count, size:absences.size, current:absences.current}))
                    

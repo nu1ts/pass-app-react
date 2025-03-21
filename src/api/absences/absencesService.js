@@ -1,16 +1,15 @@
 export const createAbsence = async(data) => {
-
+   
     try {
         return await fetch(`https://absences-api.orexi4.ru/api/absences`,{
             method:'POST',
             headers: {
-                'Content-Type': 'application/json', 'accept':'application/json',
+                
                 'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
             }, 
-            body: JSON.stringify({
-                ...data
-            })
+            body: data
         })
+        
     } catch (error) {
         console.error(error);
     }

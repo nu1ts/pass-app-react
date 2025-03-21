@@ -25,11 +25,13 @@ export default function InputFile({ setDocuments = null }) {
     const handleFilesChange = (e) => {
         e.preventDefault();
         if (e.target.files && e.target.files[0]) {
-            return setFiles((prev) => {
+            setFiles((prev) => {
                 return [...prev, ...e.target.files];
             });
         }
-        return setFiles((prev) => [...prev]);
+
+        setFiles((prev) => [...prev]);
+        return (e.target.value = null);
     };
 
     React.useEffect(() => {
