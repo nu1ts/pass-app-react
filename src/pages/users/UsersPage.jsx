@@ -22,7 +22,7 @@ const UsersPage = () => {
                             {users.length > 0 ? (
                                 <List sx={{ width: 1, paddingX: '16px' }}>
                                     {users.map((item) => {
-                                        return <UserItem {...item} />;
+                                        return <UserItem key={item.id} {...item} />;
                                     })}
                                 </List>
                             ) : (

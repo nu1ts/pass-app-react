@@ -6,8 +6,10 @@ import { useTheme } from '@mui/material/styles';
 
 import { useInput } from '../../hooks/useInput';
 import { rejectAbsence } from '../../api/absences/absencesService';
-import { ErrorToast } from '../../utils/notifications/notifications';
+import { ErrorToast, SuccessToast, WarningToast } from '../../utils/notifications/notifications';
 import { CLIENT_ERROR, ERROR_401, SERVER_ERROR } from '../../utils/constants/errorCode';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAbsences } from '../../store/reducers/absencesReducer';
 
 export default function DeleteModal({ isOpen, handleClose, id }) {
     const inputRef = useRef(null);
@@ -20,7 +22,7 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
     const [isValidForm, setIsValidForm] = useState(false);
     const [checked, setChecked] = useState(false);
     const [disabled, setDisabled] = useState(false);
-
+    const { absences } = useSelector((state) => state.absences);
     const handleChange = (event) => {
         setChecked(event.target.checked);
     };
@@ -45,6 +47,8 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
         }
     };
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         handleValid();
     }, [checked, isValidForm]);
@@ -60,8 +64,10 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
     }, [checked]);
 
     const reject = async () => {
-        const response = await rejectAbsence(id, comment.value);
+        const response = await rejectAbsence(id, comment?.value || null);
         if (response.ok) {
+            dispatch(setAbsences(absences.filter((item) => item.id != id)));
+            return WarningToast('Заявка отклонена');
         } else {
             if (response.status === 400) {
                 ErrorToast(CLIENT_ERROR);

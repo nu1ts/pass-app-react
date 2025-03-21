@@ -25,7 +25,6 @@ export default function UserSelect({ value, setValue }) {
             renderInput={(params) => <TextField {...params} label='Пользователи' />}
             sx={{
                 width: '100%',
-
                 maxWidth: '524px',
                 margin: '0 0 20px 0',
             }}

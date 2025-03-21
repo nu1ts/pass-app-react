@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import InfoChip from '../chip/InfoChip';
 import SearchInput from '../search/SearchInput';
-import DateInput from '../datePicker/DateInput';
 import { useInput } from '../../hooks/useInput';
 import { setAbsencesHistoryFiltersParams } from '../../store/actions/filterAction';
 import { setAbsencesFiltersParams } from '../../store/actions/filterAction';
@@ -53,6 +52,8 @@ export const HistoryFilters = () => {
             setAbsencesHistoryFiltersParams({
                 fullName: search.value || null,
                 status: status,
+                type: type,
+                sorting: sorting,
                 group: groupNumber || null,
                 size: 10,
                 page: 1,
@@ -64,7 +65,9 @@ export const HistoryFilters = () => {
             setAbsencesHistoryFiltersParams({
                 fullName: search.value || null,
                 status: status,
+                type: type,
                 group: groupNumber || null,
+                sorting: sorting,
                 size: 10,
                 page: pagination.current,
             }),
@@ -75,6 +78,8 @@ export const HistoryFilters = () => {
         setGroupNumber(absencesHistoryFilters.group);
         setStatus(absencesHistoryFilters.status);
         search.setValue(absencesHistoryFilters.fullName);
+        setType(absencesHistoryFilters.type);
+        setSorting(absencesHistoryFilters.sorting);
     }, []);
 
     useEffect(() => {
@@ -201,9 +206,9 @@ export const HistoryFilters = () => {
                                 size='medium'
                                 onChange={handleSortChange}
                             >
-                                <MenuItem value={'CreateAsc'}>Новые</MenuItem>
-                                <MenuItem value={'CreateDesc'}>Старые</MenuItem>
-                                <MenuItem value={'UpdateAsc'}>Обновленные</MenuItem>
+                                <MenuItem value={'CreateDesc'}>Новые</MenuItem>
+                                <MenuItem value={'CreateAsc'}>Старые</MenuItem>
+                                <MenuItem value={'UpdateDesc'}>Обновленные</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
@@ -368,9 +373,9 @@ export const AbsencesFilters = () => {
                                 size='medium'
                                 onChange={handleSortChange}
                             >
-                                <MenuItem value={'CreateAsc'}>Новые</MenuItem>
-                                <MenuItem value={'CreateDesc'}>Старые</MenuItem>
-                                <MenuItem value={'UpdateAsc'}>Обновленные</MenuItem>
+                                <MenuItem value={'CreateDesc'}>Новые</MenuItem>
+                                <MenuItem value={'CreateAsc'}>Старые</MenuItem>
+                                <MenuItem value={'UpdateDesc'}>Обновленные</MenuItem>
                             </Select>
                         </FormControl>
                         <TextField

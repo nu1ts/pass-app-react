@@ -27,6 +27,7 @@ const absencesSlice = createSlice({
         setLoadAbsences:(state) => {
             state.isLoading = true;
         },
+        
     }
 })
 

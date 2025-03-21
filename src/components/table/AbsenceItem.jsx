@@ -8,9 +8,12 @@ import InfoChip from '../chip/InfoChip';
 import DeleteModal from '../modal/DeleteModal';
 import { transformDate } from '../../utils/converter/dateConverter';
 import { approveAbsence } from '../../api/absences/absencesService';
-import { ErrorToast } from '../../utils/notifications/notifications';
+import { ErrorToast, SuccessToast } from '../../utils/notifications/notifications';
 import { ERROR_401, SERVER_ERROR } from '../../utils/constants/errorCode';
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import { setAbsences } from '../../store/reducers/absencesReducer';
 
 const statuses = {
     Pending: 'default',
@@ -29,17 +32,28 @@ const passBgColor = {
     Rejected: '#ffebeb',
 };
 
+const reason = {
+    Sick: 'Болезнь',
+    Family: 'Семейные обстоятельства',
+    Academic: 'Учебная',
+};
+
 export default function AbsenceItem(props) {
     const { row } = { ...props };
     const [open, setOpen] = React.useState(false);
     const [modalOpen, setModalOpen] = React.useState(false);
+    const [reload, setReload] = React.useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { absences } = useSelector((state) => state.absences);
     const handleClose = () => {
         setModalOpen(false);
     };
     const approve = async () => {
         const response = await approveAbsence(row.id);
         if (response.ok) {
+            dispatch(setAbsences(absences.filter((item) => item.id != row.id)));
+            return SuccessToast('Одобрено');
         } else {
             if (response.status === 401) {
                 ErrorToast(ERROR_401);
@@ -47,6 +61,7 @@ export default function AbsenceItem(props) {
                 ErrorToast(SERVER_ERROR);
             }
         }
+        setReload((prev) => !prev);
     };
 
     return (
@@ -116,28 +131,22 @@ export default function AbsenceItem(props) {
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
                                             {'Причина: '}
-                                            {row.type}
+                                            {reason[row.type]}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
-                            <Button
-                                sx={{
-                                    margin: '16px 0 0 0',
-                                    textTransform: 'none',
+                            <Chip
+                                size='medium'
+                                label='Открыть детали'
+                                color='primary'
+                                variant='outlined'
+                                sx={{ margin: '10px 0 0 10px', padding: '4px', cursor: 'pointer' }}
+                                onClick={() => {
+                                    navigate(`/absences/${row.id}`);
                                 }}
-                            >
-                                {'Документ'}
-                                <Download
-                                    sx={{
-                                        width: '24px',
-                                        height: '24px',
-                                        color: '#0072bb',
-                                        boxSizing: 'border-box',
-                                        marginLeft: '4px',
-                                    }}
-                                />
-                            </Button>
+                            />
+
                             <TableRow
                                 sx={{
                                     display: 'flex',
@@ -174,6 +183,7 @@ export default function AbsenceItem(props) {
                     </Collapse>
                 </TableCell>
             </TableRow>
+            <ToastContainer />
         </>
     );
 }

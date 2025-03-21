@@ -3,6 +3,8 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { Button, TextField } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import './index.scss';
+import Fab from '@mui/material/Fab';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useInput } from '../../hooks/useInput';
 import RoleChip from '../../components/chip/RoleChip';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,8 +15,6 @@ import { ErrorToast } from '../../utils/notifications/notifications';
 import { CLIENT_ERROR, SERVER_ERROR } from '../../utils/constants/errorCode';
 import Loader from '../../components/loader/Loader';
 import { getHighestRole } from '../../utils/userRight';
-import { setRoles } from '../../store/reducers/rolesReducer';
-import { jwtDecode } from 'jwt-decode';
 
 const ProfilePage = () => {
     const [profile, setProfile] = useState({});
@@ -80,54 +80,55 @@ const ProfilePage = () => {
                 {isLoading ? (
                     <Loader />
                 ) : (
-                    <div className='inner-wrapper '>
-                        <div className='img-wrapper'>
-                            <PermIdentityIcon
-                                sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
-                            />
-                            <RoleChip role={userRole} color={'info'} />
+                    <>
+                        <div className='inner-wrapper '>
+                            <div className='img-wrapper'>
+                                <PermIdentityIcon
+                                    sx={{ height: '100%', width: '100%', color: '#4b4b4b' }}
+                                />
+                                <RoleChip role={userRole} color={'info'} />
+                            </div>
+                            <div className='profile-info flex column-d'>
+                                <h2>Данные пользователя</h2>
+                                <div className='divider'></div>
+                                <form action='' onSubmit={handleSubmit}>
+                                    <div className='input-wrapper'>
+                                        <TextField
+                                            label={'ФИО'}
+                                            sx={{ width: 1, marginBottom: '20px' }}
+                                            value={fullName.value}
+                                            onChange={(e) => {
+                                                fullName.onChange(e);
+                                            }}
+                                        />
+                                        <TextField
+                                            label={email.emailError ? 'Невалидный email' : 'Email'}
+                                            type={'email'}
+                                            sx={{ width: 1 }}
+                                            value={email.value}
+                                            onChange={(e) => {
+                                                email.onChange(e);
+                                            }}
+                                            error={email.emailError}
+                                        />
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div className='profile-info flex column-d'>
-                            <h2>Данные пользователя</h2>
-                            <div className='divider'></div>
-                            <form action='' onSubmit={handleSubmit}>
-                                <div className='input-wrapper'>
-                                    <TextField
-                                        label={'ФИО'}
-                                        sx={{ width: 1, marginBottom: '20px' }}
-                                        value={fullName.value}
-                                        onChange={(e) => {
-                                            fullName.onChange(e);
-                                        }}
-                                    />
-                                    <TextField
-                                        label={email.emailError ? 'Невалидный email' : 'Email'}
-                                        type={'email'}
-                                        sx={{ width: 1 }}
-                                        value={email.value}
-                                        onChange={(e) => {
-                                            email.onChange(e);
-                                        }}
-                                        error={email.emailError}
-                                    />
-                                    <Button
-                                        variant='contained'
-                                        type='submit'
-                                        sx={{
-                                            width: 1,
-                                            marginTop: '20px',
-                                            backgroundColor: '#ffbf03',
-                                            color: '#000',
-                                        }}
-                                        loading={isLoading}
-                                        disabled={!isValidForm}
-                                    >
-                                        Сохранить
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                        {roles.includes('Student') && (
+                            <div className='absolute'>
+                                <Fab
+                                    sx={{ width: '70px', height: '70px' }}
+                                    color='primary'
+                                    onClick={() => {
+                                        navigate('/absences/create');
+                                    }}
+                                >
+                                    <EditNoteIcon />
+                                </Fab>
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
             <ToastContainer limit={1} />
