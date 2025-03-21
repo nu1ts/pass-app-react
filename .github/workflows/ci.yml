@@ -47,5 +47,4 @@ jobs:
               --name pass-app-react \
               -p :3000 \
               --network="host" \
-              --user 1000:1000 \
               ${{ secrets.DOCKER_USERNAME }}/pass-app-react:latest
