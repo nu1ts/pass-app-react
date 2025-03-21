@@ -9,6 +9,7 @@ import ExportModal from '../../components/modal/ExportModal';
 import EmptyResult from '../../components/emptyResult/EmptyResult';
 import Loader from '../../components/loader/Loader';
 import PaginationComponent from '../../components/pagination/Pagination';
+
 const AbsencesHistoryPage = () => {
     const [open, setOpen] = useState(false);
     const { historyAbsences, isLoading } = useSelector((state) => state.absences);

@@ -41,7 +41,7 @@ export const HistoryFilters = () => {
     };
 
     const handleCheck = (event) => {
-        setChecked(event.target.checked);
+        setChecked((prev) => !prev);
     };
     const handleChange = (e) => {
         setStatus(e.target.value);
@@ -57,6 +57,7 @@ export const HistoryFilters = () => {
                 group: groupNumber || null,
                 size: 10,
                 page: 1,
+                onlyMy: checked,
             }),
         );
     };
@@ -70,6 +71,7 @@ export const HistoryFilters = () => {
                 sorting: sorting,
                 size: 10,
                 page: pagination.current,
+                onlyMy: checked,
             }),
         );
     }, [pagination.current]);
@@ -253,7 +255,7 @@ export const AbsencesFilters = () => {
     };
 
     const handleCheck = (event) => {
-        setChecked(event.target.checked);
+        setChecked((prev) => !prev);
     };
 
     const handleClick = () => {

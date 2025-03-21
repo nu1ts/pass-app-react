@@ -20,6 +20,13 @@ const ForbiddenPage = () => {
                     </div>
                     <div className='inner__inner-content'>
                         <span>У вас недостаточно прав для доступа к этой странице</span>
+                        <Button
+                            sx={{ marginTop: '20px' }}
+                            variant='contained'
+                            onClick={handleToHome}
+                        >
+                            На главную
+                        </Button>
                     </div>
                 </div>
             </div>

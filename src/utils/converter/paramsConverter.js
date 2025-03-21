@@ -68,7 +68,7 @@ const getHistoryParamQuery = (params) => {
         queryStr +=`page=${params.page}&`;
     }
     if(params.onlyMy) {
-        queryStr +=`page=${params.onlyMy}&`;
+        queryStr +=`onlyMy=${params.onlyMy}&`;
     }
     return queryStr;
 }
