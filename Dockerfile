@@ -1,4 +1,4 @@
-FROM node:latest-alpine AS base
+FROM node:21-alpine AS base
 
 ARG APP_UID=1000
 RUN addgroup -g $APP_UID tsugroup && adduser -D -u $APP_UID -G tsugroup tsuuser
@@ -9,7 +9,7 @@ RUN mkdir /app && chown -R tsuuser:tsugroup /app
 USER tsuuser
 WORKDIR /app
 
-FROM node:16-alpine AS build
+FROM node:21-alpine AS build
 ARG BUILD_CONFIGURATION=production
 
 WORKDIR /src
