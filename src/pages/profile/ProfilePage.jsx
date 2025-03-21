@@ -110,20 +110,6 @@ const ProfilePage = () => {
                                         }}
                                         error={email.emailError}
                                     />
-                                    <Button
-                                        variant='contained'
-                                        type='submit'
-                                        sx={{
-                                            width: 1,
-                                            marginTop: '20px',
-                                            backgroundColor: '#ffbf03',
-                                            color: '#000',
-                                        }}
-                                        loading={isLoading}
-                                        disabled={!isValidForm}
-                                    >
-                                        Сохранить
-                                    </Button>
                                 </div>
                             </form>
                         </div>

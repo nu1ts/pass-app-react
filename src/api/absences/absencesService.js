@@ -96,13 +96,26 @@ export const rejectAbsence = async(id, reason) => {
     }
 }
 
-export const extendAbsence = async(id) => {
-    
+export const extendAbsence = async(id) => {  
     try {
         return await fetch(`https://absences-api.orexi4.ru/api/absences/${id}/extend`,{
             method:'PATCH',
             headers: {
                 'Content-Type': 'application/json', 'accept':'application/json',
+                'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
+            }
+        })
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const loadAbsenceDocuments = async(documentId) => {
+    try {
+        return await fetch(`https://absences-api.orexi4.ru/api/documents/${documentId}`,{
+            method:'GET',
+            headers: {
+                'accept':'*/*',
                 'Authorization':'Bearer ' + localStorage.getItem('ACCESS_TOKEN')
             }
         })

@@ -87,33 +87,19 @@ export default function HistoryItem(props) {
                                 <TableBody>
                                     <TableRow>
                                         <TableCell sx={{ fontWeight: '500' }}>
-                                            {'Дата начала: '}
-                                            {transformDate(row.start_date)}
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell sx={{ fontWeight: '500' }}>
-                                            {'Дата окончания: '}
-                                            {transformDate(row.end_date)}
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell sx={{ fontWeight: '500' }}>
                                             {'Причина: '}
                                             {reason[row.type]}
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
-                            {row.status === 'Rejected' && row.comment && (
-                                <Textarea comment={row?.comment} />
-                            )}
+
                             <Chip
-                                size='small'
-                                label='Детали'
+                                size='medium'
+                                label='Открыть детали'
                                 color='primary'
                                 variant='outlined'
-                                sx={{ padding: '4px', cursor: 'pointer' }}
+                                sx={{ margin: '10px 0 0 10px', padding: '4px', cursor: 'pointer' }}
                                 onClick={() => {
                                     navigate(`/absences/${row.id}`);
                                 }}

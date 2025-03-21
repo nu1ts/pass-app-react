@@ -42,7 +42,7 @@ export default function ExportModal({ isOpen, handleClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        const response = await exportAbsences(
+        await exportAbsences(
             await getExportQuery({
                 Type: type || null,
                 Status: status || null,

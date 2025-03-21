@@ -137,11 +137,11 @@ export default function AbsenceItem(props) {
                                 </TableBody>
                             </Table>
                             <Chip
-                                size='small'
-                                label='Детали'
+                                size='medium'
+                                label='Открыть детали'
                                 color='primary'
                                 variant='outlined'
-                                sx={{ padding: '4px', cursor: 'pointer' }}
+                                sx={{ margin: '10px 0 0 10px', padding: '4px', cursor: 'pointer' }}
                                 onClick={() => {
                                     navigate(`/absences/${row.id}`);
                                 }}
