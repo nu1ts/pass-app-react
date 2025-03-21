@@ -52,8 +52,8 @@ export default function AbsenceItem(props) {
     const approve = async () => {
         const response = await approveAbsence(row.id);
         if (response.ok) {
-            SuccessToast('Одобрено');
             dispatch(setAbsences(absences.filter((item) => item.id != row.id)));
+            return SuccessToast('Одобрено');
         } else {
             if (response.status === 401) {
                 ErrorToast(ERROR_401);

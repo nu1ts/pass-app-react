@@ -72,3 +72,29 @@ const getHistoryParamQuery = (params) => {
     }
     return queryStr;
 }
+
+export const getExportQuery= async(params)=> {
+    console.log(params);
+    let queryStr = '';
+    if(params.Status) {
+        queryStr +=`Status=${params.Status}&`;
+    } 
+    if(params.GroupId) {
+        queryStr +=`Group=${params.GroupId}&`;
+    }
+    if(params.Type) {
+        queryStr +=`Type=${params.Type}&`;
+    }
+    if(params.StartDate) {
+        queryStr +=`StartDate=${params.StartDate +'T03:57:33.951Z'}&`;
+    }
+    if(params.EndDate) {
+        queryStr +=`EndDate=${params.EndDate + 'T03:57:33.951Z'}&`;
+    }
+    if(params.studentIds) {
+        for(let i=0;i<params.studentIds.length;i++) {
+            queryStr+=`studentIds=${params.studentIds[i].id}&`;
+        }
+    } 
+    return queryStr;
+}

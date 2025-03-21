@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 
 import { useInput } from '../../hooks/useInput';
 import { rejectAbsence } from '../../api/absences/absencesService';
-import { ErrorToast } from '../../utils/notifications/notifications';
+import { ErrorToast, SuccessToast, WarningToast } from '../../utils/notifications/notifications';
 import { CLIENT_ERROR, ERROR_401, SERVER_ERROR } from '../../utils/constants/errorCode';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAbsences } from '../../store/reducers/absencesReducer';
@@ -67,6 +67,7 @@ export default function DeleteModal({ isOpen, handleClose, id }) {
         const response = await rejectAbsence(id, comment?.value || null);
         if (response.ok) {
             dispatch(setAbsences(absences.filter((item) => item.id != id)));
+            return WarningToast('Заявка отклонена');
         } else {
             if (response.status === 400) {
                 ErrorToast(CLIENT_ERROR);

@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { clearSession } from '../../store/actions/authAction';
 import './index.scss';
 
 const HomePage = () => {
+    const { isAuth } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (!isAuth) {
+            dispatch(clearSession());
+            navigate('/login');
+        }
+    }, []);
     return (
         <div>
             <section className='content'>
