@@ -1,4 +1,4 @@
-FROM node:lts-alpine AS base
+FROM node:latest-alpine AS base
 
 ARG APP_UID=1000
 RUN addgroup -g $APP_UID tsugroup && adduser -D -u $APP_UID -G tsugroup tsuuser
