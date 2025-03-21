@@ -1,11 +1,14 @@
 import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { fetchAbsenceById, loadAbsenceDocuments } from '../../api/absences/absencesService';
 import InfoChip from '../../components/chip/InfoChip';
 import { transformDateHHMM, transformDate } from '../../utils/converter/dateConverter';
-import { CLIENT_ERROR } from '../../utils/constants/errorCode';
+import { CLIENT_ERROR, SERVER_ERROR } from '../../utils/constants/errorCode';
 import { ErrorToast, SuccessToast } from '../../utils/notifications/notifications';
+import { useDispatch } from 'react-redux';
+import { clearSession } from '../../store/actions/authAction';
+
 const statuses = {
     Pending: 'default',
     Approved: 'success',
@@ -26,13 +29,27 @@ const reason = {
 const AbsenceDetails = () => {
     const { id } = useParams();
     const [details, setDetails] = useState({});
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const loadFiles = async () => {
         for (let i = 0; i < details.documents.length; i++) {
             await loadAbsenceDocuments(details.documents[i].id)
                 .then((response) => {
-                    if (!response.ok) {
+                    if (!response) {
                         return ErrorToast(CLIENT_ERROR);
+                    }
+                    if (!response.ok) {
+                        if (response.status === 403) {
+                            navigate('/forbidden');
+                            return;
+                        }
+                        if (response.status === 401) {
+                            dispatch(clearSession());
+                            navigate('/login');
+                            return;
+                        } else {
+                            return ErrorToast(SERVER_ERROR);
+                        }
                     }
                     const contentType = response.headers.get('Content-Type');
                     let filename = 'download';
